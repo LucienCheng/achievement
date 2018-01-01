@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.AuditMapper">
+	<!-- 插入一条审核记录 -->
+	<insert id="insertAudit" useGeneratedKeys="true" keyProperty="audId">
+		insert into
+		audit(userId,achId,audDate,opinion)
+		values(#{userId},#{achId},#{audDate},#{opinion})
+	</insert>
+	<!-- 删除一条审核记录 -->
+	<delete id="deleteAudit">
+		delete from audit
+		where audId=#{audId}
+	</delete>
+	<!-- 选择一条审核记录 -->
+	<select id="selectAudit" resultType="Audit">
+	select * from audit
+	<where>
+	achId=#{achId}
+	and audShow=1
+	</where>
+	</select>
+	<!-- 是否存在一条审核记录 -->
+	<select id="selectIsAudit" resultType="int">
+	select count(*) from audit
+	<where>
+	achId=#{achId}
+	and audShow=1
+	</where>
+	</select>
+	<!-- 更新一条审核记录，变成0 -->
+	<update id="updateAudit">
+	update audit set
+	audit.audShow=0
+	<where>
+	 audId=#{audId}
+	</where>
+	</update>
+</mapper>

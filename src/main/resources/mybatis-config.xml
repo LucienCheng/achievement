@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration SYSTEM "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+
+ <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+ </settings>
+ <typeAliases>
+<typeAlias type="com.entity.Achievement" alias="Achievement"/>
+<typeAlias type="com.entity.Audit" alias="Audit"/>
+<typeAlias type="com.entity.Role" alias="Role"/>
+<typeAlias type="com.entity.User" alias="User"/>
+<typeAlias type="com.entity.Module" alias="Module"/>
+</typeAliases>
+</configuration>
