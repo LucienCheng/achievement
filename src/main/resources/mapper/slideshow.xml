@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.SlideShowMapper">
+	<!-- 插入一条更改记录 -->
+	<insert id="insertSlideShow" >
+		insert into slideshow(achId) 
+		values(#{achId})
+	</insert>
+	<!-- 删除一条更改记录 -->
+	<delete id="deleteSlideShow">
+		delete from slideshow
+		where achId=#{achId}
+	</delete>
+	<select id="selectSlideShow" resultType="int">
+	select achId from slideshow
+	</select>
+
+</mapper>

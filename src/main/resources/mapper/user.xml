@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里写的是一个映射类的接口名字一定要一样 -->
+<mapper namespace="com.dao.UserMapper">
+
+	<!-- 这是一个user类型 -->
+	<resultMap id="userResultMap" type="User">
+		<id property="userId" column="userId" />
+		<result property="userWorkNum" column="userWorkNum" />
+		<result property="userPassword" column="userPassword" />
+		<result property="userPhone" column="userPhone" />
+		<result property="userName" column="userName" />
+		<result property="userSex" column="userSex" />
+		<result property="userPos" column="userPos" />
+		<association property="role" javaType="Role" column="roleId">
+			<id property="roleId" column="roleId" />
+			<result property="roleName" column="roleName" />
+		</association>
+	</resultMap>
+
+	<!-- 按照条件搜索 -->
+	<select id="searchUser" resultMap="userResultMap">
+		SELECT * FROM user_display
+		<where>
+			<if test="userId!=null">
+				userId=#{userId}
+			</if>
+			<if test="userName!=null">
+				userName like CONCAT('%',#{userName},'%') <!-- 这种安全一些，变成preparestatement了 -->
+			</if>
+			<if test="userWorkNum!=null">
+				and userWorkNum like "%${userWorkNum}%" <!-- 这种发生注入比较多，直接把相应的属性进行替换 -->
+			</if>
+		</where>
+		<if test="count!=null&#38;start!=null">
+			limit #{start},#{count}
+		</if>
+	</select>
+	<!-- 返回总数 -->
+	<select id="searchUserCount" resultType="int">
+		SELECT count(*) FROM user_display
+	</select>
+	
+	
+	
+
+
+	<!-- 批量插入数据库 -->
+	<insert id="insertUsers" useGeneratedKeys="true" keyProperty="userId"
+		parameterType="java.util.List">
+		insert into user (userWorkNum,userPassword,userPhone,
+		userName,userSex,userPos,roleId) values
+		<foreach item="users" collection="list" separator="," close=";">
+			(#{users.userWorkNum},#{users.userPassword},#{users.userPhone},
+			#{users.userName},#{users.userSex},#{users.userPos},#{users.role.roleId})
+		</foreach>
+	</insert>
+
+
+
+	<!-- 批量删除所有用户 -->
+	<delete id="deleteUsers" parameterType="java.util.List">
+		delete from user
+		<where>
+			userId in
+			<foreach collection="list" item="userId" open="(" close=")"
+				separator=",">
+				#{userId}
+			</foreach>
+		</where>
+	</delete>
+	<!-- 更新一条记录 -->
+	<update id="updateUser" parameterType="User">
+		update user set userName=#{userName},userWorkNum=#{userWorkNum},
+		userPassword=#{userPassword},userPhone=#{userPhone},userName=#{userName},
+		userSex=#{userSex},userPos=#{userPos},roleId=#{role.roleId}
+		<where>
+			userId=#{userId}
+		</where>
+
+	</update>
+
+</mapper>
+

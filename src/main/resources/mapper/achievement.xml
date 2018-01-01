@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.AchiMapper">
+	<!-- 这是一个achievement类型 -->
+	<resultMap id="achievementResultMap" type="Achievement">
+		<id property="achId" column="achId" />
+		<result property="achName" column="achName" />
+		<result property="achVideoPath" column="achVideoPath" />
+		<result property="achImagePath" column="achImagePath" />
+		<result property="achClassify" column="achClassify" />
+		<result property="achStatus" column="achStatus" />
+		<result property="achLock" column="achLock" />
+		<result property="achDate" column="achDate" />
+		<result property="achCTR" column="achCTR" />
+		<result property="achDescribe" column="achDescribe" />
+		<result property="isModify" column="isModify" />
+		<association property="user" javaType="User" column="userId">
+			<id property="userId" column="userId" />
+		</association>
+	</resultMap>
+
+
+	<!-- 插入一条成果记录 -->
+	<insert id="insertAchi" parameterType="Achievement" useGeneratedKeys="true" keyProperty="achId">
+		insert into
+		achievement(achName,userId,achVideoPath,
+		achImagePath,achClassify,achStatus,achDate,achDescribe,isModify)
+		values(#{achName},#{user.userId},#{achVideoPath},#{achImagePath},#{achClassify}
+		,#{achStatus},#{achDate},#{achDescribe},#{isModify})
+	</insert>
+
+
+
+	<!-- 查询总的成果 -->
+	<select id="searchAchi" resultMap="achievementResultMap">
+		SELECT * from achievement
+		<where>
+			<if test="achId!=null">
+				achId=#{achId}
+			</if>
+			<if test="userId!=null">
+				userId=#{userId}
+			</if>
+			<if test="achStatus!=null">
+				and achStatus=#{achStatus}
+			</if>
+			<if test="achName!=null">
+				and achName like CONCAT('%',#{achName},'%')
+			</if>
+			<if test="achClassify!=null">
+				and achClassify like CONCAT('%',#{achClassify},'%')
+			</if>
+		</where>
+
+		<if test="condition==0">
+			ORDER BY
+			achId DESC
+			LIMIT #{start},#{count}
+		</if>
+		<if test="condition==1">
+			ORDER BY
+			achievement.achCTR DESC,achId DESC
+			LIMIT
+			#{start},#{count}
+		</if>
+	</select>
+	<!-- 批量删除记录 -->
+	<delete id="deleteAchis" parameterType="java.util.List">
+		delete from achievement
+		<where>
+			achId in
+			<foreach collection="list" item="achId" open="(" close=")"
+				separator=",">
+				#{achId}
+			</foreach>
+		</where>
+	</delete>
+	<update id="updateAchi" parameterType="Achievement">
+		update achievement set
+		achCTR=#{achCTR},
+		achName=#{achName},
+		userId=#{user.userId},
+		achVideoPath=#{achVideoPath},
+		achImagePath=#{achImagePath},
+		achClassify=#{achClassify},
+		achStatus=#{achStatus},
+		achLock=#{achLock},
+		achDate=#{achDate},
+		achDescribe=#{achDescribe},
+		isModify=#{isModify}
+		<where>
+			achId=#{achId}
+		</where>
+	</update>
+
+
+	
+</mapper>

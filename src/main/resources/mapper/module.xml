@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.ModuleMapper">
+	<!-- 插入一条更改记录 -->
+	<insert id="insertModule" keyProperty="modId" useGeneratedKeys="true">
+		insert into
+		modules(modName,modContent,modDescribe,achId)
+		values(#{modName},#{modContent},#{modDescribe},#{achId})
+	</insert>
+	<!-- 批量删除记录 -->
+	<delete id="deleteModule">
+		delete from modules
+		where modId in
+		<foreach collection="list" open="(" close=")" separator=","
+			item="modId">
+			#{modId}
+		</foreach>
+	</delete>
+	<!-- 搜索一条记录 -->
+	<select id="selectModuleByModId" resultType="Module">
+		select * from
+		modules
+		<where>
+			modId=#{modId}
+		</where>
+	</select>
+	<!-- 搜索一条记录 -->
+	<select id="selectModuleByAchId" resultType="Module">
+		select * from
+		modules
+		<where>
+			achId=#{achId}
+		</where>
+	</select>
+	<!-- 更新一条记录 -->
+	<update id="updateModule">
+		update modules set
+		modContent=#{modContent},
+		modName=#{modName},
+		modDescribe=#{modDescribe}
+		<where>
+			modId=#{modId}
+		</where>
+	</update>
+
+</mapper>
