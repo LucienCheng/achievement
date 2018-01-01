@@ -19,6 +19,7 @@ import com.service.AchievementService;
 public class BackAchiControl {
 	@Resource(name="AchievementImpl")
 	private AchievementService achievementService;
+	private int test;
 	//返回view的前缀
 		private final static String prefixName="jsp/back/uploader/";
 		private static String getViewName(String viewName) {
