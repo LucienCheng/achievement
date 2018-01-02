@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+=======
+<%@ page language="java" import="java.util.*" pageEncoding="Utf-8"%>
+>>>>>>> branch 'develope' of https://github.com/chengliaofight/achievement.git
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -22,6 +26,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
   </head>
   这里也测试一下
+
   <body>
     This is my JSP page. <br>
   </body>
