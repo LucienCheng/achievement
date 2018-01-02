@@ -200,12 +200,6 @@
 			<artifactId>poi-excelant</artifactId>
 			<version>${poi}</version>
 		</dependency>
-		<!-- AL相关添加 -->
-		<dependency>
-			<groupId>com.change</groupId>
-			<artifactId>json</artifactId>
-			<version>1.0</version>
-		</dependency>
 		<!-- 安装ueditor的引用 -->
 		<dependency>
 			<groupId>com.hnu</groupId>
