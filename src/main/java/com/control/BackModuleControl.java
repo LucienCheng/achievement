@@ -21,11 +21,11 @@ public class BackModuleControl {
 	@Resource
 	private ModuleService moduleService;
 	//返回view的前缀
-	private final static String prefixName="jsp/back/uploader/";
+	private final static String prefixName="jsp/back/user/";
 	private static String getViewName(String viewName) {
 		return prefixName+viewName;
 	}
-	@RequestMapping(name="/uploader/module/saveMod",method=RequestMethod.POST)
+	@RequestMapping(name="/user/module/saveMod",method=RequestMethod.POST)
 	public String saveMod(Module module,Model model,HttpServletRequest request) throws UnsupportedEncodingException{
 		module.setAchId(105);
 		moduleService.insertModule(module);
