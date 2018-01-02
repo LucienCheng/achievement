@@ -15,13 +15,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.service.AchievementService;
 
 @Controller
-@RequestMapping("/uploader/")
+@RequestMapping("/user")
 public class BackAchiControl {
 	@Resource(name="AchievementImpl")
 	private AchievementService achievementService;
 	private String string;
 	//返回view的前缀
-		private final static String prefixName="jsp/back/uploader/";
+		private final static String prefixName="jsp/back/user/";
 		private static String getViewName(String viewName) {
 			return prefixName+viewName;
 		}

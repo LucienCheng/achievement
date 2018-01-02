@@ -25,7 +25,7 @@ public class BackModuleControl {
 	private static String getViewName(String viewName) {
 		return prefixName+viewName;
 	}
-	@RequestMapping(name="/user/module/saveMod",method=RequestMethod.POST)
+	@RequestMapping(value="/user/module/saveMod",method=RequestMethod.POST)
 	public String saveMod(Module module,Model model,HttpServletRequest request) throws UnsupportedEncodingException{
 		module.setAchId(105);
 		moduleService.insertModule(module);
