@@ -5,6 +5,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.entity.User;
 public interface UserService {
+	//通过搜索用户id获得用户
+	public boolean vertifyUser(User user );
 	//完整的搜索用户
 	public List<User> getUser(Integer userId,String userName,String userWorkNum,Integer start,Integer count);
 	//通过搜索用户id获得用户

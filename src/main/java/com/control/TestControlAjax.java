@@ -1,4 +1,4 @@
-package com.control;
+/*package com.control;
 
 
 import java.util.HashMap;
@@ -41,7 +41,7 @@ public class TestControlAjax {
 		return (User) context.getBean("user");
 		
 	}
-	/*@Resource(name="AchievementImpl")
+	@Resource(name="AchievementImpl")
 	private AchievementService achievementService;
 	@Resource(name="userServiceImpl")
 	private UserService userService;
@@ -68,7 +68,7 @@ public class TestControlAjax {
 		map.put("users", users);
 		modelAndView.setViewName("dividePage");
 	}
-	*/
+	
 	@RequestMapping(value="test",method={RequestMethod.GET,RequestMethod.POST} )
 	@ResponseBody
 	public Map<String, Object> test(){
@@ -103,3 +103,4 @@ public class TestControlAjax {
 		return "test";
 	}
 }
+*/

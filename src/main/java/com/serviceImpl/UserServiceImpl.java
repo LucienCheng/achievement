@@ -137,6 +137,15 @@ public class UserServiceImpl  implements UserService{
 		return userMapper.searchUserCount();
 	}
 
+	@Override
+	public boolean vertifyUser(User user) {
+		int result=userMapper.vertifyUser(user);
+		if(result==0)
+		return false;
+		else 
+		return false;
+	}
+
 	
 	
 	

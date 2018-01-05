@@ -10,7 +10,7 @@ import com.dao.ModuleMapper;
 import com.entity.Module;
 import com.service.ModuleService;
 
-@Service("modeuleImpl")
+@Service("moduleImpl")
 public class ModuleImpl implements ModuleService{
 	@Resource
 	private ModuleMapper moduleMapper;
@@ -43,6 +43,12 @@ public class ModuleImpl implements ModuleService{
 	public List<Module> selectModuleByAchId(int achId) {
 		// TODO Auto-generated method stub
 		return moduleMapper.selectModuleByAchId(achId);
+	}
+
+	@Override
+	public int updateModuleByachId(List<Integer> moduleIds,int achievementId) {
+		// TODO Auto-generated method stub
+		return moduleMapper.updateModuleByachId(moduleIds,achievementId);
 	}
 
 }

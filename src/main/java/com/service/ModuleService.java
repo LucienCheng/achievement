@@ -10,4 +10,5 @@ public interface ModuleService {
 	public int deleteModule(List<Integer> modules);
 	public Module selectModuleByModId(int modId);
 	public List<Module> selectModuleByAchId(int achId);
+	public int updateModuleByachId(List<Integer> moduleIds,int achievementId);
 }

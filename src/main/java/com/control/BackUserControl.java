@@ -1,30 +1,36 @@
 package com.control;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.entity.User;
+import com.entity.UserCondition;
 import com.service.UserService;
 @Controller
 public class BackUserControl {
-	@Resource
+	@Resource(name="UserServiceImpl")
 	private UserService userService;
-	//返回view的前缀
-	private final static String prefixName="jsp/back/admin/";
-	private static String getViewName(String viewName) {
-		return prefixName+viewName;
-	}
+	private final int count=10;
 	//在执行action时都会加载这个属性，当model存在的时候，就直接使用，当不存在的时候，就会进行创建，然后放到model里。相当于一个静态类。
 	@ModelAttribute
 	 private  HSSFWorkbook resultSetToExcel(String sheetName) throws Exception  
@@ -49,19 +55,27 @@ public class BackUserControl {
 	        return workbook;  
 	    }  
 	//excel导入,导入的过程有点长，所以使用异步快比较一些
-	@RequestMapping(value="/admin/importExcel" ,method=RequestMethod.POST)
+	@RequestMapping(value="/back/admin/importExcel" ,method=RequestMethod.POST)
+	@ResponseBody
 	public  Callable<String> importExcel( final MultipartFile file){
+		
 		return new Callable<String>() {
 			@Override
 			public String call() throws Exception {
-				userService.importUsersByExcel(file);
-				 return getViewName("success");
+				boolean result=userService.importUsersByExcel(file);
+				if (result) {
+					return "success";
+				}
+				else {
+					return "failure";
+				}
+				 
 			}
 		};
 	}
 	
 	//excel模板导出
-	@RequestMapping(value="/admin/exportModel" ,method=RequestMethod.GET)
+	@RequestMapping(value="/back/admin/exportModel" ,method=RequestMethod.GET)
 	public  void exportModel(HSSFWorkbook workbook,HttpServletRequest request,HttpServletResponse response) throws IOException{
 		  	String filename = "导入模板.xls";//设置下载时客户端Excel的名称       
 	        response.setContentType("application/vnd.ms-excel");       
@@ -71,7 +85,51 @@ public class BackUserControl {
 	        ouputStream.flush();       
 	        ouputStream.close();   
 	}
-	
+	//更新用户的信息
+	@RequestMapping(value="/back/updateUser",method={RequestMethod.POST})
+	@ResponseBody
+	public String updateUser(User user){
+		int result=userService.updateUser(user);
+		if (result==1) {
+			return "success";
+		}
+		else {
+			return "failure";
+		}
+	}
+	//插入一个用户
+	@RequestMapping(value="/back/admin/saveUser",method={RequestMethod.POST})
+	@ResponseBody
+	public String saveUser(User user){
+		int result=userService.updateUser(user);
+		if (result==1) {
+			return "success";
+		}
+		else {
+			return "failure";
+		}
+	}
+	//批量删除用户
+	@RequestMapping(value="/back/admin/deleteUser",method={RequestMethod.POST})
+	@ResponseBody
+	public String deleteUser(@RequestBody List<Integer> userIds){
+		int result=userService.deleteUsers(userIds);
+		if (result>0) {
+			return "success";
+		}
+		else {
+			return "failure";
+		}
+	}
+	//根据条件搜索用户
+	@RequestMapping(value="/back/admin/getUsers/{start}",method={RequestMethod.GET})
+	@ResponseBody
+	public Map<String, Object> getUsers(@PathVariable int start,UserCondition userCondition) {
+		List<User> users=userService.getUserByConditon(userCondition.getUserName(), userCondition.getUserWorkNum(), start, count);
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("users",users);
+		return map;
+	}
 	
 
 }

@@ -20,5 +20,6 @@ public interface UserMapper {
 	public int deleteUsers(List<Integer> users);
 	//修改用户
 	public int updateUser(User user) ;
+	public int vertifyUser(User user);
 	
 }
