@@ -51,4 +51,10 @@ public class ModuleImpl implements ModuleService{
 		return moduleMapper.updateModuleByachId(moduleIds,achievementId);
 	}
 
+	@Override
+	public int insertModules(List<Module> modules) {
+		// TODO Auto-generated method stub
+		return moduleMapper.insertModules(modules);
+	}
+
 }

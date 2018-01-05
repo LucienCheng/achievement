@@ -1,6 +1,7 @@
 package com.control;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.entity.Achievement;
+import com.entity.Module;
 import com.service.AchievementService;
 import com.service.ModuleService;
 
@@ -29,6 +32,23 @@ public class BackAchiControl {
 	@Resource(name="moduleImpl")
 	private ModuleService moduleService;
 	private final int count=10;
+	//这里操作是为了新创建一份module在记录中，如果保存，就会使用，不保存，那就删除原来的module
+	@RequestMapping(value="/back/user/modifyAchievement",method={RequestMethod.POST} )
+	@Transactional
+	public String updateAchievement(int achId,Model model){
+		List<Module> modules=moduleService.selectModuleByAchId(achId);
+		Achievement achievement=achievementService.getAchiByAchId(achId);
+		int result=moduleService.insertModules(modules);
+		List<Integer> moduleIds=new ArrayList<Integer>();
+		for(int i=0;i<modules.size();i++){
+			moduleIds.add(modules.get(i).getModId());
+		}
+		model.addAttribute("achievement", achievement);
+		model.addAttribute("moduleIds", moduleIds);
+		moduleIds=null;
+		modules=null;
+		return "/back/user/modifyAchievement";
+	}
 	//保存成果的操作,其中包括了保存一个成果，更改了模块的id.
 	@RequestMapping(value="/back/user/updateAchievement",method={RequestMethod.POST} )
 	@ResponseBody

@@ -33,11 +33,22 @@
 		</where>
 	</select>
 	
-	<insert id="updateModule" keyProperty="modId" useGeneratedKeys="true">
-		insert into
-		modules(modName,modContent,modDescribe)
-		values(#{modName},#{modContent},#{modDescribe})
-	</insert>
+	<update id="updateModule" keyProperty="modId" useGeneratedKeys="true">
+		update modules 
+		<set>
+		<if test="modContent != null">
+		modContent=#{modContent},
+		</if>
+		<if test="modName != null">
+		modName=#{modName},
+		</if>
+		<if test="modDescribe != null">
+		modDescribe=#{modDescribe}
+		</if>
+			</set>
+			where
+			modId=#{modId}
+	</update>
 	
 	
 		<update id="updateModuleByachId" >
@@ -52,5 +63,12 @@
 			modId=#{moduleId.modId}
 		</foreach>
 	</update>
+<insert id="insertModules" keyProperty="modId" useGeneratedKeys="true">
+		insert into
+		modules(modName,modContent,modDescribe)
+		<foreach item="module" collection="list" separator="," close=";">
+		values(#{module.modName},#{module.modContent},#{module.modDescribe})
+		</foreach>
 
+</insert>
 </mapper>
