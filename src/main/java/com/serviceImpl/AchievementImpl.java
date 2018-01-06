@@ -14,11 +14,14 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dao.AchiMapper;
 import com.dao.AlterMapper;
 import com.dao.AuditMapper;
+import com.dao.ModuleMapper;
+import com.dao.SlideShowMapper;
 import com.entity.Achievement;
 import com.entity.Audit;
 import com.service.AchievementService;
@@ -30,6 +33,8 @@ public class AchievementImpl implements AchievementService {
 	private AlterMapper alterMapper;
 	@Resource
 	private AuditMapper auditMapper;
+	@Resource
+	private SlideShowMapper slideShowMapper;
 	private String imaginPathPrefix="/file/image/";
 	private String videoPathPrefix="/file/video/";
 	static String getTime(){
@@ -43,9 +48,9 @@ public class AchievementImpl implements AchievementService {
 	}
 
 	private List<Achievement> getAchis(Integer achId,Integer userId, String achName,
-			String achClassify, Integer achStatus, Integer start, Integer count,
+			String achClassify, Integer achStatus, String userName,Integer start, Integer count,
 			Integer condition) {
-		return achiMapper.searchAchi(achId,userId, achName, achClassify, achStatus, start, count, condition);
+		return achiMapper.searchAchi(achId,userId, achName, achClassify, achStatus,userName, start, count, condition);
 	}
 	@Override
 	public String saveImagine(MultipartFile multipartFile,HttpServletRequest request) {
@@ -89,33 +94,33 @@ public class AchievementImpl implements AchievementService {
 
 	@Override
 	public List<Achievement> getAchiCondition(Integer userId,String achName,
-			String achClassify, Integer achStatus, Integer start, Integer count) {
+			String achClassify, Integer achStatus, String userName,Integer start, Integer count) {
 		// TODO Auto-generated method stub
-		return getAchis(null,userId, achName, achClassify, achStatus, start, count, 0);
+		return getAchis(null,userId, achName, achClassify, achStatus, userName,start, count, 0);
 	}
 
 
 	@Override
 	public List<Achievement> getNewAchi(Integer start, Integer count) {
 		// TODO Auto-generated method stub
-		return getAchis(null, null, null, null, 1, start, count, 0);
+		return getAchis(null, null, null, null, 1, null,start, count, 0);
 	}
 
 	@Override
 	public List<Achievement> getHotAchi(Integer start, Integer count) {
 		// TODO Auto-generated method stub
-		return getAchis(null,null, null, null, 1, start, count, 1);
+		return getAchis(null,null, null, null, 1, null,start, count, 1);
 	}
 
 	@Override
 	public List<Achievement> getAchiByUserId(Integer userId, Integer start, Integer count) {
 		// TODO Auto-generated method stub
-		return getAchis(null,userId, null, null,  null, start, count, 0);
+		return getAchis(null,userId, null, null,  null, null,start, count, 0);
 	}
 	@Override
 	public Achievement getAchiByAchId(Integer achId) {
 		// TODO Auto-generated method stub
-		List<Achievement> achievements= getAchis(achId,null, null, null, null, 0, 1, 0);
+		List<Achievement> achievements= getAchis(achId,null, null, null, null, null,0, 1, 0);
 		if (achievements.size()!=0) {
 			return achievements.get(0);
 		}
@@ -127,7 +132,7 @@ public class AchievementImpl implements AchievementService {
 	public List<Achievement> getAchiByAchiStatus(Integer userId,
 			Integer achStatus, Integer start, Integer count) {
 		// TODO Auto-generated method stub
-		return getAchis(null, userId, null, null, achStatus, start, count, 0);
+		return getAchis(null, userId, null, null, achStatus, null,start, count, 0);
 	}
 
 
@@ -140,16 +145,11 @@ public class AchievementImpl implements AchievementService {
 	}
 
 /*更新一个成果*/
+	
 	@Override
-	public int updateAchi(Achievement achievement) {
+	public int updateAchiWithSta(List<Integer> achIds, Integer achStatus) {
 		// TODO Auto-generated method stub
-		return achiMapper.updateAchi(achievement);
-	}
-	@Override
-	public int updateAchiWithSta(Achievement achievement, Integer achStatus) {
-		// TODO Auto-generated method stub
-		achievement.setAchStatus(achStatus);
-		return updateAchi(achievement);
+		return achiMapper.updateAchiWithSta(achIds,achStatus);
 	}
 	@Override
 	public boolean updateAchiModify(Achievement achievement, Integer isModify) {
@@ -174,6 +174,7 @@ public class AchievementImpl implements AchievementService {
 		 
 	 }
 	 //通过时，需要更新修改后的成果，并且展示到前台
+	 @Transactional
 	 private boolean updateAchiPassModify(Achievement achievementNew){
 		
 		int oldId=alterMapper.selectAlter(achievementNew.getAchId());
@@ -181,6 +182,7 @@ public class AchievementImpl implements AchievementService {
 		List<Integer> achievements=new ArrayList<Integer>();
 		achievements.add(oldId);
 		achiMapper.deleteAchis(achievements);
+		slideShowMapper.updateSlideShow(oldId, achievementNew.getAchId());
 		 achievementNew.setIsModify(0);
 		 achievementNew.setAchStatus(1);
 		achiMapper.updateAchi(achievementNew);

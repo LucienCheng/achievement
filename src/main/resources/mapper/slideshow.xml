@@ -14,5 +14,11 @@
 	<select id="selectSlideShow" resultType="int">
 	select achId from slideshow
 	</select>
+	<update id="updateSlideShow">
+	update slideshow
+	set achId=#{NewAchId}
+	where
+	achId=#{OldAchId}
+	</update>
 
 </mapper>

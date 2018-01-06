@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.entity.Achievement;
 
 public interface AchiMapper {
-	
+	public int updateAchiWithSta(@Param("achIds")List<Integer> achIds, @Param("achStatus")Integer achStatus) ;
 	public int insertAchi(Achievement achievement);//插入一条数据
 	public int updateAchi(Achievement achievement);//更新一个成果
 	public int deleteAchis(List<Integer> achievements);//批量删除成果
@@ -17,7 +17,7 @@ public interface AchiMapper {
 	 */
 	public List<Achievement> searchAchi(@Param("achId") Integer achId, @Param("userId")Integer userId,
 			@Param("achName")String achName,@Param("achClassify")String achClassify,
-			@Param("achStatus")Integer achStatus
+			@Param("achStatus")Integer achStatus,@Param("userName")String userName
 			,@Param("start")int start,@Param("count")int count,@Param("condition") Integer condition);//总的搜索
 	
 }

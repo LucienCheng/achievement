@@ -17,7 +17,6 @@
 	select * from audit
 	<where>
 	achId=#{achId}
-	and audShow=1
 	</where>
 	</select>
 	<!-- 是否存在一条审核记录 -->
@@ -25,13 +24,11 @@
 	select count(*) from audit
 	<where>
 	achId=#{achId}
-	and audShow=1
 	</where>
 	</select>
 	<!-- 更新一条审核记录，变成0 -->
 	<update id="updateAudit">
 	update audit set
-	audit.audShow=0
 	<where>
 	 audId=#{audId}
 	</where>

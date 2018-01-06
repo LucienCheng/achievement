@@ -5,19 +5,9 @@ private int audId;
 private int userId;
 private int achId;
 private String audDate;
-private int audShow;
 private String opinion;
 
-public Audit(int audId, int userId, int achId, String audDate,
-		int audShow, String opinion) {
-	super();
-	this.audId = audId;
-	this.userId = userId;
-	this.audDate = audDate;
-	this.audShow = audShow;
-	this.opinion = opinion;
-	this.achId=achId;
-}
+
 
 public Audit() {
 }
@@ -54,13 +44,7 @@ public void setAudDate(String audDate) {
 	this.audDate = audDate;
 }
 
-public int getAudShow() {
-	return audShow;
-}
 
-public void setAudShow(int audShow) {
-	this.audShow = audShow;
-}
 
 public String getOpinion() {
 	return opinion;
@@ -73,7 +57,7 @@ public void setOpinion(String opinion) {
 @Override
 public String toString() {
 	return "Audit [audId=" + audId + ", userId=" + userId + ", achId=" + achId
-			+ ", audDate=" + audDate + ", audShow=" + audShow + ", opinion="
+			+ ", audDate=" + audDate + ", opinion="
 			+ opinion + "]";
 }
 

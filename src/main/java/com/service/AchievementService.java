@@ -38,7 +38,7 @@ public List<Achievement> getAchiByUserId(Integer userId,@Param("start")Integer s
 		,@Param("count")Integer count) ;
 //通过搜索条件来搜索成果
 public List<Achievement> getAchiCondition(@Param("userId")Integer userId,@Param("achName")String achName,@Param("achClassify")String achClassify,
-		@Param("achStatus")Integer achStatus
+		@Param("achStatus")Integer achStatus,String userName
 		,@Param("start")Integer start,@Param("count")Integer count);
 //最新的成果
 public List<Achievement> getNewAchi(@Param("start")Integer start,@Param("count")Integer count);
@@ -63,8 +63,7 @@ public int insertAchi(Achievement achievement);
  * @return:返回插入的记录
  * 
  */
-public int updateAchi(Achievement achievement);
-public int updateAchiWithSta(Achievement achievement,Integer achStatus) ;
+public int updateAchiWithSta(List<Integer> achIds,Integer achStatus) ;
 /*
  * 用于用户成功发布成果之后，需要修改重新审核时使用的api，当ismodify为1时进行修改，当为0时删除之前的成果，发布新的成果
  */

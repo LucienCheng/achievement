@@ -33,13 +33,14 @@
 
 	<!-- 查询总的成果 -->
 	<select id="searchAchi" resultMap="achievementResultMap">
-		SELECT * from achievement
-		<where>
+		SELECT * from achievement , user
+		<trim prefix="where" prefixOverrides="and | or">
+		achievement.userId=user.userId
 			<if test="achId!=null">
-				achId=#{achId}
+				and achId=#{achId}
 			</if>
 			<if test="userId!=null">
-				userId=#{userId}
+				and user.userId=#{user.userId}
 			</if>
 			<if test="achStatus!=null">
 				and achStatus=#{achStatus}
@@ -50,8 +51,10 @@
 			<if test="achClassify!=null">
 				and achClassify like CONCAT('%',#{achClassify},'%')
 			</if>
-		</where>
-
+			<if test="userName!=null">
+				and user.userName like CONCAT('%',#{userName},'%')
+			</if>
+		</trim>
 		<if test="condition==0">
 			ORDER BY
 			achId DESC
@@ -91,6 +94,13 @@
 		<where>
 			achId=#{achId}
 		</where>
+	</update>
+	<update id="updateAchiWithSta" >
+		<foreach collection="achIds" item="achId" separator=";">
+		update achievement set achStatus=#{achStatus}
+		where achId=achId
+		
+		</foreach>
 	</update>
 
 
