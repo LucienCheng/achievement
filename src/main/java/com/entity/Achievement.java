@@ -4,7 +4,7 @@ public class Achievement {
 	private int achId;
 	private String achName;
 	private User user;
-	private int achStatus;
+	private Integer achStatus;
 	private String achVideoPath;
 	private int achLock;
 	private String achImagePath;
@@ -21,7 +21,7 @@ public class Achievement {
 		this.achId = achId;
 		this.achName = achName;
 		this.user = user;
-		this.achStatus = achStatus;
+		this.setAchStatus(achStatus);
 		this.achVideoPath = achVideoPath;
 		this.achLock = achLock;
 		this.achImagePath = achImagePath;
@@ -52,12 +52,7 @@ public int getAchId() {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public int getAchStatus() {
-		return achStatus;
-	}
-	public void setAchStatus(int achStatus) {
-		this.achStatus = achStatus;
-	}
+	
 	public String getAchVideoPath() {
 		return achVideoPath;
 	}
@@ -105,6 +100,12 @@ public int getAchId() {
 	}
 	public void setAchDate(String achDate) {
 		this.achDate = achDate;
+	}
+	public Integer getAchStatus() {
+		return achStatus;
+	}
+	public void setAchStatus(Integer achStatus) {
+		this.achStatus = achStatus;
 	}
 
 }

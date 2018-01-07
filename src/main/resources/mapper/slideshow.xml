@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.dao.SlideShowMapper">
+<resultMap id="achievementResultMap" type="Achievement">
+		<id property="achId" column="achId" />
+		<result property="achName" column="achName" />
+		<result property="achVideoPath" column="achVideoPath" />
+		<result property="achImagePath" column="achImagePath" />
+		<result property="achClassify" column="achClassify" />
+		<result property="achStatus" column="achStatus" />
+		<result property="achLock" column="achLock" />
+		<result property="achDate" column="achDate" />
+		<result property="achCTR" column="achCTR" />
+		<result property="achDescribe" column="achDescribe" />
+		<result property="isModify" column="isModify" />
+		<association property="user" javaType="User" column="userId">
+			<id property="userId" column="userId" />
+		</association>
+	</resultMap>
 	<!-- 插入一条更改记录 -->
 	<insert id="insertSlideShow" >
 		insert into slideshow(achId) 
@@ -11,8 +27,8 @@
 		delete from slideshow
 		where achId=#{achId}
 	</delete>
-	<select id="selectSlideShow" resultType="int">
-	select achId from slideshow
+	<select id="selectSlideShow" resultMap="achievementResultMap">
+	select slideshow_view.* from slideshow_view
 	</select>
 	<update id="updateSlideShow">
 	update slideshow

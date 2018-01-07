@@ -122,9 +122,9 @@ public class BackUserControl {
 		}
 	}
 	//根据条件搜索用户
-	@RequestMapping(value="/back/admin/getUsers/{start}",method={RequestMethod.GET})
+	@RequestMapping(value="/back/admin/searchUsers/{start}",method={RequestMethod.GET})
 	@ResponseBody
-	public Map<String, Object> getUsers(@PathVariable int start,UserCondition userCondition) {
+	public Map<String, Object> searchUsers(@PathVariable int start,UserCondition userCondition) {
 		List<User> users=userService.getUserByConditon(userCondition.getUserName(), userCondition.getUserWorkNum(), start, count);
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("users",users);

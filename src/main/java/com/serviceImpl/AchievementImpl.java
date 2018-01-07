@@ -20,10 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.dao.AchiMapper;
 import com.dao.AlterMapper;
 import com.dao.AuditMapper;
-import com.dao.ModuleMapper;
 import com.dao.SlideShowMapper;
 import com.entity.Achievement;
-import com.entity.Audit;
 import com.service.AchievementService;
 @Service("AchievementImpl")
 public class AchievementImpl implements AchievementService {
@@ -31,8 +29,6 @@ public class AchievementImpl implements AchievementService {
 	private AchiMapper achiMapper;
 	@Resource
 	private AlterMapper alterMapper;
-	@Resource
-	private AuditMapper auditMapper;
 	@Resource
 	private SlideShowMapper slideShowMapper;
 	private String imaginPathPrefix="/file/image/";
@@ -47,11 +43,7 @@ public class AchievementImpl implements AchievementService {
 		return date.getTime()+"_"+fileName;
 	}
 
-	private List<Achievement> getAchis(Integer achId,Integer userId, String achName,
-			String achClassify, Integer achStatus, String userName,Integer start, Integer count,
-			Integer condition) {
-		return achiMapper.searchAchi(achId,userId, achName, achClassify, achStatus,userName, start, count, condition);
-	}
+	
 	@Override
 	public String saveImagine(MultipartFile multipartFile,HttpServletRequest request) {
 		// TODO Auto-generated method stub
@@ -93,34 +85,11 @@ public class AchievementImpl implements AchievementService {
 	
 
 	@Override
-	public List<Achievement> getAchiCondition(Integer userId,String achName,
-			String achClassify, Integer achStatus, String userName,Integer start, Integer count) {
-		// TODO Auto-generated method stub
-		return getAchis(null,userId, achName, achClassify, achStatus, userName,start, count, 0);
-	}
-
-
-	@Override
-	public List<Achievement> getNewAchi(Integer start, Integer count) {
-		// TODO Auto-generated method stub
-		return getAchis(null, null, null, null, 1, null,start, count, 0);
-	}
-
-	@Override
-	public List<Achievement> getHotAchi(Integer start, Integer count) {
-		// TODO Auto-generated method stub
-		return getAchis(null,null, null, null, 1, null,start, count, 1);
-	}
-
-	@Override
-	public List<Achievement> getAchiByUserId(Integer userId, Integer start, Integer count) {
-		// TODO Auto-generated method stub
-		return getAchis(null,userId, null, null,  null, null,start, count, 0);
-	}
-	@Override
 	public Achievement getAchiByAchId(Integer achId) {
 		// TODO Auto-generated method stub
-		List<Achievement> achievements= getAchis(achId,null, null, null, null, null,0, 1, 0);
+		List<Achievement> achievements= achiMapper.searchAchi(achId, 
+				null, null, null, null, null, 
+				null, null, null, null, null, null, null,null, 0);
 		if (achievements.size()!=0) {
 			return achievements.get(0);
 		}
@@ -128,19 +97,14 @@ public class AchievementImpl implements AchievementService {
 			return null;
 		}
 	}
-	@Override
-	public List<Achievement> getAchiByAchiStatus(Integer userId,
-			Integer achStatus, Integer start, Integer count) {
-		// TODO Auto-generated method stub
-		return getAchis(null, userId, null, null, achStatus, null,start, count, 0);
-	}
-
+	
 
 
 /*以下是插入一个成果*/
 	@Override
 	public int insertAchi(Achievement achievement) {
 		// TODO Auto-generated method stub
+		
 		return achiMapper.insertAchi(achievement);
 	}
 
@@ -151,17 +115,11 @@ public class AchievementImpl implements AchievementService {
 		// TODO Auto-generated method stub
 		return achiMapper.updateAchiWithSta(achIds,achStatus);
 	}
+	
+	
+	//需要修改已经发布的成果,重新插入一个新的成果，然后记录到alterMaper中。
 	@Override
-	public boolean updateAchiModify(Achievement achievement, Integer isModify) {
-		if (isModify==0) {
-			return updateAchiPassModify(achievement);
-		}
-		else {
-			return updateAchiReModify(achievement);
-		}
-	}
-	//需要修改已经发布的成果
-	 private boolean updateAchiReModify(Achievement achievementNew){
+	 public boolean updateAchiModify(Achievement achievementNew){
 		 achievementNew.setAchDate(getTime());
 		 achievementNew.setIsModify(1);
 		 achievementNew.setAchStatus(0);
@@ -173,19 +131,21 @@ public class AchievementImpl implements AchievementService {
 		return true;
 		 
 	 }
-	 //通过时，需要更新修改后的成果，并且展示到前台
+	 
+	 //通过时，需要更新修改后的成果，并且更新引用到这个achId的地方.
 	 @Transactional
-	 private boolean updateAchiPassModify(Achievement achievementNew){
-		
+	 @Override
+	 public boolean updateAchiPassModify(Achievement achievementNew,Integer auditorId){
+		 achievementNew.setIsModify(0);
 		int oldId=alterMapper.selectAlter(achievementNew.getAchId());
-		alterMapper.deleteAchiAlter(achievementNew.getAchId());
 		List<Integer> achievements=new ArrayList<Integer>();
+		alterMapper.deleteAchiAlter(achievementNew.getAchId());
 		achievements.add(oldId);
-		achiMapper.deleteAchis(achievements);
-		slideShowMapper.updateSlideShow(oldId, achievementNew.getAchId());
+		achiMapper.deleteAchis(achievements);//删除老的已经发布的，使用新修改后的。
+		slideShowMapper.updateSlideShow(oldId, achievementNew.getAchId());//更新前台幻灯片
 		 achievementNew.setIsModify(0);
 		 achievementNew.setAchStatus(1);
-		achiMapper.updateAchi(achievementNew);
+		achiMapper.updateAchi(achievementNew);//更新新的状态
 		 return true;
 	 }
 
@@ -194,6 +154,37 @@ public class AchievementImpl implements AchievementService {
 	public int deleteAchis(List<Integer> achievements) {
 		// TODO Auto-generated method stub
 		return achiMapper.deleteAchis(achievements);
+	}
+	//最新
+	@Override
+	public List<Achievement> getNewAchi(String authorName, String achStartTime,
+			String achEndTime, Integer start, Integer count) {
+		return achiMapper.searchAchi(null, null, null, null, null, null, authorName, 
+				achStartTime, achEndTime, null, null, null, start, count, 0);
+		 
+	}
+	//最热
+	@Override
+	public List<Achievement> getHotAchi(String authorName, String achStartTime,
+			String achEndTime, Integer start, Integer count) {
+		achiMapper.searchAchi(null, null, null, null, null, null, authorName, achStartTime, achEndTime,
+				null, null, null, start, count, 1);
+		return null;
+	}
+	//后台根据条件搜索
+	@Override
+	public List<Achievement> getAchiCondition(Integer authorId,
+			Integer auditorId, Integer achStatus, String achStartTime,String achEndTime,String audStartTime,String audEndTime,
+			String achName, String authorName, String auditorName,Integer start,
+			Integer count) {
+		return achiMapper.searchAchi(null, authorId, auditorId, achName, null, achStatus, 
+				authorName, achStartTime, achEndTime, audStartTime, auditorName, audEndTime, start, count, 0);
+	}
+	@Override
+	public boolean updateAchievement(Achievement achievement) {
+		// TODO Auto-generated method stub
+		achiMapper.updateAchi(achievement);
+		return true;
 	}
 	
 

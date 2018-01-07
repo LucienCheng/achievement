@@ -33,14 +33,16 @@
 
 	<!-- 查询总的成果 -->
 	<select id="searchAchi" resultMap="achievementResultMap">
-		SELECT * from achievement , user
+		SELECT * from achievement_view
 		<trim prefix="where" prefixOverrides="and | or">
-		achievement.userId=user.userId
 			<if test="achId!=null">
 				and achId=#{achId}
 			</if>
-			<if test="userId!=null">
-				and user.userId=#{user.userId}
+			<if test="authorId!=null">
+				and authorId=#{authorId}
+			</if>
+			<if test="auditorId!=null">
+				and auditorId=#{auditorId}
 			</if>
 			<if test="achStatus!=null">
 				and achStatus=#{achStatus}
@@ -51,18 +53,33 @@
 			<if test="achClassify!=null">
 				and achClassify like CONCAT('%',#{achClassify},'%')
 			</if>
-			<if test="userName!=null">
-				and user.userName like CONCAT('%',#{userName},'%')
+			<if test="authorName!=null">
+				and authorName like CONCAT('%',#{authorName},'%')
+			</if>
+			<if test="achStartTime!=null">
+				and achDate>=#{achStartTime}
+			</if>
+			<if test="achEndTime!=null">
+				and achDate<=#{achEndTime}
+			</if>
+			<if test="audStartTime!=null">
+				and audDate>=#{audStartTime}
+			</if>
+			<if test="audEndTime!=null">
+				and audDate<=#{audEndTime}
+			</if>
+			<if test="auditorName != null">
+				and auditorName like CONCAT('%',#{auditorName},'%')
 			</if>
 		</trim>
-		<if test="condition==0">
+		<if test="condition==0 and start!=null and count != null">
 			ORDER BY
-			achId DESC
+			achDate DESC
 			LIMIT #{start},#{count}
 		</if>
-		<if test="condition==1">
+		<if test="condition==1 and start!=null and count != null">
 			ORDER BY
-			achievement.achCTR DESC,achId DESC
+			achCTR DESC,achDate DESC
 			LIMIT
 			#{start},#{count}
 		</if>
@@ -79,27 +96,26 @@
 		</where>
 	</delete>
 	<update id="updateAchi" parameterType="Achievement">
-		update achievement set
-		achCTR=#{achCTR},
-		achName=#{achName},
-		userId=#{user.userId},
-		achVideoPath=#{achVideoPath},
-		achImagePath=#{achImagePath},
-		achClassify=#{achClassify},
-		achStatus=#{achStatus},
-		achLock=#{achLock},
-		achDate=#{achDate},
-		achDescribe=#{achDescribe},
-		isModify=#{isModify}
-		<where>
+		update achievement 
+		<set>
+		<if test="achCTR != null">achCTR=#{achCTR},</if>
+		<if test="achName != null">achName=#{achName},</if>
+		<if test="user.userId != null">userId=#{user.userId},</if>
+		<if test="achVideoPath != null">achVideoPath=#{achVideoPath},</if>
+		<if test="achImagePath != null">achImagePath=#{achImagePath},</if>
+		<if test="achClassify != null">achClassify=#{achClassify},</if>
+		<if test="achStatus != null">achStatus=#{achStatus},</if>
+		<if test="achLock != null">achLock=#{achLock},</if>
+		<if test="achDate != null">achDate=#{achDate},</if>
+		<if test="achDescribe != null">achDescribe=#{achDescribe},</if>
+		<if test="isModify != null">isModify=#{isModify}</if>
+		</set>
 			achId=#{achId}
-		</where>
 	</update>
 	<update id="updateAchiWithSta" >
 		<foreach collection="achIds" item="achId" separator=";">
 		update achievement set achStatus=#{achStatus}
-		where achId=achId
-		
+		where achId=#{achId}
 		</foreach>
 	</update>
 

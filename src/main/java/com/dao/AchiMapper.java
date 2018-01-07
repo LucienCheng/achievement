@@ -11,13 +11,30 @@ public interface AchiMapper {
 	public int insertAchi(Achievement achievement);//插入一条数据
 	public int updateAchi(Achievement achievement);//更新一个成果
 	public int deleteAchis(List<Integer> achievements);//批量删除成果
-	/*
-	 * @parameter:用户id，成果名，成果分类，成果的状态，数据库第几条开始，取出多少条记录,排序的条件，0代表的是最新，1代表最热
-	 * @return:返回成果的列表
-	 */
-	public List<Achievement> searchAchi(@Param("achId") Integer achId, @Param("userId")Integer userId,
+/**
+ * 
+ * @param achId 成果id
+ * @param authorId 作者id
+ * @param auditorId 审核人员id
+ * @param achName 成果名字
+ * @param achClassify 成果分类
+ * @param achStatus 成果状态
+ * @param authorName 作者名字
+ * @param achStartTime 成果创建开始时间
+ * @param achEndTime 成果创建结束时间
+ * @param audStartTime 成果审核开始时间
+ * @param audEndTime 成果审核结束时间
+ * @param start 页码
+ * @param count 个数
+ * @param condition 是最新，还是最热
+ * @return
+ */
+	public List<Achievement> searchAchi(@Param("achId") Integer achId, @Param("authorId")Integer authorId,@Param("auditor") Integer auditorId,
 			@Param("achName")String achName,@Param("achClassify")String achClassify,
-			@Param("achStatus")Integer achStatus,@Param("userName")String userName
-			,@Param("start")int start,@Param("count")int count,@Param("condition") Integer condition);//总的搜索
+			@Param("achStatus")Integer achStatus,@Param("authorName")String authorName,@Param("achStartTime") String achStartTime,
+			@Param("achEndTime") String achEndTime,
+			@Param("audStartTime") String audStartTime,@Param("auditorName")String auditorName,
+			@Param("audEndTime") String audEndTime,@Param("start")Integer start,@Param("count")Integer count,
+			@Param("condition") int condition);//总的搜索
 	
 }

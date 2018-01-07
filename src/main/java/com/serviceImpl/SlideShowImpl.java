@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.dao.SlideShowMapper;
+import com.entity.Achievement;
 import com.service.SlideShowService;
 
 @Service("slideShowImpl")
@@ -17,19 +18,19 @@ public class SlideShowImpl implements SlideShowService{
 	@Override
 	public int insertSlideShow(int achId) {
 		// TODO Auto-generated method stub
-		return 0;
+		return slideShowMapper.insertSlideShow(achId);
 	}
 
 	@Override
 	public int deleteSlideShow(int achId) {
 		// TODO Auto-generated method stub
-		return 0;
+		return slideShowMapper.deleteSlideShow(achId);
 	}
 
 	@Override
-	public List<Integer> selectSlideShow() {
+	public List<Achievement> selectSlideShow() {
 		// TODO Auto-generated method stub
-		return null;
+		return slideShowMapper.selectSlideShow();
 	}
 
 }

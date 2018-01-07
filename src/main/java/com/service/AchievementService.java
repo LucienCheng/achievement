@@ -33,46 +33,28 @@ public String saveVideo(MultipartFile multipartFile,HttpServletRequest request);
  * @return:返回成果的列表
  *以下都是查询成果的接口，只不过提供不同方式的查询。
  */
-//通过用户id来搜索成果
-public List<Achievement> getAchiByUserId(Integer userId,@Param("start")Integer start
-		,@Param("count")Integer count) ;
-//通过搜索条件来搜索成果
-public List<Achievement> getAchiCondition(@Param("userId")Integer userId,@Param("achName")String achName,@Param("achClassify")String achClassify,
-		@Param("achStatus")Integer achStatus,String userName
-		,@Param("start")Integer start,@Param("count")Integer count);
-//最新的成果
-public List<Achievement> getNewAchi(@Param("start")Integer start,@Param("count")Integer count);
-//最热的成果
-public List<Achievement> getHotAchi(@Param("start")Integer start,@Param("count")Integer count);
-//通过achId获得
-public Achievement getAchiByAchId(@Param("achId") Integer achId);
-//通过成果状态获得
-public List<Achievement> getAchiByAchiStatus(@Param("userId")Integer userId,
-		@Param("achStatus")Integer achStatus
-		,@Param("start")Integer start,@Param("count")Integer count);
-/*
- * 插入一个成果
- * @param:一个成果
- * @return:返回插入的记录
- */
-public int insertAchi(Achievement achievement);
 
-/*
- * 更新成果
- * @param:一个成果
- * @return:返回插入的记录
- * 
- */
+//最新的成果（前台使用）
+public List<Achievement> getNewAchi(String authorName,String achStartTime,String achEndTime,Integer start,Integer count);
+//最热的成果（前台使用）
+public List<Achievement> getHotAchi(String authorName,String achStartTime,String achEndTime,Integer start,Integer count);
+//通过achId获得某个具体的成果
+public Achievement getAchiByAchId(Integer achId);
+//提供给后台搜索使用.
+public List<Achievement> getAchiCondition(Integer authorId,Integer auditorId,Integer achStatus,
+		String achStartTime,String achEndTime,String audStartTime,String audEndTime,String auditorName,
+		String achName,String authorName,Integer start,Integer count);
+//插入单个成果
+int insertAchi(Achievement achievement);
+
+//批量更新成果的状态。
 public int updateAchiWithSta(List<Integer> achIds,Integer achStatus) ;
-/*
- * 用于用户成功发布成果之后，需要修改重新审核时使用的api，当ismodify为1时进行修改，当为0时删除之前的成果，发布新的成果
- */
-public boolean updateAchiModify(Achievement achievement,Integer isModify);
-
-/*
- * 删除成果
- * @param:一组成果id
- * @return:返回插入的记录
- */
+//对已经发布的成果进行修改
+public boolean updateAchiModify(Achievement achievementNew);
+//对修改后的成果进行审核，审核通过之后
+public boolean updateAchiPassModify(Achievement achievementNew,Integer auditorId);
+//修改单个成果的内容。
+public boolean updateAchievement(Achievement achievement);
+//删除一个成果
 public int deleteAchis(List<Integer> achievements);
 }
