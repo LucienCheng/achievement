@@ -1,6 +1,7 @@
 package com.entity;
 
 public class UserCondition {
+	private Integer userId;
 	private String userName;
 	private String userWorkNum;
 	public String getUserWorkNum() {
@@ -15,10 +16,18 @@ public class UserCondition {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	
 	@Override
 	public String toString() {
-		return "UserCondition [userName=" + userName + ", userWorkNum="
-				+ userWorkNum + "]";
+		return "UserCondition [userId=" + userId + ", userName=" + userName
+				+ ", userWorkNum=" + userWorkNum + "]";
 	}
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+	
 	
 }

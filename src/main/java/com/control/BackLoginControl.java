@@ -1,6 +1,7 @@
 package com.control;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,16 +18,17 @@ public class BackLoginControl {
 	@RequestMapping(value="/back",method={RequestMethod.GET})
 	public String back(){
 		return "/back/login";
-		
 	}
-	
 	@RequestMapping(value="/back/login",method={RequestMethod.POST})
-	public String vertifyLogin(User user){
-		boolean result=userService.vertifyUser(user);
-		if(result){
+	public String vertifyLogin(User user,HttpSession session){
+		User userOld=userService.vertifyUser(user);
+		
+		if(userOld!=null){
 			Role role=user.getRole();
+			session.setAttribute("userId",userOld.getUserId() );
+			session.setAttribute("roleId",role.getRoleId() );
 			switch (role.getRoleId()) {
-			case 1:
+			case 1: 
 				return "/back/adminIndex";
 			case 2:
 				return "/back/auditor/auditorIndex";
@@ -38,8 +40,8 @@ public class BackLoginControl {
 		
 	}
 	@RequestMapping(value="/back/loginOut",method={RequestMethod.POST})
-	public String loginOut(int userId){
+	public String loginOut(int userId,HttpSession session){
+		session.removeAttribute("userId");
 		return "/back/login";
-		
 	}
 }

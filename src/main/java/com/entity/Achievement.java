@@ -1,7 +1,7 @@
 package com.entity;
 
 public class Achievement {
-	private int achId;
+	private Integer achId;
 	private String achName;
 	private User user;
 	private Integer achStatus;
@@ -34,10 +34,10 @@ public class Achievement {
 	public Achievement() {
 	}
 
-public int getAchId() {
+public Integer getAchId() {
 		return achId;
 	}
-	public void setAchId(int achId) {
+	public void setAchId(Integer achId) {
 		this.achId = achId;
 	}
 	public String getAchName() {

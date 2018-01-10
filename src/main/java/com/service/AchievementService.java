@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.entity.Achievement;
+import com.entity.AchievementCondition;
 import com.entity.Audit;
 
 public interface AchievementService {
@@ -40,15 +41,23 @@ public List<Achievement> getNewAchi(String authorName,String achStartTime,String
 public List<Achievement> getHotAchi(String authorName,String achStartTime,String achEndTime,Integer start,Integer count);
 //通过achId获得某个具体的成果
 public Achievement getAchiByAchId(Integer achId);
-//提供给后台搜索使用.
+//提供给后台user搜索使用.
 public List<Achievement> getAchiCondition(Integer authorId,Integer auditorId,Integer achStatus,
 		String achStartTime,String achEndTime,String audStartTime,String audEndTime,String auditorName,
 		String achName,String authorName,Integer start,Integer count);
+//提供给后台audit搜索使用.
+public List<Achievement> getAchiLockCondition(Integer authorId,Integer auditorId,Integer achStatus,
+		String achStartTime,String achEndTime,String audStartTime,String audEndTime,String auditorName,
+		String achName,String authorName,Integer achLock,Integer start,Integer count);
 //插入单个成果
 int insertAchi(Achievement achievement);
 
 //批量更新成果的状态。
 public int updateAchiWithSta(List<Integer> achIds,Integer achStatus) ;
+
+
+//批量更新成果的锁的状态。
+public int updateAchiWithLock(List<Integer> achIds,Integer achLock) ;
 //对已经发布的成果进行修改
 public boolean updateAchiModify(Achievement achievementNew);
 //对修改后的成果进行审核，审核通过之后
@@ -57,4 +66,6 @@ public boolean updateAchiPassModify(Achievement achievementNew,Integer auditorId
 public boolean updateAchievement(Achievement achievement);
 //删除一个成果
 public int deleteAchis(List<Integer> achievements);
+//根据搜索结果返回查询的结果数量。
+public int getCount(AchievementCondition achievementCondition);
 }

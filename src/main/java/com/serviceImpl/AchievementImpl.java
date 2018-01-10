@@ -22,6 +22,7 @@ import com.dao.AlterMapper;
 import com.dao.AuditMapper;
 import com.dao.SlideShowMapper;
 import com.entity.Achievement;
+import com.entity.AchievementCondition;
 import com.service.AchievementService;
 @Service("AchievementImpl")
 public class AchievementImpl implements AchievementService {
@@ -89,7 +90,7 @@ public class AchievementImpl implements AchievementService {
 		// TODO Auto-generated method stub
 		List<Achievement> achievements= achiMapper.searchAchi(achId, 
 				null, null, null, null, null, 
-				null, null, null, null, null, null, null,null, 0);
+				null, null, null, null, null, null, null,null, null,0);
 		if (achievements.size()!=0) {
 			return achievements.get(0);
 		}
@@ -160,7 +161,7 @@ public class AchievementImpl implements AchievementService {
 	public List<Achievement> getNewAchi(String authorName, String achStartTime,
 			String achEndTime, Integer start, Integer count) {
 		return achiMapper.searchAchi(null, null, null, null, null, null, authorName, 
-				achStartTime, achEndTime, null, null, null, start, count, 0);
+				achStartTime, achEndTime, null, null, null, null,start, count, 0);
 		 
 	}
 	//最热
@@ -168,7 +169,7 @@ public class AchievementImpl implements AchievementService {
 	public List<Achievement> getHotAchi(String authorName, String achStartTime,
 			String achEndTime, Integer start, Integer count) {
 		achiMapper.searchAchi(null, null, null, null, null, null, authorName, achStartTime, achEndTime,
-				null, null, null, start, count, 1);
+				null, null, null, null,start, count, 1);
 		return null;
 	}
 	//后台根据条件搜索
@@ -178,13 +179,29 @@ public class AchievementImpl implements AchievementService {
 			String achName, String authorName, String auditorName,Integer start,
 			Integer count) {
 		return achiMapper.searchAchi(null, authorId, auditorId, achName, null, achStatus, 
-				authorName, achStartTime, achEndTime, audStartTime, auditorName, audEndTime, start, count, 0);
+				authorName, achStartTime, achEndTime, audStartTime, auditorName, audEndTime, null,start, count, 0);
+	}
+	public List<Achievement> getAchiLockCondition(Integer authorId,Integer auditorId,Integer achStatus,
+			String achStartTime,String achEndTime,String audStartTime,String audEndTime,String auditorName,
+			String achName,String authorName,Integer achLock,Integer start,Integer count){
+		return achiMapper.searchAchi(null, authorId, auditorId, achName, null, achStatus, 
+				authorName, achStartTime, achEndTime, audStartTime, auditorName, audEndTime, achLock,start, count, 0);
 	}
 	@Override
 	public boolean updateAchievement(Achievement achievement) {
 		// TODO Auto-generated method stub
 		achiMapper.updateAchi(achievement);
 		return true;
+	}
+	@Override
+	public int updateAchiWithLock(List<Integer> achIds, Integer achLock) {
+		// TODO Auto-generated method stub
+		return achiMapper.updateAchiWithLock(achIds, achLock);
+	}
+	@Override
+	public int getCount(AchievementCondition achievementCondition) {
+		// TODO Auto-generated method stub
+		return achiMapper.selectCount(achievementCondition);
 	}
 	
 

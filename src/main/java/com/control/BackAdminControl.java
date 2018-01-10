@@ -9,12 +9,14 @@ import java.util.concurrent.Callable;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,11 +29,27 @@ import com.entity.User;
 import com.entity.UserCondition;
 import com.service.UserService;
 @Controller
-public class BackUserControl {
+public class BackAdminControl {
 	@Resource(name="UserServiceImpl")
 	private UserService userService;
 	private final int count=10;
 	//在执行action时都会加载这个属性，当model存在的时候，就直接使用，当不存在的时候，就会进行创建，然后放到model里。相当于一个静态类。
+
+	//首页
+		@RequestMapping(value="/back/admin",method={RequestMethod.GET})
+		public String index(UserCondition userCondition,Model model) {
+			List<User> users=userService.getUserByConditon(userCondition, 0, count);
+			model.addAttribute("users", users);
+			model.addAttribute("totalCount",userService.getUserCount(userCondition));
+			return "/back/amin/adminIndex";
+		}
+		
+	//个人资料
+		@RequestMapping(value="/back/admin/personInfo",method={RequestMethod.GET})
+		public String personInfo(HttpSession session,Model model) {
+			model.addAttribute("user", userService.getUserById((int)session.getAttribute("userId")));
+			return "/back/personInfo";
+		}
 	@ModelAttribute
 	 private  HSSFWorkbook resultSetToExcel(String sheetName) throws Exception  
 	    {  
@@ -73,7 +91,6 @@ public class BackUserControl {
 			}
 		};
 	}
-	
 	//excel模板导出
 	@RequestMapping(value="/back/admin/exportModel" ,method=RequestMethod.GET)
 	public  void exportModel(HSSFWorkbook workbook,HttpServletRequest request,HttpServletResponse response) throws IOException{
@@ -86,7 +103,7 @@ public class BackUserControl {
 	        ouputStream.close();   
 	}
 	//更新用户的信息
-	@RequestMapping(value="/back/updateUser",method={RequestMethod.POST})
+	@RequestMapping(value="/back/{role}/updateUser",method={RequestMethod.POST})
 	@ResponseBody
 	public String updateUser(User user){
 		int result=userService.updateUser(user);
@@ -97,7 +114,7 @@ public class BackUserControl {
 			return "failure";
 		}
 	}
-	//插入一个用户
+	//保存一个用户
 	@RequestMapping(value="/back/admin/saveUser",method={RequestMethod.POST})
 	@ResponseBody
 	public String saveUser(User user){
@@ -122,12 +139,13 @@ public class BackUserControl {
 		}
 	}
 	//根据条件搜索用户
-	@RequestMapping(value="/back/admin/searchUsers/{start}",method={RequestMethod.GET})
+	@RequestMapping(value="/back/admin/{start}",method={RequestMethod.GET})
 	@ResponseBody
 	public Map<String, Object> searchUsers(@PathVariable int start,UserCondition userCondition) {
-		List<User> users=userService.getUserByConditon(userCondition.getUserName(), userCondition.getUserWorkNum(), start, count);
+		List<User> users=userService.getUserByConditon(userCondition, start, count);
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("users",users);
+		map.put("totalCount",userService.getUserCount(userCondition));
 		return map;
 	}
 	

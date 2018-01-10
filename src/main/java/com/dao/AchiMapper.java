@@ -5,12 +5,15 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.entity.Achievement;
+import com.entity.AchievementCondition;
 
 public interface AchiMapper {
+	public int updateAchiWithLock(@Param("achIds")List<Integer> achIds, @Param("achLock")Integer achLock) ;
 	public int updateAchiWithSta(@Param("achIds")List<Integer> achIds, @Param("achStatus")Integer achStatus) ;
 	public int insertAchi(Achievement achievement);//插入一条数据
 	public int updateAchi(Achievement achievement);//更新一个成果
 	public int deleteAchis(List<Integer> achievements);//批量删除成果
+	public int selectCount(AchievementCondition condition);//批量删除成果
 /**
  * 
  * @param achId 成果id
@@ -34,7 +37,7 @@ public interface AchiMapper {
 			@Param("achStatus")Integer achStatus,@Param("authorName")String authorName,@Param("achStartTime") String achStartTime,
 			@Param("achEndTime") String achEndTime,
 			@Param("audStartTime") String audStartTime,@Param("auditorName")String auditorName,
-			@Param("audEndTime") String audEndTime,@Param("start")Integer start,@Param("count")Integer count,
-			@Param("condition") int condition);//总的搜索
+			@Param("audEndTime") String audEndTime,@Param("achLock") Integer achLock,
+			@Param("start")Integer start,@Param("count")Integer count,@Param("condition") int condition);//总的搜索
 	
 }

@@ -21,7 +21,8 @@
 
 
 	<!-- 插入一条成果记录 -->
-	<insert id="insertAchi" parameterType="Achievement" useGeneratedKeys="true" keyProperty="achId">
+	<insert id="insertAchi" parameterType="Achievement"
+		useGeneratedKeys="true" keyProperty="achId">
 		insert into
 		achievement(achName,userId,achVideoPath,
 		achImagePath,achClassify,achStatus,achDate,achDescribe,isModify)
@@ -42,7 +43,7 @@
 				and authorId=#{authorId}
 			</if>
 			<if test="auditorId!=null">
-				and auditorId=#{auditorId}
+				and (auditorId=#{auditorId} or auditorId is null)
 			</if>
 			<if test="achStatus!=null">
 				and achStatus=#{achStatus}
@@ -71,6 +72,10 @@
 			<if test="auditorName != null">
 				and auditorName like CONCAT('%',#{auditorName},'%')
 			</if>
+			<if test="achLock != null">
+				and achLock=#{achLock}
+			</if>
+
 		</trim>
 		<if test="condition==0 and start!=null and count != null">
 			ORDER BY
@@ -96,29 +101,76 @@
 		</where>
 	</delete>
 	<update id="updateAchi" parameterType="Achievement">
-		update achievement 
+		update achievement
 		<set>
-		<if test="achCTR != null">achCTR=#{achCTR},</if>
-		<if test="achName != null">achName=#{achName},</if>
-		<if test="user.userId != null">userId=#{user.userId},</if>
-		<if test="achVideoPath != null">achVideoPath=#{achVideoPath},</if>
-		<if test="achImagePath != null">achImagePath=#{achImagePath},</if>
-		<if test="achClassify != null">achClassify=#{achClassify},</if>
-		<if test="achStatus != null">achStatus=#{achStatus},</if>
-		<if test="achLock != null">achLock=#{achLock},</if>
-		<if test="achDate != null">achDate=#{achDate},</if>
-		<if test="achDescribe != null">achDescribe=#{achDescribe},</if>
-		<if test="isModify != null">isModify=#{isModify}</if>
+			<if test="achCTR != null">achCTR=#{achCTR},</if>
+			<if test="achName != null">achName=#{achName},</if>
+			<if test="user.userId != null">userId=#{user.userId},</if>
+			<if test="achVideoPath != null">achVideoPath=#{achVideoPath},</if>
+			<if test="achImagePath != null">achImagePath=#{achImagePath},</if>
+			<if test="achClassify != null">achClassify=#{achClassify},</if>
+			<if test="achStatus != null">achStatus=#{achStatus},</if>
+			<if test="achLock != null">achLock=#{achLock},</if>
+			<if test="achDate != null">achDate=#{achDate},</if>
+			<if test="achDescribe != null">achDescribe=#{achDescribe},</if>
+			<if test="isModify != null">isModify=#{isModify}</if>
 		</set>
-			achId=#{achId}
+		achId=#{achId}
 	</update>
-	<update id="updateAchiWithSta" >
+	<update id="updateAchiWithSta">
 		<foreach collection="achIds" item="achId" separator=";">
-		update achievement set achStatus=#{achStatus}
-		where achId=#{achId}
+			update achievement set achStatus=#{achStatus}
+			where achId=#{achId}
 		</foreach>
 	</update>
-
-
+<update id="updateAchiWithLock">
+		<foreach collection="achIds" item="achId" separator=";">
+			update achievement set achStatus=#{achLock}
+			where achId=#{achId}
+		</foreach>
+	</update>
+	<select id="selectCount" resultType="int">
+	SELECT count(*) from achievement_view
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="authorId!=null">
+				and authorId=#{authorId}
+			</if>
+			<if test="auditorId!=null">
+				and (auditorId=#{auditorId} or auditorId is null)
+			</if>
+			<if test="achStatus!=null">
+				and achStatus=#{achStatus}
+			</if>
+			<if test="achName!=null">
+				and achName like CONCAT('%',#{achName},'%')
+			</if>
+			<if test="achClassify!=null">
+				and achClassify like CONCAT('%',#{achClassify},'%')
+			</if>
+			<if test="authorName!=null">
+				and authorName like CONCAT('%',#{authorName},'%')
+			</if>
+			<if test="achStartTime!=null">
+				and achDate>=#{achStartTime}
+			</if>
+			<if test="achEndTime!=null">
+				and achDate<=#{achEndTime}
+			</if>
+			<if test="audStartTime!=null">
+				and audDate>=#{audStartTime}
+			</if>
+			<if test="audEndTime!=null">
+				and audDate<=#{audEndTime}
+			</if>
+			<if test="auditorName != null">
+				and auditorName like CONCAT('%',#{auditorName},'%')
+			</if>
+			<if test="achLock != null">
+				and achLock=#{achLock}
+			</if>
+		</trim>
+	</select>
 	
+
+
 </mapper>

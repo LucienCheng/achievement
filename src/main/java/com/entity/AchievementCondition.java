@@ -11,6 +11,20 @@ public class AchievementCondition {
 	private String achName;
 	private String authorName;
 	private String auditorName;
+	private String achClassify;
+	public String getAchClassify() {
+		return achClassify;
+	}
+	public void setAchClassify(String achClassify) {
+		this.achClassify = achClassify;
+	}
+	public String getAchLock() {
+		return achLock;
+	}
+	public void setAchLock(String achLock) {
+		this.achLock = achLock;
+	}
+	private String achLock;
 	public Integer getAuthorId() {
 		return authorId;
 	}
@@ -78,8 +92,10 @@ public class AchievementCondition {
 				+ achStartTime + ", achEndTime=" + achEndTime
 				+ ", audStartTime=" + audStartTime + ", audEndTime="
 				+ audEndTime + ", achName=" + achName + ", authorName="
-				+ authorName + ", auditorName=" + auditorName + "]";
+				+ authorName + ", auditorName=" + auditorName
+				+ ", achClassify=" + achClassify + ", achLock=" + achLock + "]";
 	}
+
 	
 
 }

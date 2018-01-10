@@ -20,8 +20,27 @@
 	
 	<!-- 按照条件搜索 -->
 	<select id="searchUser" resultMap="userResultMap">
-		SELECT * FROM user_display
-		<trim prefix="where" prefixOverrides="and | or"></trim>
+		SELECT * FROM user_view
+		<trim prefix="where" prefixOverrides="and | or">
+		
+			<if test="condition.userId != null">
+				and userId=#{condition.userId}
+			</if>
+			<if test="condition.userName != null">
+				and userName like CONCAT('%',#{condition.userName},'%') <!-- 这种安全一些，变成preparestatement了 -->
+			</if>
+			<if test="condition.userWorkNum != null">
+				and userWorkNum like CONCAT('%',#{condition.userWorkNum},'%')
+			</if>
+		</trim>
+		<if test="count!=null and start!=null">
+			limit #{start},#{count}
+		</if>
+	</select>
+	<!-- 返回总数 -->
+	<select id="searchUserCount" resultType="int">
+		SELECT count(*) FROM user_view
+		<trim prefix="where" prefixOverrides="and | or">
 		
 			<if test="userId != null">
 				and userId=#{userId}
@@ -30,28 +49,17 @@
 				and userName like CONCAT('%',#{userName},'%') <!-- 这种安全一些，变成preparestatement了 -->
 			</if>
 			<if test="userWorkNum != null">
-				and userWorkNum like CONCAT('%',#{userWorkNum},'%') <!-- 这种发生注入比较多，直接把相应的属性进行替换 -->
+				and userWorkNum like CONCAT('%',#{userWorkNum},'%')
 			</if>
-		
-		<if test="count!=null and start!=null">
-			limit #{start},#{count}
-		</if>
-	</select>
-	<!-- 返回总数 -->
-	<select id="searchUserCount" resultType="int">
-		SELECT count(*) FROM user_display
+		</trim>
 	</select>
 	<!-- 认证用户-->
-	<select id="vertifyUser" resultType="int">
-		SELECT count(*) FROM user_display 
+	<select id="vertifyUser" resultMap="userResultMap">
+		SELECT * FROM user_view
 		<where>
-		#{userWorkNum}=userWorkNum and #{userPassword}=userPassword
+		userWorkNum=#{userWorkNum} and userPassword=#{userPassword}
 		</where>
 	</select>
-	
-	
-
-
 	<!-- 批量插入数据库 -->
 	<insert id="insertUsers" useGeneratedKeys="true" keyProperty="userId"
 		parameterType="java.util.List">

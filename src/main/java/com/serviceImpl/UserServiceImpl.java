@@ -1,7 +1,5 @@
 package com.serviceImpl;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.dao.UserMapper;
 import com.entity.Role;
 import com.entity.User;
+import com.entity.UserCondition;
 import com.service.UserService;
 @Service("userServiceImpl")
 /*这是一个用户的业务逻辑的实现类*/
@@ -32,7 +31,9 @@ public class UserServiceImpl  implements UserService{
 	@Override
 	public User getUserById(Integer userId) {
 		// TODO Auto-generated method stub
-		List<User> users= getUser(userId, null, null, null, null);
+		UserCondition condition=new UserCondition();
+		condition.setUserId(userId);
+		List<User> users= getUser(condition, null, null);
 		if(users.size()==0){
 			return null;
 		}else {
@@ -41,10 +42,10 @@ public class UserServiceImpl  implements UserService{
 	}
 
 	@Override
-	public List<User> getUserByConditon(String userName, String userWorkNum,
+	public List<User> getUserByConditon(UserCondition condition,
 			Integer start, Integer count) {
 		// TODO Auto-generated method stub
-		return getUser(null, userName, userWorkNum, start, count);
+		return getUser(condition, start, count);
 	}
 
 	@Override
@@ -66,10 +67,9 @@ public class UserServiceImpl  implements UserService{
 	}
 
 	@Override
-	public List<User> getUser(Integer userId, String userName,
-			String userWorkNum, Integer start, Integer count) {
+	public List<User> getUser(UserCondition condition, Integer start, Integer count) {
 		// TODO Auto-generated method stub
-		return userMapper.searchUser(userId, userName, userWorkNum, start, count);
+		return userMapper.searchUser(condition, start, count);
 	}
 
 	@Override
@@ -132,18 +132,14 @@ public class UserServiceImpl  implements UserService{
 	}
 
 	@Override
-	public int getUserCount() {
+	public int getUserCount(UserCondition condition) {
 		// TODO Auto-generated method stub
-		return userMapper.searchUserCount();
+		return userMapper.searchUserCount(condition);
 	}
 
 	@Override
-	public boolean vertifyUser(User user) {
-		int result=userMapper.vertifyUser(user);
-		if(result==0)
-		return false;
-		else 
-		return false;
+	public User vertifyUser(User user) {
+		return userMapper.vertifyUser(user);
 	}
 
 	
