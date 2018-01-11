@@ -23,6 +23,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    This is my JSP page. <br>
+展示的是已经经过审核的，处理和待审核有些不同，因为待审核需要加锁。
   </body>
 </html>

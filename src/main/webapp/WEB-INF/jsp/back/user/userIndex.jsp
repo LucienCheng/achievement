@@ -20,12 +20,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	-->
   </head>
   <body>
-  
-  <%--   <img alt="" src='<c:url value="${image}"/>'>
-    <br>
-  <video width="320" height="240" controls="controls">
-  <source src='<c:url value="${video}" />'>
-Your browser does not support the video tag.
-</video> --%>
+ 上传者的首页，默认展示审核通过的。
   </body>
 </html>

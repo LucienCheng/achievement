@@ -41,7 +41,7 @@ public List<Achievement> getNewAchi(String authorName,String achStartTime,String
 public List<Achievement> getHotAchi(String authorName,String achStartTime,String achEndTime,Integer start,Integer count);
 //通过achId获得某个具体的成果
 public Achievement getAchiByAchId(Integer achId);
-//提供给后台user搜索使用.
+//提供给后台搜索使用.
 public List<Achievement> getAchiCondition(Integer authorId,Integer auditorId,Integer achStatus,
 		String achStartTime,String achEndTime,String audStartTime,String audEndTime,String auditorName,
 		String achName,String authorName,Integer start,Integer count);

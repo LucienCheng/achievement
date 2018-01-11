@@ -23,7 +23,9 @@ import com.dao.AuditMapper;
 import com.dao.SlideShowMapper;
 import com.entity.Achievement;
 import com.entity.AchievementCondition;
+import com.entity.Audit;
 import com.service.AchievementService;
+import com.service.TimeToolService;
 @Service("AchievementImpl")
 public class AchievementImpl implements AchievementService {
 	@Resource
@@ -32,6 +34,8 @@ public class AchievementImpl implements AchievementService {
 	private AlterMapper alterMapper;
 	@Resource
 	private SlideShowMapper slideShowMapper;
+	@Resource
+	private AuditMapper auditMapper;
 	private String imaginPathPrefix="/file/image/";
 	private String videoPathPrefix="/file/video/";
 	static String getTime(){
@@ -105,11 +109,10 @@ public class AchievementImpl implements AchievementService {
 	@Override
 	public int insertAchi(Achievement achievement) {
 		// TODO Auto-generated method stub
-		
 		return achiMapper.insertAchi(achievement);
 	}
 
-/*更新一个成果*/
+/*更新一个成果的状态*/
 	
 	@Override
 	public int updateAchiWithSta(List<Integer> achIds, Integer achStatus) {
@@ -133,7 +136,7 @@ public class AchievementImpl implements AchievementService {
 		 
 	 }
 	 
-	 //通过时，需要更新修改后的成果，并且更新引用到这个achId的地方.
+	 //成果通过审核时，需要更新修改后的成果，并且更新引用到这个achId的地方.
 	 @Transactional
 	 @Override
 	 public boolean updateAchiPassModify(Achievement achievementNew,Integer auditorId){
@@ -147,6 +150,11 @@ public class AchievementImpl implements AchievementService {
 		 achievementNew.setIsModify(0);
 		 achievementNew.setAchStatus(1);
 		achiMapper.updateAchi(achievementNew);//更新新的状态
+		Audit audit=new Audit();
+		audit.setAchId(achievementNew.getAchId());
+		audit.setUserId(auditorId);
+		audit.setAudDate(TimeToolService.getCurrentTime());
+		auditMapper.insertAudit(audit);
 		 return true;
 	 }
 

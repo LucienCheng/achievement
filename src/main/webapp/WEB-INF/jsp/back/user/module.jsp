@@ -20,9 +20,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	-->
   </head>
   <body>
-  <label>模块名称：</label>${module.modName }<br>
-  <label>模块描述：</label>${module.modDescribe }<br>
-   <label>成果id：</label>${module.achId }<br>
-  <label>模块内容：</label>${module.modContent }<br>
+  编辑模块界面有个保存按钮
   </body>
 </html>

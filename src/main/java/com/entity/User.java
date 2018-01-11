@@ -12,12 +12,12 @@ import org.springframework.stereotype.Component;
 public class User implements Serializable {
 
 	private static final long serialVersionUID = -6985849510857392350L;// 序列化，防止数据丢失
-	private int userId;
+	private Integer userId;
 	private String userWorkNum;
 	private String userPassword;
 	private String userPhone;
 	private String userName;
-	private int userSex;
+	private Integer userSex;
 	@Resource(name="role")
 	private Role role;
 	private String userPos;
@@ -34,8 +34,8 @@ public class User implements Serializable {
 				+ role + ", userPos=" + userPos + "]";
 	}
 
-	public User(int userId, String userWorkNum, String userPassword,
-			String userPhone, String userName, int userSex, Role role,
+	public User(Integer userId, String userWorkNum, String userPassword,
+			String userPhone, String userName, Integer userSex, Role role,
 			String userPos) {
 		super();
 		this.userId = userId;
@@ -48,11 +48,11 @@ public class User implements Serializable {
 		this.userPos = userPos;
 	}
 
-	public int getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
@@ -89,11 +89,11 @@ public class User implements Serializable {
 		this.userName = userName;
 	}
 
-	public int getUserSex() {
+	public Integer getUserSex() {
 		return userSex;
 	}
 
-	public void setUserSex(int userSex) {
+	public void setUserSex(Integer userSex) {
 		this.userSex = userSex;
 	}
 

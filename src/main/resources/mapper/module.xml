@@ -60,7 +60,7 @@
 		</if>
 		</set>
 		where
-			modId=#{moduleId.modId}
+			modId=#{moduleId}
 		</foreach>
 	</update>
 <insert id="insertModules" keyProperty="modId" useGeneratedKeys="true">
@@ -69,6 +69,5 @@
 		<foreach item="module" collection="list" separator="," close=";">
 		values(#{module.modName},#{module.modContent},#{module.modDescribe})
 		</foreach>
-
 </insert>
 </mapper>

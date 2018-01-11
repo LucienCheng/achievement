@@ -1,9 +1,9 @@
 package com.entity;
 
 public class Audit {
-private int audId;
-private int userId;
-private int achId;
+private Integer audId;
+private Integer userId;
+private Integer achId;
 private String audDate;
 private String opinion;
 
@@ -12,27 +12,27 @@ private String opinion;
 public Audit() {
 }
 
-public int getAudId() {
+public Integer getAudId() {
 	return audId;
 }
 
-public void setAudId(int audId) {
+public void setAudId(Integer audId) {
 	this.audId = audId;
 }
 
-public int getUserId() {
+public Integer getUserId() {
 	return userId;
 }
 
-public void setUserId(int userId) {
+public void setUserId(Integer userId) {
 	this.userId = userId;
 }
 
-public int getAchId() {
+public Integer getAchId() {
 	return achId;
 }
 
-public void setAchId(int achId) {
+public void setAchId(Integer achId) {
 	this.achId = achId;
 }
 

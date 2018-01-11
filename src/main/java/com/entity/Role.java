@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component(value="role")
 @Scope(value="prototype")
 public class Role {
-private int roleId;
+private Integer roleId;
 @NotNull(message="不能为空")
 @Size(min=1,max=10,message="不能没有字符")
 private String roleName;
@@ -25,10 +25,10 @@ public Role(int roleId, String roleName) {
 	public String toString() {
 		return "Role [roleId=" + roleId + ", roleName=" + roleName + "]";
 	}
-public int getRoleId() {
+public Integer getRoleId() {
 		return roleId;
 	}
-	public void setRoleId(int roleId) {
+	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
 	}
 	public String getRoleName() {
