@@ -6,16 +6,16 @@ public class Achievement {
 	private User user;
 	private Integer achStatus;
 	private String achVideoPath;
-	private int achLock;
+	private Integer achLock;
 	private String achImagePath;
-	private int isModify;
+	private Integer isModify;
 	private String achClassify;
-	private int achCTR;
+	private Integer achCTR;
 	private String achDescribe;
 	private String achDate;
-	public Achievement(int achId, String achName, User user, int achStatus,
-			String achVideoPath, int achLock, String achImagePath,
-			int isModify, String achClassify, int achCTR, String achDescribe,
+	public Achievement(Integer achId, String achName, User user, Integer achStatus,
+			String achVideoPath, Integer achLock, String achImagePath,
+			Integer isModify, String achClassify, Integer achCTR, String achDescribe,
 			String achDate) {
 		super();
 		this.achId = achId;
@@ -59,10 +59,10 @@ public Integer getAchId() {
 	public void setAchVideoPath(String achVideoPath) {
 		this.achVideoPath = achVideoPath;
 	}
-	public int getAchLock() {
+	public Integer getAchLock() {
 		return achLock;
 	}
-	public void setAchLock(int achLock) {
+	public void setAchLock(Integer achLock) {
 		this.achLock = achLock;
 	}
 	public String getAchImagePath() {
@@ -71,10 +71,10 @@ public Integer getAchId() {
 	public void setAchImagePath(String achImagePath) {
 		this.achImagePath = achImagePath;
 	}
-	public int getIsModify() {
+	public Integer getIsModify() {
 		return isModify;
 	}
-	public void setIsModify(int isModify) {
+	public void setIsModify(Integer isModify) {
 		this.isModify = isModify;
 	}
 	public String getAchClassify() {
@@ -83,10 +83,10 @@ public Integer getAchId() {
 	public void setAchClassify(String achClassify) {
 		this.achClassify = achClassify;
 	}
-	public int getAchCTR() {
+	public Integer getAchCTR() {
 		return achCTR;
 	}
-	public void setAchCTR(int achCTR) {
+	public void setAchCTR(Integer achCTR) {
 		this.achCTR = achCTR;
 	}
 	public String getAchDescribe() {

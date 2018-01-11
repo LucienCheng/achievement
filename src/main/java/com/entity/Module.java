@@ -1,12 +1,12 @@
 package com.entity;
 
 public class Module {
-private int modId;
+private Integer modId;
 private String modName;
 private String modContent;
 private String modDescribe;
-private int achId;
-public Module(int modId, String modName, String modContent, String modDescribe,int achId) {
+private Integer achId;
+public Module(Integer modId, String modName, String modContent, String modDescribe,Integer achId) {
 	super();
 	this.modId = modId;
 	this.modName = modName;
@@ -17,10 +17,10 @@ public Module(int modId, String modName, String modContent, String modDescribe,i
 public Module() {
 	
 }
-public int getModId() {
+public Integer getModId() {
 	return modId;
 }
-public void setModId(int modId) {
+public void setModId(Integer modId) {
 	this.modId = modId;
 }
 public String getModName() {
@@ -46,10 +46,10 @@ public String toString() {
 	return "Module [modId=" + modId + ", modName=" + modName + ", modContent="
 			+ modContent + ", modDescribe=" + modDescribe + "]";
 }
-public int getAchId() {
+public Integer getAchId() {
 	return achId;
 }
-public void setAchId(int achId) {
+public void setAchId(Integer achId) {
 	this.achId = achId;
 }
 

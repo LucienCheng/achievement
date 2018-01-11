@@ -36,9 +36,7 @@
 	<select id="searchAchi" resultMap="achievementResultMap">
 		SELECT * from achievement_view
 		<trim prefix="where" prefixOverrides="and | or">
-			<if test="achId!=null">
-				and achId=#{achId}
-			</if>
+				
 			<if test="authorId!=null">
 				and authorId=#{authorId}
 			</if>
@@ -75,7 +73,7 @@
 			<if test="achLock != null">
 				and achLock=#{achLock}
 			</if>
-
+			and achId=#{achId}
 		</trim>
 		<if test="condition==0 and start!=null and count != null">
 			ORDER BY
@@ -100,7 +98,7 @@
 			</foreach>
 		</where>
 	</delete>
-	<update id="updateAchi" parameterType="Achievement">
+	<update id="updateAchi" parameterType="Achievement" useGeneratedKeys="true" keyProperty="achId">
 		update achievement
 		<set>
 			<if test="achCTR != null">achCTR=#{achCTR},</if>
@@ -115,15 +113,16 @@
 			<if test="achDescribe != null">achDescribe=#{achDescribe},</if>
 			<if test="isModify != null">isModify=#{isModify}</if>
 		</set>
+		where
 		achId=#{achId}
 	</update>
-	<update id="updateAchiWithSta">
+	<update id="updateAchiWithSta" useGeneratedKeys="true" keyProperty="achId">
 		<foreach collection="achIds" item="achId" separator=";">
 			update achievement set achStatus=#{achStatus}
 			where achId=#{achId}
 		</foreach>
 	</update>
-<update id="updateAchiWithLock">
+<update id="updateAchiWithLock" >
 		<foreach collection="achIds" item="achId" separator=";">
 			update achievement set achStatus=#{achLock}
 			where achId=#{achId}

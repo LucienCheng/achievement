@@ -116,6 +116,7 @@ public class UserServiceImpl  implements UserService{
 				}
 			user.setRole(new Role(role.get(single.get("角色")), null));
 			user.setUserName(single.get("姓名"));
+			//密码默认为工号
 			user.setUserPassword(single.get("工号"));
 			user.setUserPhone(single.get("电话号码"));
 			user.setUserPos(single.get("职称"));

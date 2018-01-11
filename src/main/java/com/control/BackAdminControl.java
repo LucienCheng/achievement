@@ -1,5 +1,6 @@
 package com.control;
 import java.io.IOException;
+
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.entity.User;
 import com.entity.UserCondition;
 import com.service.UserService;
+//管理员控制区域
 @Controller
 public class BackAdminControl {
 	@Resource(name="UserServiceImpl")
@@ -43,12 +45,39 @@ public class BackAdminControl {
 			model.addAttribute("totalCount",userService.getUserCount(userCondition));
 			return "/back/amin/adminIndex";
 		}
-		
+		//根据条件搜索用户
+		@RequestMapping(value="/back/admin/{start}",method={RequestMethod.GET})
+		@ResponseBody
+		public Map<String, Object> searchUsers(@PathVariable int start,UserCondition userCondition) {
+			List<User> users=userService.getUserByConditon(userCondition, start, count);
+			Map<String, Object> map=new HashMap<String, Object>();
+			map.put("users",users);
+			map.put("totalCount",userService.getUserCount(userCondition));
+			return map;
+		}
 	//个人资料
 		@RequestMapping(value="/back/admin/personInfo",method={RequestMethod.GET})
 		public String personInfo(HttpSession session,Model model) {
 			model.addAttribute("user", userService.getUserById((int)session.getAttribute("userId")));
 			return "/back/personInfo";
+		}
+		//更新用户个人的信息
+		@RequestMapping(value="/back/admin/savePerson",method={RequestMethod.POST})
+		@ResponseBody
+		public String updateUser(User user,HttpSession session){
+			if(user.getUserId()==null){
+				user.setUserId((int)session.getAttribute("userId"));
+			}
+			else {
+				return "failure";
+			}
+			int result=userService.updateUser(user);
+			if (result==1) {
+				return "success";
+			}
+			else {
+				return "failure";
+			}
 		}
 	@ModelAttribute
 	 private  HSSFWorkbook resultSetToExcel(String sheetName) throws Exception  
@@ -102,18 +131,7 @@ public class BackAdminControl {
 	        ouputStream.flush();       
 	        ouputStream.close();   
 	}
-	//更新用户的信息
-	@RequestMapping(value="/back/{role}/updateUser",method={RequestMethod.POST})
-	@ResponseBody
-	public String updateUser(User user){
-		int result=userService.updateUser(user);
-		if (result==1) {
-			return "success";
-		}
-		else {
-			return "failure";
-		}
-	}
+	
 	//保存一个用户
 	@RequestMapping(value="/back/admin/saveUser",method={RequestMethod.POST})
 	@ResponseBody
@@ -138,16 +156,7 @@ public class BackAdminControl {
 			return "failure";
 		}
 	}
-	//根据条件搜索用户
-	@RequestMapping(value="/back/admin/{start}",method={RequestMethod.GET})
-	@ResponseBody
-	public Map<String, Object> searchUsers(@PathVariable int start,UserCondition userCondition) {
-		List<User> users=userService.getUserByConditon(userCondition, start, count);
-		Map<String, Object> map=new HashMap<String, Object>();
-		map.put("users",users);
-		map.put("totalCount",userService.getUserCount(userCondition));
-		return map;
-	}
+	
 	
 
 }

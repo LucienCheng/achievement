@@ -22,7 +22,6 @@
 	<select id="searchUser" resultMap="userResultMap">
 		SELECT * FROM user_view
 		<trim prefix="where" prefixOverrides="and | or">
-		
 			<if test="condition.userId != null">
 				and userId=#{condition.userId}
 			</if>
@@ -41,7 +40,6 @@
 	<select id="searchUserCount" resultType="int">
 		SELECT count(*) FROM user_view
 		<trim prefix="where" prefixOverrides="and | or">
-		
 			<if test="userId != null">
 				and userId=#{userId}
 			</if>
@@ -85,13 +83,19 @@
 		</where>
 	</delete>
 	<!-- 更新一条记录 -->
-	<update id="updateUser" parameterType="User">
-		update user set userName=#{userName},userWorkNum=#{userWorkNum},
-		userPassword=#{userPassword},userPhone=#{userPhone},userName=#{userName},
-		userSex=#{userSex},userPos=#{userPos},roleId=#{role.roleId}
-		<where>
+	<update id="updateUser" parameterType="User"  useGeneratedKeys="true" keyProperty="userId">
+		update user <set> 
+		<if test="userName != null">userName=#{userName},</if>
+		<if test="userWorkNum != null">userWorkNum=#{userWorkNum},</if>
+		<if test="userPassword != null">userPassword=#{userPassword},</if>
+		<if test="userPhone != null">userPhone=#{userPhone},</if>
+		<if test="userName != null">userName=#{userName},</if>
+		<if test="userSex != null">userSex=#{userSex},</if>
+		<if test="userPos != null">userPos=#{userPos},</if>
+		<if test="roleId != null">roleId=#{role.roleId},</if>
+		</set>
+		where
 			userId=#{userId}
-		</where>
 
 	</update>
 

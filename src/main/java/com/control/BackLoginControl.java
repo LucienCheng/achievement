@@ -29,7 +29,7 @@ public class BackLoginControl {
 			session.setAttribute("roleId",role.getRoleId() );
 			switch (role.getRoleId()) {
 			case 1: 
-				return "/back/adminIndex";
+				return "/back/user/userIndex";
 			case 2:
 				return "/back/auditor/auditorIndex";
 			case 3:

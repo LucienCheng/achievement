@@ -23,6 +23,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    This is my JSP page. <br>
+  审核人员的首页默认是展示待审核的界面，可以执行批量通过，单个不通过并且编写建议。
   </body>
 </html>

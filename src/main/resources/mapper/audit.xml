@@ -7,30 +7,30 @@
 		audit(userId,achId,audDate,opinion)
 		values(#{userId},#{achId},#{audDate},#{opinion})
 	</insert>
+	
+	
+		<!-- 批量插入已经通过审核记录-->
+	<insert id="insertAudits">
+	<foreach collection="achIds" item="achId" separator=";">
+	insert into
+		audit(userId,achId,audDate)
+		values(#{auditorId},#{achId},#{audDate})
+	</foreach>
+		
+	</insert>
 	<!-- 删除一条审核记录 -->
 	<delete id="deleteAudit">
 		delete from audit
 		where audId=#{audId}
 	</delete>
-	<!-- 选择一条审核记录 -->
-	<select id="selectAudit" resultType="Audit">
+	<!-- 选择所有审核记录 -->
+	<select id="selectAudit" resultType="list">
 	select * from audit
 	<where>
 	achId=#{achId}
 	</where>
+	order by audDate
 	</select>
-	<!-- 是否存在一条审核记录 -->
-	<select id="selectIsAudit" resultType="int">
-	select count(*) from audit
-	<where>
-	achId=#{achId}
-	</where>
-	</select>
-	<!-- 更新一条审核记录，变成0 -->
-	<update id="updateAudit">
-	update audit set
-	<where>
-	 audId=#{audId}
-	</where>
-	</update>
+	
+
 </mapper>
