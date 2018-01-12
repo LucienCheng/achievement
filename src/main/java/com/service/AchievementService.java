@@ -65,4 +65,5 @@ public boolean updateAchievement(Achievement achievement);
 public int deleteAchis(List<Integer> achievements);
 //根据搜索结果返回查询的结果数量。
 public int getCount(AchievementCondition achievementCondition);
+
 }

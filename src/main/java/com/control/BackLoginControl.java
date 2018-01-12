@@ -32,7 +32,7 @@ public class BackLoginControl {
 			case 2:
 				return "/back/auditor/auditorIndex";
 			case 3:
-				return "/back/admin/adminIndex";
+				return "forward:/back/admin";
 			}
 		}
 			return "/back/login";

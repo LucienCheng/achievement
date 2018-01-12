@@ -13,7 +13,8 @@ public interface AchiMapper {
 	public int insertAchi(Achievement achievement);//插入一条数据
 	public int updateAchi(Achievement achievement);//更新一个成果
 	public int deleteAchis(List<Integer> achievements);//批量删除成果
-	public int selectCount(AchievementCondition condition);//批量删除成果
+	public int selectCount(AchievementCondition condition);//获得总数
+
 /**
  * 
  * @param achId 成果id

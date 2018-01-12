@@ -1,7 +1,7 @@
 package com.control;
 import java.io.IOException;
-
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,14 +26,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.entity.Achievement;
+import com.entity.AchievementCondition;
 import com.entity.User;
 import com.entity.UserCondition;
+import com.mysql.fabric.xmlrpc.base.Array;
+import com.service.SlideShowService;
 import com.service.UserService;
 //管理员控制区域
 @Controller
 public class BackAdminControl {
 	@Resource(name="UserServiceImpl")
 	private UserService userService;
+	@Resource(name="slideShowImpl")
+	private SlideShowService slideShowService;
 	private final int count=10;
 	//在执行action时都会加载这个属性，当model存在的时候，就直接使用，当不存在的时候，就会进行创建，然后放到model里。相当于一个静态类。
 
@@ -51,8 +57,10 @@ public class BackAdminControl {
 		public Map<String, Object> searchUsers(@PathVariable int start,UserCondition userCondition) {
 			List<User> users=userService.getUserByConditon(userCondition, start, count);
 			Map<String, Object> map=new HashMap<String, Object>();
+			map.put("statue", "failure");
 			map.put("users",users);
 			map.put("totalCount",userService.getUserCount(userCondition));
+			map.put("statue", "success");
 			return map;
 		}
 	//个人资料
@@ -156,7 +164,45 @@ public class BackAdminControl {
 			return "failure";
 		}
 	}
+	//接下是轮播图
+	//轮播图页面
+	@RequestMapping(value="/back/admin/slideShow",method={RequestMethod.GET})
+	public String slideShow(Model model){
+		//选取幻灯片
+		 List<Achievement> achievements=slideShowService.selectSlideShow();
+		AchievementCondition condition=new AchievementCondition();
+		List<Integer> excludeAchIds=new ArrayList<Integer>();
+		for (Achievement achievement : achievements) {
+			excludeAchIds.add(achievement.getAchId());
+		}
+		model.addAttribute("achievements",achievements);
+		model.addAttribute("achievementsSearch", slideShowService.forSlideShow(condition, excludeAchIds, 0, count));
+		return "/back/admin/slideShow";
+	}
+	@RequestMapping(value="/back/admin/slideShow/{start}",method={RequestMethod.POST})
+	@ResponseBody
+	public  Map<String, Object> slideShowPage(@PathVariable("start") Integer start,List<Integer> excludeIds,AchievementCondition condition){
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("statue", "failure");
+		map.put("achievementsSearch", slideShowService.forSlideShow(condition, excludeIds, start, count));
+		map.put("statue", "success");
+		return map;
+	}
 	
+	//轮播图的添加动作，并且会刷新slideShow
+	@RequestMapping(value="/back/admin/slideShow/add",method={RequestMethod.POST})
+	@ResponseBody
+	public String addSlideShow(@RequestBody Integer achId){
+		slideShowService.insertSlideShow(achId);
+		return "forward:/back/admin/slideShow";
+	}
 	
+	//轮播图的删除动作，并且会刷新slideShow
+		@RequestMapping(value="/back/admin/slideShow/delete",method={RequestMethod.POST})
+		@ResponseBody
+		public String deleteSlideShow(@RequestBody Integer achId){
+			slideShowService.deleteSlideShow(achId);
+			return "forward:/back/admin/slideShow";
+		}
 
 }

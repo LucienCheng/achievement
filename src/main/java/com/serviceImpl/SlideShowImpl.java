@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.dao.SlideShowMapper;
 import com.entity.Achievement;
+import com.entity.AchievementCondition;
 import com.service.SlideShowService;
 
 @Service("slideShowImpl")
@@ -31,6 +32,11 @@ public class SlideShowImpl implements SlideShowService{
 	public List<Achievement> selectSlideShow() {
 		// TODO Auto-generated method stub
 		return slideShowMapper.selectSlideShow();
+	}
+	@Override
+	public int forSlideShow(AchievementCondition condition,
+			List<Integer> excludeIds,Integer start,Integer count) {
+		return slideShowMapper.forSlideShow(condition, excludeIds, start, count);
 	}
 
 }

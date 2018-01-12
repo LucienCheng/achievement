@@ -31,7 +31,6 @@
 	</insert>
 
 
-
 	<!-- 查询总的成果 -->
 	<select id="searchAchi" resultMap="achievementResultMap">
 		SELECT * from achievement_view
@@ -73,7 +72,10 @@
 			<if test="achLock != null">
 				and achLock=#{achLock}
 			</if>
+			<if test="achId != null">
 			and achId=#{achId}
+			</if>
+			
 		</trim>
 		<if test="condition==0 and start!=null and count != null">
 			ORDER BY
