@@ -169,8 +169,7 @@ public class BackUserControll {
 		//成果的模块插入
 		int modResult = moduleService.insertModules(modules, achievement.getAchId());
 		// 保存退出
-		return "forward://back/user/achievement/modify?achId="
-				+ achievement.getAchId();
+				return "forward:/back/user/achievement/";
 	}
 
 	// 批量删除achievement
