@@ -34,7 +34,7 @@ public class BackAuditorControl {
 	private AuditMapper auditMapper;
 	@Resource(name="UserServiceImpl")
 	private UserService userService;
-	private final int count = 10;// 显示的条数
+	private final int count = 5;// 显示的条数
 	// 个人资料
 		@RequestMapping(value = "/back/auditor/personInfo", method = { RequestMethod.GET })
 		public String personInfo(HttpSession session, Model model) {
@@ -93,11 +93,16 @@ public class BackAuditorControl {
 	// 这是待审核的搜索页面，需要加锁,也就是auditorindex使用的ajax
 	@RequestMapping(value = "/back/auditor/unAudited/{start}", method = { RequestMethod.GET })
 	@ResponseBody
-	public Map<String, Object> auditorSearchUnauditedAchievement(
+	public Map<String, Object> auditorSearchUnauditedAchievement(List<Integer> oldAchIds,
 			@PathVariable("start") int start, AchievementCondition condition,
 			HttpSession session) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("statue", "failure");
+		//解锁
+		if(oldAchIds!=null){
+			achievementService.updateAchiWithLock(oldAchIds, 0);
+		}
+		
 		List<Integer> achIds = new ArrayList<Integer>();
 		List<Achievement> achievements = achievementService
 				.getAchiLockCondition(null,
@@ -120,7 +125,7 @@ public class BackAuditorControl {
 		return map;
 	}
 	
-	//也就是auditorindex使用的ajax
+	
 	@RequestMapping(value = {"/back/auditor/audited"}, method = { RequestMethod.GET })
 	public String pass(Model model, AchievementCondition condition) {
 		// 这里会返回待审核列表给前端
@@ -162,31 +167,31 @@ public class BackAuditorControl {
 	// 这是一个动作，将成果变成审核通过,返回待审核成果给待审核界面
 	@RequestMapping(value = "/back/auditor/pass/{start}", method = { RequestMethod.POST })
 	@ResponseBody
-	public Map<String, Object> passAchievement(List<Integer> achIds,HttpSession session,
+	public Map<String, Object> passAchievement(List<Integer> oldAchIds,HttpSession session,
 			@PathVariable("start") int start, AchievementCondition condition) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("statue", "failure");
 		// 设置状态为1，通过状态
-		achievementService.updateAchiWithSta(achIds, 1);
-		achievementService.updateAchiWithModify(achIds, 0);
+		achievementService.updateAchiWithSta(oldAchIds, 1);
+		achievementService.updateAchiWithModify(oldAchIds, 0);
 		//插入通过记录
-		auditMapper.insertAudits(achIds, TimeToolService.getCurrentTime(), (int)session.getAttribute("userId"));
+		auditMapper.insertAudits(oldAchIds, TimeToolService.getCurrentTime(), (int)session.getAttribute("userId"));
 		// 解锁
-		achievementService.updateAchiWithLock(achIds, 0);
+		achievementService.updateAchiWithLock(oldAchIds, 0);
 		// 这里会返回待审核列表给前端
 		List<Achievement> achievements = achievementService
 				.getAchiLockCondition(null, condition.getAuditorId(), 1,
 						condition.getAchStartTime(), condition.getAchEndTime(),
 						null, null, null, condition.getAchName(),
 						condition.getAuthorName(), 0, start, count);
-		achIds.clear();
+		oldAchIds.clear();
 		for (Achievement achievement : achievements) {
-			achIds.add(achievement.getAchId());
+			oldAchIds.add(achievement.getAchId());
 		}
 		//一旦用户失效就会释放锁
-		if (achIds.size()>0) {
-			achievementService.updateAchiWithLock(achIds, 1);
-			session.setAttribute("achIds", achIds);
+		if (oldAchIds.size()>0) {
+			achievementService.updateAchiWithLock(oldAchIds, 1);
+			session.setAttribute("achIds", oldAchIds);
 		}
 		map.put("totalCount",
 				achievementService.getCount(condition));
@@ -199,7 +204,7 @@ public class BackAuditorControl {
 	@RequestMapping(value = "/back/auditor/unpass/{start}", method = { RequestMethod.POST })
 	@ResponseBody
 	@Transactional
-	public Map<String, Object> passAchievement(Audit audit,HttpSession session,
+	public Map<String, Object> passAchievement(Audit audit,HttpSession session,List<Integer> oldAchIds,
 			AchievementCondition condition, @PathVariable("start") int start) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("statue", "failure");
@@ -211,7 +216,7 @@ public class BackAuditorControl {
 		achievementService.updateAchiWithSta(achIds, 2);
 		auditMapper.insertAudit(audit);
 		// 解锁
-		achievementService.updateAchiWithLock(achIds, 0);
+		achievementService.updateAchiWithLock(oldAchIds, 0);
 		List<Achievement> achievements = achievementService
 				.getAchiLockCondition(null, condition.getAuditorId(), 0,
 						condition.getAchStartTime(), condition.getAchEndTime(),

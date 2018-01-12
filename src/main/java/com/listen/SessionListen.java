@@ -14,6 +14,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.dao.AchiMapper;
 import com.service.AchievementService;
 import com.serviceImpl.AchievementImpl;
 
@@ -23,7 +24,7 @@ import com.serviceImpl.AchievementImpl;
  */
 @WebListener
 public class SessionListen implements HttpSessionListener {
-private AchievementService achievementService;
+private AchiMapper achiMapper;
     /**
      * Default constructor. 
      */
@@ -46,11 +47,12 @@ private AchievementService achievementService;
          // TODO Auto-generated method stub
     	ApplicationContext application = WebApplicationContextUtils 
     			.getWebApplicationContext(event.getSession().getServletContext()); 
-    			achievementService=(AchievementService) application.getBean("AchievementImpl");
+
+    	achiMapper=(AchiMapper) application.getBean("achiMapper");
     	List<Integer> achIds=(List<Integer>) event.getSession().getAttribute("achIds");
     	if (achIds!=null) {
 			if (achIds.size()>0) {
-				achievementService.updateAchiWithLock(achIds, 0);
+				achiMapper.updateAchiWithLock(achIds, 0);
 			}
 		}
     }
