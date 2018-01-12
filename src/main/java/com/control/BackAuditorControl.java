@@ -83,7 +83,7 @@ public class BackAuditorControl {
 	}
 
 	// 这是待审核的搜索页面，需要加锁,也就是auditorindex使用的ajax
-	@RequestMapping(value = "/back/auditor/achievement/unAudited/{start}", method = { RequestMethod.GET })
+	@RequestMapping(value = "/back/auditor/unAudited/{start}", method = { RequestMethod.GET })
 	@ResponseBody
 	public Map<String, Object> auditorSearchUnauditedAchievement(
 			@PathVariable("start") int start, AchievementCondition condition,
@@ -107,8 +107,9 @@ public class BackAuditorControl {
 		map.put("statue", "success");
 		return map;
 	}
+	
 	//也就是auditorindex使用的ajax
-	@RequestMapping(value = {"/back/auditor/pass","/back/auditor/unPass"}, method = { RequestMethod.GET })
+	@RequestMapping(value = {"/back/auditor/audited","/back/auditor/audited"}, method = { RequestMethod.GET })
 	public String pass(Model model, AchievementCondition condition) {
 		// 这里会返回待审核列表给前端
 		if(condition.getAchStatus()==2||condition.getAchStatus()==0){
@@ -125,7 +126,7 @@ public class BackAuditorControl {
 	}
 
 	// 返回检索的列表，这里包括了未通过的和已经通过的页面。也就是已经审核过的
-	@RequestMapping(value = "/back/auditor/achievement/audited/{start}", method = { RequestMethod.GET })
+	@RequestMapping(value = "/back/auditor/audited/{start}", method = { RequestMethod.GET })
 	@ResponseBody
 	public Map<String, Object> auditorSearchAuditedAchievement(
 			@PathVariable("start") int start, AchievementCondition condition,
@@ -147,7 +148,7 @@ public class BackAuditorControl {
 		return map;
 	}
 	// 这是一个动作，将成果变成审核通过,返回待审核成果给待审核界面
-	@RequestMapping(value = "/back/auditor/achievement/pass/{start}", method = { RequestMethod.POST })
+	@RequestMapping(value = "/back/auditor/pass/{start}", method = { RequestMethod.POST })
 	@ResponseBody
 	public Map<String, Object> passAchievement(List<Integer> achIds,HttpSession session,
 			@PathVariable("start") int start, AchievementCondition condition) {
@@ -179,7 +180,7 @@ public class BackAuditorControl {
 	}
 
 	// 这是一个动作，将成果变成审核未通过，返回待审核界面
-	@RequestMapping(value = "/back/auditor/achievement/unpass/{start}", method = { RequestMethod.POST })
+	@RequestMapping(value = "/back/auditor/unpass/{start}", method = { RequestMethod.POST })
 	@ResponseBody
 	@Transactional
 	public Map<String, Object> passAchievement(Audit audit,HttpSession session,

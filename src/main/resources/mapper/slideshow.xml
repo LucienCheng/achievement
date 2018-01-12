@@ -28,13 +28,7 @@
 		where achId=#{achId}
 	</delete>
 	<select id="selectSlideShow" resultMap="achievementResultMap">
-	select slideshow_view.* from slideshow_view
+	select slideshow_view.* from slideshow_view where  achStatus=1
 	</select>
-	<update id="updateSlideShow">
-	update slideshow
-	set achId=#{NewAchId}
-	where
-	achId=#{OldAchId}
-	</update>
 
 </mapper>

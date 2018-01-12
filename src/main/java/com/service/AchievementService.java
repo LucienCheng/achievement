@@ -58,10 +58,7 @@ public int updateAchiWithSta(List<Integer> achIds,Integer achStatus) ;
 
 //批量更新成果的锁的状态。
 public int updateAchiWithLock(List<Integer> achIds,Integer achLock) ;
-//对已经发布的成果进行修改
-public boolean updateAchiModify(Achievement achievementNew);
-//对修改后的成果进行审核，审核通过之后
-public boolean updateAchiPassModify(Achievement achievementNew,Integer auditorId);
+
 //修改单个成果的内容。
 public boolean updateAchievement(Achievement achievement);
 //删除一个成果

@@ -22,7 +22,7 @@ import com.entity.Role;
 import com.entity.User;
 import com.entity.UserCondition;
 import com.service.UserService;
-@Service("userServiceImpl")
+@Service("UserServiceImpl")
 /*这是一个用户的业务逻辑的实现类*/
 public class UserServiceImpl  implements UserService{
 	@Resource

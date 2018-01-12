@@ -8,5 +8,5 @@ public interface SlideShowMapper {
 	public int insertSlideShow(int achId);
 	public int deleteSlideShow(int achId);
 	public List<Achievement> selectSlideShow();
-	public int updateSlideShow(@Param("OldAchId")int OldAchId,@Param("NewAchId")int NewAchId);
+	
 }

@@ -120,44 +120,6 @@ public class AchievementImpl implements AchievementService {
 		return achiMapper.updateAchiWithSta(achIds,achStatus);
 	}
 	
-	
-	//需要修改已经发布的成果,重新插入一个新的成果，然后记录到alterMaper中。
-	@Override
-	 public boolean updateAchiModify(Achievement achievementNew){
-		 achievementNew.setAchDate(getTime());
-		 achievementNew.setIsModify(1);
-		 achievementNew.setAchStatus(0);
-		 achievementNew.setAchCTR(0);
-		 int oldId=achievementNew.getAchId();
-		insertAchi(achievementNew);
-		int newId=achievementNew.getAchId();
-		alterMapper.insertAchiAlter(oldId, newId);
-		return true;
-		 
-	 }
-	 
-	 //成果通过审核时，需要更新修改后的成果，并且更新引用到这个achId的地方.
-	 @Transactional
-	 @Override
-	 public boolean updateAchiPassModify(Achievement achievementNew,Integer auditorId){
-		 achievementNew.setIsModify(0);
-		int oldId=alterMapper.selectAlter(achievementNew.getAchId());
-		List<Integer> achievements=new ArrayList<Integer>();
-		alterMapper.deleteAchiAlter(achievementNew.getAchId());
-		achievements.add(oldId);
-		achiMapper.deleteAchis(achievements);//删除老的已经发布的，使用新修改后的。
-		slideShowMapper.updateSlideShow(oldId, achievementNew.getAchId());//更新前台幻灯片
-		 achievementNew.setIsModify(0);
-		 achievementNew.setAchStatus(1);
-		achiMapper.updateAchi(achievementNew);//更新新的状态
-		Audit audit=new Audit();
-		audit.setAchId(achievementNew.getAchId());
-		audit.setUserId(auditorId);
-		audit.setAudDate(TimeToolService.getCurrentTime());
-		auditMapper.insertAudit(audit);
-		 return true;
-	 }
-
 /*批量删除成果*/
 	@Override
 	public int deleteAchis(List<Integer> achievements) {

@@ -16,15 +16,9 @@ public class ModuleImpl implements ModuleService{
 	private ModuleMapper moduleMapper;
 
 	@Override
-	public int insertModule(Module module) {
+	public int updateModules(List<Module> modules) {
 		// TODO Auto-generated method stub
-		return moduleMapper.insertModule(module);
-	}
-
-	@Override
-	public int updateModule(Module module) {
-		// TODO Auto-generated method stub
-		return moduleMapper.updateModule(module);
+		return moduleMapper.updateModules(modules);
 	}
 
 	@Override
@@ -45,16 +39,18 @@ public class ModuleImpl implements ModuleService{
 		return moduleMapper.selectModuleByAchId(achId);
 	}
 
-	@Override
-	public int updateModuleByachId(List<Integer> moduleIds,int achievementId) {
-		// TODO Auto-generated method stub
-		return moduleMapper.updateModuleByachId(moduleIds,achievementId);
-	}
+	
 
 	@Override
-	public int insertModules(List<Module> modules) {
+	public int insertModules(List<Module> modules,int achId) {
 		// TODO Auto-generated method stub
-		return moduleMapper.insertModules(modules);
+		if(modules!=null){
+			for (Module module : modules) {
+				module.setAchId(achId);
+			}
+			return moduleMapper.insertModules(modules);
+		}
+		return 0;
 	}
 
 }

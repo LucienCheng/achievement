@@ -13,7 +13,7 @@ import com.service.UserService;
 
 @Controller
 public class BackLoginControl {
-	@Resource(name="userServiceImpl")
+	@Resource(name="UserServiceImpl")
 	private UserService userService;
 	@RequestMapping(value="/back",method={RequestMethod.GET})
 	public String back(){
@@ -22,9 +22,8 @@ public class BackLoginControl {
 	@RequestMapping(value="/back/login",method={RequestMethod.POST})
 	public String vertifyLogin(User user,HttpSession session){
 		User userOld=userService.vertifyUser(user);
-		
 		if(userOld!=null){
-			Role role=user.getRole();
+			Role role=userOld.getRole();
 			session.setAttribute("userId",userOld.getUserId() );
 			session.setAttribute("roleId",role.getRoleId() );
 			switch (role.getRoleId()) {

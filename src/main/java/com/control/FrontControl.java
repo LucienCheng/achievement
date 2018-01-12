@@ -92,26 +92,50 @@ public class FrontControl {
 
 		Achievement achievement = achievementService
 				.getAchiByAchId(achievementId);
-		model.addAttribute("video", achievement.getAchVideoPath());
-		achievement.setAchCTR(achievement.getAchCTR() + 1);
-		achievementService.updateAchievement(achievement);
-		return "/front/video";
+		if(achievement.getAchStatus()!=1){
+			model.addAttribute("error", "成果更新状态了，不能查看，需要回退到上一步");
+			return "forward:/front/second";
+		}
+		else {
+			model.addAttribute("video", achievement.getAchVideoPath());
+			achievement.setAchCTR(achievement.getAchCTR() + 1);
+			achievementService.updateAchievement(achievement);
+			return "/front/video";
+		}
+		
 	}
 
 	// 三级页面模块，初始页面
 	@RequestMapping(value = "/front/modules/{achId}", method = { RequestMethod.GET })
 	public String getAchievementModules(@PathParam("achId") int achId,
 			Model model) {
-		model.addAttribute("modules", moduleService.selectModuleByAchId(achId));
-		return "/front/modules";
+		Achievement achievement = achievementService
+				.getAchiByAchId(achId);
+		if (achievement.getAchStatus()!=1) {
+			model.addAttribute("error", "成果更新状态了，不能查看，需要回退到上一步");
+			return "forward:/front/second";
+		}
+		else {
+			model.addAttribute("modules", moduleService.selectModuleByAchId(achId));
+			return "/front/modules";
+		}
+		
 	}
 
 	// 三级页面模块，具体页面
 	@RequestMapping(value = "/front/modules/{achId}/{moduleId}", method = { RequestMethod.GET })
 	public String getAchievementModule(@PathParam("moduleId") int moduleId,
 			@PathParam("achId") int achId, Model model) {
+		Achievement achievement = achievementService
+				.getAchiByAchId(achId);
+		if (achievement.getAchStatus()!=1) {
+			model.addAttribute("error", "成果更新状态了，不能查看，需要回退到上一步");
+			return "forward:/front/second";
+		}
+		else {
 		model.addAttribute("modules", moduleService.selectModuleByAchId(achId));
 		model.addAttribute("moduleId", moduleId);
 		return "/front/modules";
+		}
 	}
 }

@@ -36,36 +36,36 @@
 	<select id="searchAchi" resultMap="achievementResultMap">
 		SELECT * from achievement_view
 		<trim prefix="where" prefixOverrides="and | or">
-				
-			<if test="authorId!=null">
+
+			<if test="authorId != null">
 				and authorId=#{authorId}
 			</if>
-			<if test="auditorId!=null">
+			<if test="auditorId != null">
 				and (auditorId=#{auditorId} or auditorId is null)
 			</if>
-			<if test="achStatus!=null">
+			<if test="achStatus != null">
 				and achStatus=#{achStatus}
 			</if>
-			<if test="achName!=null">
+			<if test="achName != null">
 				and achName like CONCAT('%',#{achName},'%')
 			</if>
-			<if test="achClassify!=null">
+			<if test="achClassify != null">
 				and achClassify like CONCAT('%',#{achClassify},'%')
 			</if>
-			<if test="authorName!=null">
+			<if test="authorName != null">
 				and authorName like CONCAT('%',#{authorName},'%')
 			</if>
-			<if test="achStartTime!=null">
-				and achDate>=#{achStartTime}
+			<if test="achStartTime != null">
+				and achDate <![CDATA[ >= ]]> #{achStartTime}
 			</if>
-			<if test="achEndTime!=null">
-				and achDate<=#{achEndTime}
+			<if test="achEndTime != null">
+				and achDate <![CDATA[ <= ]]> #{achEndTime}
 			</if>
-			<if test="audStartTime!=null">
-				and audDate>=#{audStartTime}
+			<if test="audStartTime != null">
+				and audDate <![CDATA[ >= ]]> #{audStartTime}
 			</if>
-			<if test="audEndTime!=null">
-				and audDate<=#{audEndTime}
+			<if test="audEndTime != null">
+				and audDate <![CDATA[ <= ]]> #{audEndTime}
 			</if>
 			<if test="auditorName != null">
 				and auditorName like CONCAT('%',#{auditorName},'%')
@@ -98,7 +98,12 @@
 			</foreach>
 		</where>
 	</delete>
+<<<<<<< HEAD
 	<update id="updateAchi" parameterType="Achievement" useGeneratedKeys="true" keyProperty="achId">
+=======
+	<update id="updateAchi" parameterType="Achievement"
+		useGeneratedKeys="true" keyProperty="achId">
+>>>>>>> refs/heads/feather-1.11
 		update achievement
 		<set>
 			<if test="achCTR != null">achCTR=#{achCTR},</if>
@@ -116,20 +121,31 @@
 		where
 		achId=#{achId}
 	</update>
+<<<<<<< HEAD
 	<update id="updateAchiWithSta" useGeneratedKeys="true" keyProperty="achId">
+=======
+	<update id="updateAchiWithSta" useGeneratedKeys="true"
+		keyProperty="achId">
+>>>>>>> refs/heads/feather-1.11
 		<foreach collection="achIds" item="achId" separator=";">
-			update achievement set achStatus=#{achStatus}
+			update
+			achievement set achStatus=#{achStatus}
 			where achId=#{achId}
 		</foreach>
 	</update>
+<<<<<<< HEAD
 <update id="updateAchiWithLock" >
+=======
+	<update id="updateAchiWithLock">
+>>>>>>> refs/heads/feather-1.11
 		<foreach collection="achIds" item="achId" separator=";">
-			update achievement set achStatus=#{achLock}
+			update
+			achievement set achStatus=#{achLock}
 			where achId=#{achId}
 		</foreach>
 	</update>
 	<select id="selectCount" resultType="int">
-	SELECT count(*) from achievement_view
+		SELECT count(*) from achievement_view
 		<trim prefix="where" prefixOverrides="and | or">
 			<if test="authorId!=null">
 				and authorId=#{authorId}
@@ -150,16 +166,16 @@
 				and authorName like CONCAT('%',#{authorName},'%')
 			</if>
 			<if test="achStartTime!=null">
-				and achDate>=#{achStartTime}
+				and achDate <![CDATA[ >= ]]> #{achStartTime}
 			</if>
 			<if test="achEndTime!=null">
-				and achDate<=#{achEndTime}
+				and achDate <![CDATA[ <= ]]> #{achEndTime}
 			</if>
 			<if test="audStartTime!=null">
-				and audDate>=#{audStartTime}
+				and audDate  <![CDATA[ >= ]]> #{audStartTime}
 			</if>
 			<if test="audEndTime!=null">
-				and audDate<=#{audEndTime}
+				and audDate <![CDATA[ <= ]]> #{audEndTime}
 			</if>
 			<if test="auditorName != null">
 				and auditorName like CONCAT('%',#{auditorName},'%')
@@ -169,7 +185,7 @@
 			</if>
 		</trim>
 	</select>
-	
+
 
 
 </mapper>

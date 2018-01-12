@@ -102,94 +102,78 @@ public class BackUserControll {
 	}
 
 	// 进入（修改/添加）成果界面,复制一份module，为了防止出现更改已通过的操作。返回的是成果编辑界面
-	@RequestMapping(value = { "/back/user/achievement/modify",
-			"/back/user/achievement/add" }, method = { RequestMethod.POST })
+	@RequestMapping(value = "/back/user/achievement/modify", method = { RequestMethod.POST })
 	@Transactional
 	public String modifyAchievement(Integer achId, Model model) {
-		// 获得成果的基本信息
-		Achievement achievement = achievementService.getAchiByAchId(achId);
-		List<Integer> oldModuleIds = new ArrayList<Integer>();
-		// 通过搜索成果的id获得一份module。
-		List<Module> modules = moduleService.selectModuleByAchId(achId);
-		for (Module module : modules) {
-			oldModuleIds.add(module.getModId());
-		}
-		// 重新拷贝一份，重新把插入的主键重置给modId属性
-		moduleService.insertModules(modules);
-		List<Integer> newModuleIds = new ArrayList<Integer>();
-		// 将复制一份的module进行复制。
-		for (Module module : modules) {
-			newModuleIds.add(module.getModId());
-		}
-		model.addAttribute("newModuleIds", newModuleIds);
-		model.addAttribute("oldModuleIds", oldModuleIds);
+
+		// 获得模块
+		model.addAttribute("modules", moduleService.selectModuleByAchId(achId));
 		// 意见列表如果通过的成果会把意见默认为通过。
 		model.addAttribute("audits", auditMapper.selectAudit(achId));
-		model.addAttribute("achievement", achievement);
-		return "/back/user/achievement";
+		// 获得成果的基本信息
+		model.addAttribute("achievement",
+				achievementService.getAchiByAchId(achId));
+		return "/back/user/modifyAchievement";
 	}
 
-	// 保存成果。为了防止多次保存造成同步问题，需要进行saveCount的次数保存
-	@RequestMapping(value = "/back/user/achievement/save", method = { RequestMethod.POST })
+	// 添加成果
+	@RequestMapping(value = "/back/user/achievement/add", method = { RequestMethod.POST })
 	@Transactional
-	public String updateModAchievement(Model model,
-			@RequestParam MultipartFile image,
+	public String addAchievement(HttpSession session) {
+		return "/back/user/addAchievement";
+	}
+
+	// 保存修改的成果。为了防止多次保存造成同步问题，需要进行saveCount的次数保存
+	@RequestMapping(value = "/back/user/achievement/modifySave", method = { RequestMethod.POST })
+	@Transactional
+	public String modifySave(Model model, @RequestParam MultipartFile image,
 			@RequestParam MultipartFile video, HttpServletRequest request,
-			Achievement achievement, List<Integer> moduleIds) {
+			Achievement achievement, List<Module> oldModules,
+			List<Module> newModules) {
+		List<Integer> achIds = new ArrayList<Integer>();
+		achIds.add(achievement.getAchId());
+		// 将修改的成果设置为0，待审核状态
+		achievementService.updateAchiWithSta(achIds, 0);
 		String imagePath = null;
 		String videoPath = null;
-		// 第一次保存
 		achievement.setAchDate(TimeToolService.getCurrentTime());
-		// 如果保存的是一个新的成果
-		if (achievement.getAchId() == null) {
+		if (image != null) {
 			imagePath = achievementService.saveImagine(image, request);
-			videoPath = achievementService.saveVideo(video, request);
 			achievement.setAchImagePath(imagePath);
-			achievement.setAchVideoPath(videoPath);
-			int achiResult = achievementService.insertAchi(achievement);
-			int modResult = moduleService.updateModuleByachId(moduleIds,
-					achievement.getAchId());
-		} else {
-			Achievement oldAchievement = achievementService
-					.getAchiByAchId(achievement.getAchId());
-
-			if (image != null) {
-				imagePath = achievementService.saveImagine(image, request);
-				achievement.setAchImagePath(imagePath);
-			}
-			if (video != null) {
-				videoPath = achievementService.saveVideo(video, request);
-				achievement.setAchVideoPath(videoPath);
-			}
-
-			// 更新待审核,删除之前新建的module
-			if (oldAchievement.getAchStatus() == 0) {
-				achievementService.updateAchievement(achievement);
-				moduleService.deleteModule(moduleIds);
-			}
-			// 更新审核通过
-			else if (oldAchievement.getAchStatus() == 1) {
-				// 插入一个新的成果
-				achievementService.insertAchi(achievement);
-				// 更新模块内容
-				moduleService.updateModuleByachId(moduleIds,
-						achievement.getAchId());
-			}
-			// 更新未通过,删除之前新建的module
-			else {
-				// 将成果变成待审核
-				achievement.setAchStatus(0);
-				achievementService.updateAchievement(achievement);
-				moduleService.deleteModule(moduleIds);
-			}
 		}
-		
-		// 转发给另一个 映射处理
+		if (video != null) {
+			videoPath = achievementService.saveVideo(video, request);
+			achievement.setAchVideoPath(videoPath);
+		}
+		achievementService.updateAchievement(achievement);
+		moduleService.updateModules(oldModules);
+		moduleService.insertModules(newModules, achievement.getAchId());
+		// 保存退出
+		return "forward:/back/user/achievement/";
+	}
+
+	@RequestMapping(value = "/back/user/achievement/addSave", method = { RequestMethod.POST })
+	@Transactional
+	public String addSave(Model model, @RequestParam MultipartFile image,
+			@RequestParam MultipartFile video, HttpServletRequest request,
+			Achievement achievement, List<Module> modules) {
+		String imagePath = null;
+		String videoPath = null;
+		achievement.setAchDate(TimeToolService.getCurrentTime());
+		imagePath = achievementService.saveImagine(image, request);
+		videoPath = achievementService.saveVideo(video, request);
+		achievement.setAchImagePath(imagePath);
+		achievement.setAchVideoPath(videoPath);
+		//一个成果插入
+		int achiResult = achievementService.insertAchi(achievement);
+		//成果的模块插入
+		int modResult = moduleService.insertModules(modules, achievement.getAchId());
+		// 保存退出
 		return "forward://back/user/achievement/modify?achId="
 				+ achievement.getAchId();
 	}
 
-	// 删除achievement
+	// 批量删除achievement
 	@RequestMapping(value = "/back/user/achievement/delete/{start}", method = { RequestMethod.POST })
 	@ResponseBody
 	public Map<String, Object> deleteAchievement(List<Integer> achievements,
@@ -209,39 +193,6 @@ public class BackUserControll {
 							null, 0, start, count);
 			map.put("totalCount", achievementService.getCount(condition));
 			map.put("achievements", achievements2);
-			map.put("statue", "success");
-		}
-		return map;
-	}
-
-	// 在修改某个模块的时候，就会发送一个模块过去。这是一个页面
-	@RequestMapping(value = "/back/user/{moduleId}", method = RequestMethod.GET)
-	public String getModule(@PathVariable("moduleId") int moduleId, Model model) {
-		Module module = moduleService.selectModuleByModId(moduleId);
-		model.addAttribute("module", module);
-		return "/back/user/module";
-	}
-	@RequestMapping(value = "/back/user/newModule", method = RequestMethod.GET)
-	public String newModule(Model model) {
-		return "/back/user/module";
-	}
-
-	// 新建保存模块的时候
-	@RequestMapping(value = "/back/user/{achId}/saveModule", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> saveModule(@PathVariable("achId") Integer achId,Module module) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("statue", "failure");
-		//如果是新建的
-		if(module.getAchId()==null){
-			module.setAchId(achId);
-			moduleService.insertModule(module);
-			map.put("modId", module.getModId());
-			map.put("statue", "success");
-		}
-		//如果是更新
-		else {
-			moduleService.updateModule(module);
 			map.put("statue", "success");
 		}
 		return map;
