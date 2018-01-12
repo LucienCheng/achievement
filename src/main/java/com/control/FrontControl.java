@@ -1,6 +1,7 @@
 package com.control;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -34,9 +35,9 @@ public class FrontControl {
 	// 一级界面
 	@RequestMapping(value = "/front/index", method = { RequestMethod.GET })
 	public String front(Model model) {
-		model.addAttribute("hot",
+		model.addAttribute("hotAchievements",
 				achievementService.getHotAchi(null, null, null, 0, 5));
-		model.addAttribute("new",
+		model.addAttribute("newAchievements",
 				achievementService.getNewAchi(null, null, null, 0, 5));
 		model.addAttribute("slideShow", slideShowService.selectSlideShow());
 		return "/front/index";
@@ -45,8 +46,8 @@ public class FrontControl {
 	// 二级页面最热
 	@RequestMapping(value = "/front/HotAchievement", method = { RequestMethod.GET })
 	public String getHotAchievement(Model model) {
-		model.addAttribute("achievements",
-				achievementService.getHotAchi(null, null, null, 0, count));
+		List<Achievement > achievements=achievementService.getHotAchi(null, null, null, 0, count);
+		model.addAttribute("achievements",achievements);
 		return "/front/second";
 	}
 
@@ -104,10 +105,9 @@ public class FrontControl {
 		}
 		
 	}
-
 	// 三级页面模块，初始页面
 	@RequestMapping(value = "/front/modules/{achId}", method = { RequestMethod.GET })
-	public String getAchievementModules(@PathParam("achId") int achId,
+	public String getAchievementModules(@PathVariable("achId") int achId,
 			Model model) {
 		Achievement achievement = achievementService
 				.getAchiByAchId(achId);
@@ -122,20 +122,4 @@ public class FrontControl {
 		
 	}
 
-	// 三级页面模块，具体页面
-	@RequestMapping(value = "/front/modules/{achId}/{moduleId}", method = { RequestMethod.GET })
-	public String getAchievementModule(@PathParam("moduleId") int moduleId,
-			@PathParam("achId") int achId, Model model) {
-		Achievement achievement = achievementService
-				.getAchiByAchId(achId);
-		if (achievement.getAchStatus()!=1) {
-			model.addAttribute("error", "成果更新状态了，不能查看，需要回退到上一步");
-			return "forward:/front/second";
-		}
-		else {
-		model.addAttribute("modules", moduleService.selectModuleByAchId(achId));
-		model.addAttribute("moduleId", moduleId);
-		return "/front/modules";
-		}
-	}
 }

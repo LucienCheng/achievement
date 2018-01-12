@@ -134,6 +134,9 @@ public class BackUserControll {
 		achIds.add(achievement.getAchId());
 		// 将修改的成果设置为0，待审核状态
 		achievementService.updateAchiWithSta(achIds, 0);
+		if(achievement.getAchStatus()==1){
+			achievementService.updateAchiWithModify(achIds, 1);
+		}
 		String imagePath = null;
 		String videoPath = null;
 		achievement.setAchDate(TimeToolService.getCurrentTime());

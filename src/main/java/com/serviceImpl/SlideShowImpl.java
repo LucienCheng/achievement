@@ -34,7 +34,7 @@ public class SlideShowImpl implements SlideShowService{
 		return slideShowMapper.selectSlideShow();
 	}
 	@Override
-	public int forSlideShow(AchievementCondition condition,
+	public List<Achievement> forSlideShow(AchievementCondition condition,
 			List<Integer> excludeIds,Integer start,Integer count) {
 		return slideShowMapper.forSlideShow(condition, excludeIds, start, count);
 	}

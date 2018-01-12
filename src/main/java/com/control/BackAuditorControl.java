@@ -156,6 +156,7 @@ public class BackAuditorControl {
 		map.put("statue", "failure");
 		// 设置状态为1，通过状态
 		achievementService.updateAchiWithSta(achIds, 1);
+		achievementService.updateAchiWithModify(achIds, 0);
 		//插入通过记录
 		auditMapper.insertAudits(achIds, TimeToolService.getCurrentTime(), (int)session.getAttribute("userId"));
 		// 解锁

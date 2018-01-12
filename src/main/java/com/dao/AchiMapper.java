@@ -14,7 +14,7 @@ public interface AchiMapper {
 	public int updateAchi(Achievement achievement);//更新一个成果
 	public int deleteAchis(List<Integer> achievements);//批量删除成果
 	public int selectCount(AchievementCondition condition);//获得总数
-
+	public int updateAchiWithModify(@Param("achIds")List<Integer> achIds,@Param("isModify")Integer isModify) ;
 /**
  * 
  * @param achId 成果id
@@ -33,7 +33,7 @@ public interface AchiMapper {
  * @param condition 是最新，还是最热
  * @return
  */
-	public List<Achievement> searchAchi(@Param("achId") Integer achId, @Param("authorId")Integer authorId,@Param("auditor") Integer auditorId,
+	public List<Achievement> searchAchi(@Param("achId") Integer achId, @Param("authorId")Integer authorId,@Param("auditorId") Integer auditorId,
 			@Param("achName")String achName,@Param("achClassify")String achClassify,
 			@Param("achStatus")Integer achStatus,@Param("authorName")String authorName,@Param("achStartTime") String achStartTime,
 			@Param("achEndTime") String achEndTime,

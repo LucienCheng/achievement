@@ -137,6 +137,15 @@
 			where achId=#{achId}
 		</foreach>
 	</update>
+	<update id="updateAchiWithModify">
+		<foreach collection="achIds" item="achId" separator=";">
+			update
+			achievement set isModify=#{isModify}
+			where achId=#{achId}
+		</foreach>
+	</update>
+	
+	
 	<select id="selectCount" resultType="int">
 		SELECT count(*) from achievement_view
 		<trim prefix="where" prefixOverrides="and | or">

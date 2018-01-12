@@ -20,7 +20,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	-->
   </head>
   <body>
-  
+  ${userId }
+  ${roleId }
+  ${totalCount }
+  ${users }
   这里是管理员界面，会有ajax请求查询用户。/back/admin/{start}这个链接请求数据，获取到json。然后重新表格。
   </body>
 </html>

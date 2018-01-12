@@ -138,9 +138,9 @@ public class AchievementImpl implements AchievementService {
 	@Override
 	public List<Achievement> getHotAchi(String authorName, String achStartTime,
 			String achEndTime, Integer start, Integer count) {
-		achiMapper.searchAchi(null, null, null, null, null, null, authorName, achStartTime, achEndTime,
+		return achiMapper.searchAchi(null, null, null, null, null, null, authorName, achStartTime, achEndTime,
 				null, null, null, null,start, count, 1);
-		return null;
+		
 	}
 	//后台根据条件搜索
 	@Override
@@ -172,6 +172,11 @@ public class AchievementImpl implements AchievementService {
 	public int getCount(AchievementCondition achievementCondition) {
 		// TODO Auto-generated method stub
 		return achiMapper.selectCount(achievementCondition);
+	}
+	@Override
+	public int updateAchiWithModify(List<Integer> achIds, Integer isModify) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	

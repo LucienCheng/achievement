@@ -23,6 +23,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
+  ${user }
+  <br>
    个人资料界面，使用/back/admin/savePerson可以保存用户信息。
   </body>
 </html>

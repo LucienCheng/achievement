@@ -12,5 +12,5 @@ public interface SlideShowService {
 	public int deleteSlideShow(int achId);
 	public List<Achievement> selectSlideShow();
 	//提供给slideShow使用的搜索
-	int forSlideShow(AchievementCondition condition,List<Integer> excludeIds,Integer start,Integer count);
+	List<Achievement> forSlideShow(AchievementCondition condition,List<Integer> excludeIds,Integer start,Integer count);
 }

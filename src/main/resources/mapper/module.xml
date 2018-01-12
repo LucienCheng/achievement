@@ -32,7 +32,7 @@
 		INNER
 		JOIN achievement ON modules.achId = achievement.achId
 		<where>
-			achId=#{achId}
+			achievement.achId=#{achId}
 		</where>
 	</select>
 

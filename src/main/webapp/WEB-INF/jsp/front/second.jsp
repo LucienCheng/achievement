@@ -23,6 +23,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
+  ${test }
+  ${achievements }
+  <br>
   二级界面，展示最新或者最热
   </body>
 </html>

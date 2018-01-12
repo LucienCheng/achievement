@@ -17,6 +17,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,15 +45,16 @@ public class BackAdminControl {
 	//在执行action时都会加载这个属性，当model存在的时候，就直接使用，当不存在的时候，就会进行创建，然后放到model里。相当于一个静态类。
 
 	//首页
-		@RequestMapping(value="/back/admin",method={RequestMethod.GET})
-		public String index(UserCondition userCondition,Model model) {
+		@RequestMapping(value="/back/admin",method={RequestMethod.GET,RequestMethod.POST})
+		public String index(Model model) {
+			UserCondition userCondition=new UserCondition();
 			List<User> users=userService.getUserByConditon(userCondition, 0, count);
 			model.addAttribute("users", users);
 			model.addAttribute("totalCount",userService.getUserCount(userCondition));
-			return "/back/amin/adminIndex";
+			return "/back/admin/adminIndex";
 		}
 		//根据条件搜索用户
-		@RequestMapping(value="/back/admin/{start}",method={RequestMethod.GET})
+		@RequestMapping(value="/back/admin/{start}",method={RequestMethod.GET,RequestMethod.POST})
 		@ResponseBody
 		public Map<String, Object> searchUsers(@PathVariable int start,UserCondition userCondition) {
 			List<User> users=userService.getUserByConditon(userCondition, start, count);
@@ -64,7 +66,7 @@ public class BackAdminControl {
 			return map;
 		}
 	//个人资料
-		@RequestMapping(value="/back/admin/personInfo",method={RequestMethod.GET})
+		@RequestMapping(value="/back/admin/personInfo",method={RequestMethod.GET,RequestMethod.POST})
 		public String personInfo(HttpSession session,Model model) {
 			model.addAttribute("user", userService.getUserById((int)session.getAttribute("userId")));
 			return "/back/personInfo";
@@ -129,7 +131,7 @@ public class BackAdminControl {
 		};
 	}
 	//excel模板导出
-	@RequestMapping(value="/back/admin/exportModel" ,method=RequestMethod.GET)
+	@RequestMapping(value="/back/admin/exportModel" ,method={RequestMethod.GET,RequestMethod.POST})
 	public  void exportModel(HSSFWorkbook workbook,HttpServletRequest request,HttpServletResponse response) throws IOException{
 		  	String filename = "导入模板.xls";//设置下载时客户端Excel的名称       
 	        response.setContentType("application/vnd.ms-excel");       
@@ -166,7 +168,8 @@ public class BackAdminControl {
 	}
 	//接下是轮播图
 	//轮播图页面
-	@RequestMapping(value="/back/admin/slideShow",method={RequestMethod.GET})
+	@RequestMapping(value="/back/admin/slideShow",method={RequestMethod.GET,RequestMethod.POST})
+	@Transactional
 	public String slideShow(Model model){
 		//选取幻灯片
 		 List<Achievement> achievements=slideShowService.selectSlideShow();
@@ -179,7 +182,7 @@ public class BackAdminControl {
 		model.addAttribute("achievementsSearch", slideShowService.forSlideShow(condition, excludeAchIds, 0, count));
 		return "/back/admin/slideShow";
 	}
-	@RequestMapping(value="/back/admin/slideShow/{start}",method={RequestMethod.POST})
+	@RequestMapping(value="/back/admin/slideShow/{start}",method={RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
 	public  Map<String, Object> slideShowPage(@PathVariable("start") Integer start,List<Integer> excludeIds,AchievementCondition condition){
 		Map<String, Object> map=new HashMap<String, Object>();
@@ -190,7 +193,7 @@ public class BackAdminControl {
 	}
 	
 	//轮播图的添加动作，并且会刷新slideShow
-	@RequestMapping(value="/back/admin/slideShow/add",method={RequestMethod.POST})
+	@RequestMapping(value="/back/admin/slideShow/add",method={RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
 	public String addSlideShow(@RequestBody Integer achId){
 		slideShowService.insertSlideShow(achId);

@@ -15,7 +15,7 @@ import com.service.UserService;
 public class BackLoginControl {
 	@Resource(name="UserServiceImpl")
 	private UserService userService;
-	@RequestMapping(value="/back",method={RequestMethod.GET})
+	@RequestMapping(value="/back",method={RequestMethod.GET,})
 	public String back(){
 		return "/back/login";
 	}

@@ -23,6 +23,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
+  ${hotAchievements }
+  <br>
+   ${newAchievements }
+  <br>
+   ${slideShow }
+  <br>
    一级界面，展示成果图片
   </body>
 </html>
