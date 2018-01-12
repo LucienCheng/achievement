@@ -182,7 +182,8 @@ public class BackAdminControl {
 		model.addAttribute("achievementsSearch", slideShowService.forSlideShow(condition, excludeAchIds, 0, count));
 		return "/back/admin/slideShow";
 	}
-	@RequestMapping(value="/back/admin/slideShow/{start}",method={RequestMethod.GET,RequestMethod.POST})
+	//在slideshow页面里有个json接收搜索页面的
+	@RequestMapping(value="/back/admin/slideShow/search/{start}",method={RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
 	public  Map<String, Object> slideShowPage(@PathVariable("start") Integer start,List<Integer> excludeIds,AchievementCondition condition){
 		Map<String, Object> map=new HashMap<String, Object>();

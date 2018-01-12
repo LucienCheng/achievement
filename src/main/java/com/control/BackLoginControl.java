@@ -28,19 +28,19 @@ public class BackLoginControl {
 			session.setAttribute("roleId",role.getRoleId() );
 			switch (role.getRoleId()) {
 			case 1: 
-				return "/back/user/userIndex";
+				return "redirect:/back/user";
 			case 2:
-				return "/back/auditor/auditorIndex";
+				return "redirect:/back/auditor";
 			case 3:
-				return "forward:/back/admin";
+				return "redirect:/back/admin";
 			}
 		}
 			return "/back/login";
 		
 	}
-	@RequestMapping(value="/back/loginOut",method={RequestMethod.POST})
-	public String loginOut(int userId,HttpSession session){
-		session.removeAttribute("userId");
+	@RequestMapping(value="/back/loginOut",method={RequestMethod.POST,RequestMethod.GET})
+	public String loginOut(HttpSession session){
+		session.invalidate();
 		return "/back/login";
 	}
 }

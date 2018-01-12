@@ -44,7 +44,7 @@ public class BackUserControll {
 	private final int count = 10;// 显示的条数
 
 	// 首页显示审核已通过
-	@RequestMapping(value = "/back/user/achievement/", method = { RequestMethod.GET })
+	@RequestMapping(value = "/back/user/", method = { RequestMethod.GET ,RequestMethod.POST})
 	public String index(HttpSession session, Model model,
 			AchievementCondition condition) {
 		model.addAttribute("achievements", achievementService

@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>display_spring</display-name>
- 
-  <listener>
-    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>
-  <context-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:spring-mybatis.xml</param-value>
-  </context-param>
+
+  <listener><listener-class>com.listen.SessionListen</listener-class></listener>
   
-<!--   过滤器 -->
   
-  <!--   以下为了使用ueditor而编写不拦截的url地址 -->
-	
   <servlet-mapping>
     <servlet-name>default</servlet-name>
     <url-pattern>/index.html</url-pattern>
@@ -26,12 +17,11 @@
     <servlet-name>default</servlet-name>
     <url-pattern>/uploadimage</url-pattern>
   </servlet-mapping>
-
   <servlet-mapping>
     <servlet-name>default</servlet-name>
     <url-pattern>/catchimage</url-pattern>
   </servlet-mapping>
-   <servlet-mapping>
+  <servlet-mapping>
     <servlet-name>default</servlet-name>
     <url-pattern>/uploadvideo</url-pattern>
   </servlet-mapping>
@@ -47,26 +37,16 @@
     <servlet-name>default</servlet-name>
     <url-pattern>/listfile</url-pattern>
   </servlet-mapping>
-  
-  
-  
-  <!-- 默认的过滤器，使用的是spring的dispatcher,不会拦截jsp页面 -->
   <servlet>
     <servlet-name>springmvc</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
     <async-supported>true</async-supported>
   </servlet>
-    <servlet-mapping>
+  <servlet-mapping>
     <servlet-name>springmvc</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
-  
-
-
-  
-  <!-- 拦截器 -->
-  
   <filter>
     <filter-name>encoding</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

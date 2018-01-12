@@ -171,6 +171,7 @@ public class AchievementImpl implements AchievementService {
 	@Override
 	public int getCount(AchievementCondition achievementCondition) {
 		// TODO Auto-generated method stub
+		System.out.println("test");
 		return achiMapper.selectCount(achievementCondition);
 	}
 	@Override

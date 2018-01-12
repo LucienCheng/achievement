@@ -61,12 +61,13 @@ public class BackAuditorControl {
 		}
 	}
 	// 审核人员的首页，显示待审核的界面
-	@RequestMapping(value = "/back/auditor", method = { RequestMethod.GET })
-	public String Index(Model model, AchievementCondition achievementCondition) {
+	@RequestMapping(value = "/back/auditor", method = { RequestMethod.GET ,RequestMethod.POST})
+	@Transactional
+	public String Index(Model model, AchievementCondition achievementCondition,HttpSession session) {
 		List<Integer> achIds = new ArrayList<Integer>();
 		List<Achievement> achievements = achievementService
 				.getAchiLockCondition(null,
-						achievementCondition.getAuditorId(), 0,
+						(int)session.getAttribute("userId"), 0,
 						achievementCondition.getAchStartTime(),
 						achievementCondition.getAchEndTime(), null, null, null,
 						achievementCondition.getAchName(),
@@ -74,8 +75,15 @@ public class BackAuditorControl {
 		for (Achievement achievement : achievements) {
 			achIds.add(achievement.getAchId());
 		}
+		System.out.println(achIds);
 		//加锁
-		achievementService.updateAchiWithLock(achIds, 1);
+		//一旦用户失效就会释放锁
+		if (achIds.size()>0) {
+			achievementService.updateAchiWithLock(achIds, 1);
+			session.setAttribute("achIds", achIds);
+		}
+		
+		achievementCondition.setAchStatus(0);
 		model.addAttribute("totalCount",
 				achievementService.getCount(achievementCondition));
 		model.addAttribute("achievements", achievements);
@@ -102,14 +110,18 @@ public class BackAuditorControl {
 			achIds.add(achievement.getAchId());
 		}
 		// 加锁
-		achievementService.updateAchiWithLock(achIds, 1);
+		//一旦用户失效就会释放锁
+		if (achIds.size()>0) {
+			achievementService.updateAchiWithLock(achIds, 1);
+			session.setAttribute("achIds", achIds);
+		}
 		map.put("achievements", achievements);
 		map.put("statue", "success");
 		return map;
 	}
 	
 	//也就是auditorindex使用的ajax
-	@RequestMapping(value = {"/back/auditor/audited","/back/auditor/audited"}, method = { RequestMethod.GET })
+	@RequestMapping(value = {"/back/auditor/audited"}, method = { RequestMethod.GET })
 	public String pass(Model model, AchievementCondition condition) {
 		// 这里会返回待审核列表给前端
 		if(condition.getAchStatus()==2||condition.getAchStatus()==0){
@@ -171,8 +183,11 @@ public class BackAuditorControl {
 		for (Achievement achievement : achievements) {
 			achIds.add(achievement.getAchId());
 		}
-		// 锁定
-		achievementService.updateAchiWithLock(achIds, 1);
+		//一旦用户失效就会释放锁
+		if (achIds.size()>0) {
+			achievementService.updateAchiWithLock(achIds, 1);
+			session.setAttribute("achIds", achIds);
+		}
 		map.put("totalCount",
 				achievementService.getCount(condition));
 		map.put("achievements", achievements);
@@ -206,8 +221,11 @@ public class BackAuditorControl {
 		for (Achievement achievement : achievements) {
 			achIds.add(achievement.getAchId());
 		}
-		// 重新获取的成果进行锁定
-		achievementService.updateAchiWithLock(achIds, 1);
+		//一旦用户失效就会释放锁
+		if (achIds.size()>0) {
+			achievementService.updateAchiWithLock(achIds, 1);
+			session.setAttribute("achIds", achIds);
+		}
 		map.put("totalCount",
 				achievementService.getCount(condition));
 		map.put("achievements", achievements);

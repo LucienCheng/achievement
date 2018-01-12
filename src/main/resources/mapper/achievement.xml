@@ -123,7 +123,7 @@
 
 	<update id="updateAchiWithSta" useGeneratedKeys="true"
 		keyProperty="achId">
-		<foreach collection="achIds" item="achId" separator=";">
+		<foreach collection="achIds" item="achId" separator=";" close=";">
 			update
 			achievement set achStatus=#{achStatus}
 			where achId=#{achId}
@@ -131,14 +131,14 @@
 	</update>
 
 	<update id="updateAchiWithLock">
-		<foreach collection="achIds" item="achId" separator=";">
+		<foreach collection="achIds" item="achId" separator=";" close=";">
 			update
-			achievement set achStatus=#{achLock}
+			achievement set achLock=#{achLock}
 			where achId=#{achId}
 		</foreach>
 	</update>
 	<update id="updateAchiWithModify">
-		<foreach collection="achIds" item="achId" separator=";">
+		<foreach collection="achIds" item="achId" separator=";" close=";">
 			update
 			achievement set isModify=#{isModify}
 			where achId=#{achId}
@@ -149,34 +149,34 @@
 	<select id="selectCount" resultType="int">
 		SELECT count(*) from achievement_view
 		<trim prefix="where" prefixOverrides="and | or">
-			<if test="authorId!=null">
+			<if test="authorId != null">
 				and authorId=#{authorId}
 			</if>
-			<if test="auditorId!=null">
+			<if test="auditorId != null">
 				and (auditorId=#{auditorId} or auditorId is null)
 			</if>
-			<if test="achStatus!=null">
+			<if test="achStatus != null">
 				and achStatus=#{achStatus}
 			</if>
-			<if test="achName!=null">
+			<if test="achName != null">
 				and achName like CONCAT('%',#{achName},'%')
 			</if>
-			<if test="achClassify!=null">
+			<if test="achClassify != null">
 				and achClassify like CONCAT('%',#{achClassify},'%')
 			</if>
-			<if test="authorName!=null">
+			<if test="authorName != null">
 				and authorName like CONCAT('%',#{authorName},'%')
 			</if>
-			<if test="achStartTime!=null">
+			<if test="achStartTime != null">
 				and achDate <![CDATA[ >= ]]> #{achStartTime}
 			</if>
-			<if test="achEndTime!=null">
+			<if test="achEndTime != null">
 				and achDate <![CDATA[ <= ]]> #{achEndTime}
 			</if>
-			<if test="audStartTime!=null">
+			<if test="audStartTime != null">
 				and audDate  <![CDATA[ >= ]]> #{audStartTime}
 			</if>
-			<if test="audEndTime!=null">
+			<if test="audEndTime != null">
 				and audDate <![CDATA[ <= ]]> #{audEndTime}
 			</if>
 			<if test="auditorName != null">
