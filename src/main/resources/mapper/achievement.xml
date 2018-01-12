@@ -98,12 +98,9 @@
 			</foreach>
 		</where>
 	</delete>
-<<<<<<< HEAD
-	<update id="updateAchi" parameterType="Achievement" useGeneratedKeys="true" keyProperty="achId">
-=======
+
 	<update id="updateAchi" parameterType="Achievement"
 		useGeneratedKeys="true" keyProperty="achId">
->>>>>>> refs/heads/feather-1.11
 		update achievement
 		<set>
 			<if test="achCTR != null">achCTR=#{achCTR},</if>
@@ -121,23 +118,17 @@
 		where
 		achId=#{achId}
 	</update>
-<<<<<<< HEAD
-	<update id="updateAchiWithSta" useGeneratedKeys="true" keyProperty="achId">
-=======
+
 	<update id="updateAchiWithSta" useGeneratedKeys="true"
 		keyProperty="achId">
->>>>>>> refs/heads/feather-1.11
 		<foreach collection="achIds" item="achId" separator=";">
 			update
 			achievement set achStatus=#{achStatus}
 			where achId=#{achId}
 		</foreach>
 	</update>
-<<<<<<< HEAD
-<update id="updateAchiWithLock" >
-=======
+
 	<update id="updateAchiWithLock">
->>>>>>> refs/heads/feather-1.11
 		<foreach collection="achIds" item="achId" separator=";">
 			update
 			achievement set achStatus=#{achLock}
