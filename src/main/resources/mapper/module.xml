@@ -51,7 +51,6 @@
 			</set>
 			where
 			modId=#{module.modId}
-		</foreach>
 
 
 	</update>

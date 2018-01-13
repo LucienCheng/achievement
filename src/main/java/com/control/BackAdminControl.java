@@ -113,7 +113,6 @@ public class BackAdminControl {
 	    }  
 	//excel导入,导入的过程有点长，所以使用异步快比较一些
 	@RequestMapping(value="/back/admin/importExcel" ,method=RequestMethod.POST)
-	@ResponseBody
 	public  Callable<String> importExcel( final MultipartFile file){
 		
 		return new Callable<String>() {
@@ -121,10 +120,10 @@ public class BackAdminControl {
 			public String call() throws Exception {
 				boolean result=userService.importUsersByExcel(file);
 				if (result) {
-					return "success";
+					return "redirect:/back/admin";
 				}
 				else {
-					return "failure";
+					return "redirect:/back/admin";
 				}
 				 
 			}

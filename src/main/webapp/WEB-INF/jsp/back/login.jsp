@@ -7,27 +7,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <base href="<%=basePath%>">
-    
-    <title>My JSP 'login.jsp' starting page</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
-
+    <title>登录页面_免费简洁响应式Bootstrap后台主题模板BootAdmin - JS代码网</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <!-- Bootstrap -->
+    <link href="source/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="source/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+    <link href="source/assets/styles.css" rel="stylesheet" media="screen">
+    <script src="source/vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
   </head>
-  
-  <body>
+  <body id="login">
+    <div class="container">
 
-<form action="back/login" method="post">
-工号：<input name="userWorkNum" type="text">
-密码：<input name="userPassword" type="text">
-<input type="submit">
-</form>
+      <form class="form-signin" action="back/login" method="post">
+        <h2 class="form-signin-heading">登录</h2>
+        <input type="text" class="input-block-level" placeholder="工号" name="userWorkNum">
+        <input type="password" class="input-block-level" placeholder="密码" name="userPassword">
+        <label class="checkbox">
+          <input type="checkbox" value="remember-me"> 记住密码
+        </label>
+        <button class="btn btn-large btn-primary" type="submit">登录</button>
+      </form>
+
+    </div> <!-- /container -->
+    <script src="source/vendors/jquery-1.9.1.min.js"></script>
+    <script src="source/bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>
