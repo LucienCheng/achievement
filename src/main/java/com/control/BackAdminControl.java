@@ -46,24 +46,29 @@ public class BackAdminControl {
 
 	//首页
 		@RequestMapping(value="/back/admin",method={RequestMethod.GET,RequestMethod.POST})
-		public String index(Model model) {
-			UserCondition userCondition=new UserCondition();
+		public String index(Model model,UserCondition userCondition) {
 			List<User> users=userService.getUserByConditon(userCondition, 0, count);
-			model.addAttribute("users", users);
-			model.addAttribute("totalCount",userService.getUserCount(userCondition));
+			int totalCount=userService.getUserCount(userCondition);
+			int totalPage=(totalCount  +  count  - 1) / count; 
+			model.addAttribute("users",users);
+			model.addAttribute("curPage", 1);
+			model.addAttribute("totalCount",totalCount);
+			model.addAttribute("totalPage",totalPage);
+			model.addAttribute("userCondition", userCondition);
 			return "/back/admin/adminIndex";
 		}
 		//根据条件搜索用户
 		@RequestMapping(value="/back/admin/{start}",method={RequestMethod.GET,RequestMethod.POST})
-		@ResponseBody
-		public Map<String, Object> searchUsers(@PathVariable int start,UserCondition userCondition) {
-			List<User> users=userService.getUserByConditon(userCondition, start, count);
-			Map<String, Object> map=new HashMap<String, Object>();
-			map.put("statue", "failure");
-			map.put("users",users);
-			map.put("totalCount",userService.getUserCount(userCondition));
-			map.put("statue", "success");
-			return map;
+		public String searchUsers(@PathVariable int start,UserCondition userCondition,Model model) {
+			List<User> users=userService.getUserByConditon(userCondition, (start-1)*10, count);
+			int totalCount=userService.getUserCount(userCondition);
+			int totalPage=(totalCount  +  count  - 1) / count; 
+			model.addAttribute("users",users);
+			model.addAttribute("curPage", start);
+			model.addAttribute("totalCount",totalCount);
+			model.addAttribute("totalPage",totalPage);
+			model.addAttribute("userCondition", userCondition);
+			return "/back/admin/adminIndex";
 		}
 	//个人资料
 		@RequestMapping(value="/back/admin/personInfo",method={RequestMethod.GET,RequestMethod.POST})
@@ -73,21 +78,10 @@ public class BackAdminControl {
 		}
 		//更新用户个人的信息
 		@RequestMapping(value="/back/admin/savePerson",method={RequestMethod.POST})
-		@ResponseBody
 		public String updateUser(User user,HttpSession session){
-			if(user.getUserId()==null){
-				user.setUserId((int)session.getAttribute("userId"));
-			}
-			else {
-				return "failure";
-			}
+			user.setUserId((int)session.getAttribute("userId"));
 			int result=userService.updateUser(user);
-			if (result==1) {
-				return "success";
-			}
-			else {
-				return "failure";
-			}
+			return "redirect:/back/admin/personInfo";
 		}
 	@ModelAttribute
 	 private  HSSFWorkbook resultSetToExcel(String sheetName) throws Exception  
@@ -143,27 +137,28 @@ public class BackAdminControl {
 	
 	//保存一个用户
 	@RequestMapping(value="/back/admin/saveUser",method={RequestMethod.POST})
-	@ResponseBody
 	public String saveUser(User user){
 		int result=userService.updateUser(user);
-		if (result==1) {
-			return "success";
-		}
-		else {
-			return "failure";
-		}
+		return "redirect:/back/admin";
 	}
+	
+	//添加一个用户
+		@RequestMapping(value="/back/admin/addUser",method={RequestMethod.POST})
+		public String addUser(User user){
+			List<User> users=new ArrayList<User>();
+			users.add(user);
+			int result=userService.insertUsers(users);
+			return "redirect:/back/admin";
+		}
 	//批量删除用户
-	@RequestMapping(value="/back/admin/deleteUser",method={RequestMethod.POST})
+	@RequestMapping(value="/back/admin/deleteUser/",method={RequestMethod.POST})
 	@ResponseBody
-	public String deleteUser(@RequestBody List<Integer> userIds){
+	public Map<String, Object> deleteUser(@RequestBody List<Integer> userIds){
+		Map<String, Object> map=new HashMap<String, Object>();
 		int result=userService.deleteUsers(userIds);
-		if (result>0) {
-			return "success";
-		}
-		else {
-			return "failure";
-		}
+		System.out.println(userIds);
+		map.put("success", "success");
+		return map;
 	}
 	//接下是轮播图
 	//轮播图页面
@@ -178,7 +173,6 @@ public class BackAdminControl {
 			excludeAchIds.add(achievement.getAchId());
 		}
 		model.addAttribute("achievements",achievements);
-		model.addAttribute("achievementsSearch", slideShowService.forSlideShow(condition, excludeAchIds, 0, count));
 		return "/back/admin/slideShow";
 	}
 	//在slideshow页面里有个json接收搜索页面的

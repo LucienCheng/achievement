@@ -25,6 +25,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
    ${ achievements}
    <br>
-   ${achievementsSearch }
   </body>
 </html>

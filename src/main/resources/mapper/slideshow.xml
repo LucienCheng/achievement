@@ -71,7 +71,7 @@
 			<if test="condition.achLock != null">
 				and achLock=#{condition.achLock}
 			</if>
-			<if test="excludeIds != null">
+			<if test="excludeIds != null and excludeIds.length != 0">
 			and achId not in 
 			<foreach collection="excludeIds" item="achId" separator="," open="(" close=")">
 			#{achId}

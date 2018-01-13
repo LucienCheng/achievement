@@ -92,7 +92,10 @@
 		<if test="userName != null">userName=#{userName},</if>
 		<if test="userSex != null">userSex=#{userSex},</if>
 		<if test="userPos != null">userPos=#{userPos},</if>
-		<if test="roleId != null">roleId=#{role.roleId},</if>
+		<if test="role != null">
+		<if test="role.roleId != null">roleId=#{role.roleId},</if>
+		</if>
+		
 		</set>
 		where
 			userId=#{userId}

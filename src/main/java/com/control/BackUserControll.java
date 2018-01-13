@@ -86,19 +86,10 @@ public class BackUserControll {
 
 	// 更新用户个人的信息
 	@RequestMapping(value = "/back/user/savePerson", method = { RequestMethod.POST })
-	@ResponseBody
-	public String updateUser(User user, HttpSession session) {
-		if (user.getUserId() == null) {
-			user.setUserId((int) session.getAttribute("userId"));
-		} else {
-			return "failure";
-		}
-		int result = userService.updateUser(user);
-		if (result == 1) {
-			return "success";
-		} else {
-			return "failure";
-		}
+	public String updateUser(User user,HttpSession session){
+		user.setUserId((int)session.getAttribute("userId"));
+		int result=userService.updateUser(user);
+		return "redirect:/back/admin/personInfo";
 	}
 
 	// 进入修改界面

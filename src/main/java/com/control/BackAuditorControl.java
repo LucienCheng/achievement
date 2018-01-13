@@ -44,21 +44,11 @@ public class BackAuditorControl {
 		}
 	//更新用户个人的信息
 	@RequestMapping(value="/back/auditor/savePerson",method={RequestMethod.POST})
-	@ResponseBody
+
 	public String updateUser(User user,HttpSession session){
-		if(user.getUserId()==null){
-			user.setUserId((int)session.getAttribute("userId"));
-		}
-		else {
-			return "failure";
-		}
+		user.setUserId((int)session.getAttribute("userId"));
 		int result=userService.updateUser(user);
-		if (result==1) {
-			return "success";
-		}
-		else {
-			return "failure";
-		}
+		return "redirect:/back/admin/personInfo";
 	}
 	// 审核人员的首页，显示待审核的界面
 	@RequestMapping(value = "/back/auditor", method = { RequestMethod.GET ,RequestMethod.POST})
