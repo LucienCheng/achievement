@@ -101,7 +101,7 @@ public class BackUserControll {
 		}
 	}
 
-	// 进入（修改/添加）成果界面,复制一份module，为了防止出现更改已通过的操作。返回的是成果编辑界面
+	// 进入修改界面
 	@RequestMapping(value = "/back/user/achievement/modify", method = { RequestMethod.POST })
 	@Transactional
 	public String modifyAchievement(Integer achId, Model model) {
@@ -116,20 +116,23 @@ public class BackUserControll {
 		return "/back/user/modifyAchievement";
 	}
 
-	// 添加成果
+	// 进入添加成果界面，并且新建一个achievement
 	@RequestMapping(value = "/back/user/achievement/add", method = { RequestMethod.POST })
 	@Transactional
-	public String addAchievement(HttpSession session) {
+	public String addAchievement(Model model) {
+		Achievement achievement=new Achievement();
+		achievementService.insertAchi(achievement);
+		model.addAttribute("achId", achievement.getAchId());
 		return "/back/user/addAchievement";
 	}
 
-	// 保存修改的成果。为了防止多次保存造成同步问题，需要进行saveCount的次数保存
+	// 保存修改的成果。这种效果就是一旦保存了模块，那就生效了。
 	@RequestMapping(value = "/back/user/achievement/modifySave", method = { RequestMethod.POST })
 	@Transactional
 	public String modifySave(Model model, @RequestParam MultipartFile image,
 			@RequestParam MultipartFile video, HttpServletRequest request,
-			Achievement achievement, List<Module> oldModules,
-			List<Module> newModules) {
+			Achievement achievement, List<Integer> oldModules,
+			List<Integer> newModules) {
 		List<Integer> achIds = new ArrayList<Integer>();
 		achIds.add(achievement.getAchId());
 		// 将修改的成果设置为0，待审核状态
@@ -149,17 +152,15 @@ public class BackUserControll {
 			achievement.setAchVideoPath(videoPath);
 		}
 		achievementService.updateAchievement(achievement);
-		moduleService.updateModules(oldModules);
-		moduleService.insertModules(newModules, achievement.getAchId());
 		// 保存退出
 		return "forward:/back/user/achievement/";
 	}
-
+//新建的时候的保存
 	@RequestMapping(value = "/back/user/achievement/addSave", method = { RequestMethod.POST })
 	@Transactional
 	public String addSave(Model model, @RequestParam MultipartFile image,
 			@RequestParam MultipartFile video, HttpServletRequest request,
-			Achievement achievement, List<Module> modules) {
+			Achievement achievement) {
 		String imagePath = null;
 		String videoPath = null;
 		achievement.setAchDate(TimeToolService.getCurrentTime());
@@ -167,10 +168,10 @@ public class BackUserControll {
 		videoPath = achievementService.saveVideo(video, request);
 		achievement.setAchImagePath(imagePath);
 		achievement.setAchVideoPath(videoPath);
+		//设置为待审核
+		achievement.setAchStatus(0);
 		//一个成果插入
 		int achiResult = achievementService.insertAchi(achievement);
-		//成果的模块插入
-		int modResult = moduleService.insertModules(modules, achievement.getAchId());
 		// 保存退出
 				return "forward:/back/user/achievement/";
 	}
@@ -212,5 +213,38 @@ public class BackUserControll {
 		}
 		return map;
 	}
+	//添加新建模块直接调到编辑模块的界面
+	@RequestMapping(value = "/back/user/addModule", method = RequestMethod.POST)
+	public String addModule(Integer achId,Model model) {
+		model.addAttribute("achId", achId);
+		return "/back/user/module";
+	}
+	//保存新建模块，传进来的是成果id和模块内容，然后返回上一层
+		@RequestMapping(value = "/back/user/saveModule", method = RequestMethod.POST)
+		public String saveModule(Module module) {
+			moduleService.insertModules(module);
+			List<Integer> achIds=new ArrayList<Integer>();
+			achIds.add(module.getAchId());
+			//设置为未发布状态
+			achievementService.updateAchiWithSta(achIds, -1);
+			return "redirect:/back/user/achievement/modify?achId="+module.getAchId();
+		}
+		
+		//修改模块直接调到编辑模块的界面
+		@RequestMapping(value = "/back/user/modifyModule", method = RequestMethod.POST)
+		public String modifyModule(Integer modId,Model model) {
+			model.addAttribute("module", moduleService.selectModuleByModId(modId));
+			return "/back/user/module";
+		}
+		//保存修改模块，传进来的是成果id和模块内容，然后返回上一层
+			@RequestMapping(value = "/back/user/saveModifyModule", method = RequestMethod.POST)
+			public String saveModifyModule(Module module) {
+				moduleService.updateModules(module);
+				List<Integer> achIds=new ArrayList<Integer>();
+				achIds.add(module.getAchId());
+				//设置为待审核
+				achievementService.updateAchiWithSta(achIds, -1);
+				return "redirect:/back/user/achievement/modify?achId="+module.getAchId();
+			}
 
 }

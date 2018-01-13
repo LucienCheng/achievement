@@ -37,7 +37,6 @@
 	</select>
 
 	<update id="updateModule" keyProperty="modId" useGeneratedKeys="true">
-		<foreach collection="list" item="module" separator=";">
 			update modules
 			<set>
 				<if test="module.modContent != null">
@@ -62,8 +61,6 @@
 	<insert id="insertModules" keyProperty="modId" useGeneratedKeys="true">
 		insert into
 		modules(modName,modContent,modDescribe,achId)
-		<foreach item="module" collection="list" separator="," close=";">
 			values(#{module.modName},#{module.modContent},#{module.modDescribe},#{module.achId})
-		</foreach>
 	</insert>
 </mapper>
