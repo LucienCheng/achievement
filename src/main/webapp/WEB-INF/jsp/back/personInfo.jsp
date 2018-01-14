@@ -48,7 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
 					<li><a href="/achievement/back/admin"> 用户管理</a></li>
 					<li class="active"><a href="javascript:void(0);"> 个人消息修改</a></li>
-					<li><a href="#"> 首页轮播图</a></li>
+					<li><a href="/achievement/back/admin/slideShow"> 首页轮播图</a></li>
 				</ul>
 			</div>
 		</c:if>

@@ -15,6 +15,7 @@
 		<result property="isModify" column="isModify" />
 		<association property="user" javaType="User" column="userId">
 			<id property="userId" column="userId" />
+			<result property="userName" column="authorName"/>
 		</association>
 	</resultMap>
 	<!-- 插入一条更改记录 -->
@@ -25,7 +26,13 @@
 	<!-- 删除一条更改记录 -->
 	<delete id="deleteSlideShow">
 		delete from slideshow
-		where achId=#{achId}
+		where achId in 
+		<foreach collection="list" item="achId" open="(" close=")" separator=",">
+		#{achId}
+		
+		</foreach>
+		
+		
 	</delete>
 	<select id="selectSlideShow" resultMap="achievementResultMap">
 	select slideshow_view.* from slideshow_view where  achStatus=1 and isModify=0
@@ -71,12 +78,8 @@
 			<if test="condition.achLock != null">
 				and achLock=#{condition.achLock}
 			</if>
-			<if test="excludeIds != null and excludeIds.length != 0">
 			and achId not in 
-			<foreach collection="excludeIds" item="achId" separator="," open="(" close=")">
-			#{achId}
-			</foreach>
-			</if>
+			(select achId from slideshow) 
 		</trim>
 		<if test="start!=null and count != null">
 			ORDER BY

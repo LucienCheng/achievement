@@ -9,8 +9,8 @@ import com.entity.AchievementCondition;
 
 public interface SlideShowService {
 	public int insertSlideShow(@Param("achId")int achId);
-	public int deleteSlideShow(int achId);
+	public int deleteSlideShow(List<Integer> achIds);
 	public List<Achievement> selectSlideShow();
 	//提供给slideShow使用的搜索
-	List<Achievement> forSlideShow(AchievementCondition condition,List<Integer> excludeIds,Integer start,Integer count);
+	List<Achievement> forSlideShow(AchievementCondition condition,Integer start,Integer count);
 }

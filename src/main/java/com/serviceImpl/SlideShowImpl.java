@@ -23,9 +23,9 @@ public class SlideShowImpl implements SlideShowService{
 	}
 
 	@Override
-	public int deleteSlideShow(int achId) {
+	public int deleteSlideShow(List<Integer> achIds) {
 		// TODO Auto-generated method stub
-		return slideShowMapper.deleteSlideShow(achId);
+		return slideShowMapper.deleteSlideShow(achIds);
 	}
 
 	@Override
@@ -35,8 +35,8 @@ public class SlideShowImpl implements SlideShowService{
 	}
 	@Override
 	public List<Achievement> forSlideShow(AchievementCondition condition,
-			List<Integer> excludeIds,Integer start,Integer count) {
-		return slideShowMapper.forSlideShow(condition, excludeIds, start, count);
+			Integer start,Integer count) {
+		return slideShowMapper.forSlideShow(condition, start, count);
 	}
 
 }

@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 import javax.annotation.Resource;
+import javax.json.Json;
+import javax.json.JsonArray;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,6 +18,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.json.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -41,7 +44,7 @@ public class BackAdminControl {
 	private UserService userService;
 	@Resource(name="slideShowImpl")
 	private SlideShowService slideShowService;
-	private final int count=10;
+	private final int count=1;	
 	//在执行action时都会加载这个属性，当model存在的时候，就直接使用，当不存在的时候，就会进行创建，然后放到model里。相当于一个静态类。
 
 	//首页
@@ -50,6 +53,8 @@ public class BackAdminControl {
 			List<User> users=userService.getUserByConditon(userCondition, 0, count);
 			int totalCount=userService.getUserCount(userCondition);
 			int totalPage=(totalCount  +  count  - 1) / count; 
+			JSONArray userJson=new JSONArray(users);
+			model.addAttribute("userJson",userJson);
 			model.addAttribute("users",users);
 			model.addAttribute("curPage", 1);
 			model.addAttribute("totalCount",totalCount);
@@ -60,9 +65,11 @@ public class BackAdminControl {
 		//根据条件搜索用户
 		@RequestMapping(value="/back/admin/{start}",method={RequestMethod.GET,RequestMethod.POST})
 		public String searchUsers(@PathVariable int start,UserCondition userCondition,Model model) {
-			List<User> users=userService.getUserByConditon(userCondition, (start-1)*10, count);
+			List<User> users=userService.getUserByConditon(userCondition, (start-1)*count, count);
 			int totalCount=userService.getUserCount(userCondition);
 			int totalPage=(totalCount  +  count  - 1) / count; 
+			JSONArray userJson=new JSONArray(users);
+			model.addAttribute("userJson",userJson);
 			model.addAttribute("users",users);
 			model.addAttribute("curPage", start);
 			model.addAttribute("totalCount",totalCount);
@@ -138,6 +145,7 @@ public class BackAdminControl {
 	//保存一个用户
 	@RequestMapping(value="/back/admin/saveUser",method={RequestMethod.POST})
 	public String saveUser(User user){
+		System.out.println(user);
 		int result=userService.updateUser(user);
 		return "redirect:/back/admin";
 	}
@@ -167,23 +175,15 @@ public class BackAdminControl {
 	public String slideShow(Model model){
 		//选取幻灯片
 		 List<Achievement> achievements=slideShowService.selectSlideShow();
-		AchievementCondition condition=new AchievementCondition();
-		List<Integer> excludeAchIds=new ArrayList<Integer>();
-		for (Achievement achievement : achievements) {
-			excludeAchIds.add(achievement.getAchId());
-		}
 		model.addAttribute("achievements",achievements);
 		return "/back/admin/slideShow";
 	}
-	//在slideshow页面里有个json接收搜索页面的
+	//在searchSlideShow
 	@RequestMapping(value="/back/admin/slideShow/search/{start}",method={RequestMethod.GET,RequestMethod.POST})
-	@ResponseBody
-	public  Map<String, Object> slideShowPage(@PathVariable("start") Integer start,List<Integer> excludeIds,AchievementCondition condition){
-		Map<String, Object> map=new HashMap<String, Object>();
-		map.put("statue", "failure");
-		map.put("achievementsSearch", slideShowService.forSlideShow(condition, excludeIds, start, count));
-		map.put("statue", "success");
-		return map;
+
+	public  String slideShowPage(Model model,@PathVariable("start") Integer start,AchievementCondition condition){
+		model.addAttribute("achievements", slideShowService.forSlideShow(condition, (start-1)*count, count));
+	return "/back/admin/searchSlideShow";
 	}
 	
 	//轮播图的添加动作，并且会刷新slideShow
@@ -197,9 +197,11 @@ public class BackAdminControl {
 	//轮播图的删除动作，并且会刷新slideShow
 		@RequestMapping(value="/back/admin/slideShow/delete",method={RequestMethod.POST})
 		@ResponseBody
-		public String deleteSlideShow(@RequestBody Integer achId){
-			slideShowService.deleteSlideShow(achId);
-			return "forward:/back/admin/slideShow";
+		public Map<String, Object> deleteSlideShow(@RequestBody List<Integer> achIds){
+			Map<String, Object> map=new HashMap<String, Object>();
+			slideShowService.deleteSlideShow(achIds);
+			map.put("success", "success");
+			return map;
 		}
 
 }
