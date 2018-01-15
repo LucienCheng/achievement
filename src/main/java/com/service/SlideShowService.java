@@ -13,4 +13,5 @@ public interface SlideShowService {
 	public List<Achievement> selectSlideShow();
 	//提供给slideShow使用的搜索
 	List<Achievement> forSlideShow(AchievementCondition condition,Integer start,Integer count);
+	public int count(AchievementCondition condition);
 }

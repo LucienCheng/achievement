@@ -39,4 +39,10 @@ public class SlideShowImpl implements SlideShowService{
 		return slideShowMapper.forSlideShow(condition, start, count);
 	}
 
+	@Override
+	public int count(AchievementCondition condition) {
+		// TODO Auto-generated method stub
+		return slideShowMapper.count(condition);
+	}
+
 }

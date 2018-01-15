@@ -48,9 +48,7 @@
 			<if test="condition.auditorId != null">
 				and (auditorId=#{condition.auditorId} or condition.auditorId is null)
 			</if>
-			<if test="condition.achStatus != null">
-				and achStatus=#{condition.condition.achStatus}
-			</if>
+				and achStatus=1
 			<if test="condition.achName != null">
 				and achName like CONCAT('%',#{condition.achName},'%')
 			</if>
@@ -75,9 +73,7 @@
 			<if test="condition.auditorName != null">
 				and auditorName like CONCAT('%',#{condition.auditorName},'%')
 			</if>
-			<if test="condition.achLock != null">
-				and achLock=#{condition.achLock}
-			</if>
+				and achLock=0
 			and achId not in 
 			(select achId from slideshow) 
 		</trim>
@@ -87,5 +83,50 @@
 			LIMIT #{start},#{count}
 		</if>
 		
+	</select>
+	
+	
+	
+	
+	
+	<select id="count" resultType="int">
+		SELECT count(*) from achievement_view
+		<trim prefix="where" prefixOverrides="and | or">
+
+			<if test="condition.authorId != null">
+				and authorId=#{condition.authorId}
+			</if>
+			<if test="condition.auditorId != null">
+				and (auditorId=#{condition.auditorId} or condition.auditorId is null)
+			</if>
+				and achStatus=1
+			<if test="condition.achName != null">
+				and achName like CONCAT('%',#{condition.achName},'%')
+			</if>
+			<if test="condition.achClassify != null">
+				and achClassify like CONCAT('%',#{condition.achClassify},'%')
+			</if>
+			<if test="condition.authorName != null">
+				and authorName like CONCAT('%',#{condition.authorName},'%')
+			</if>
+			<if test="condition.achStartTime != null">
+				and achDate <![CDATA[ >= ]]> #{condition.achStartTime}
+			</if>
+			<if test="condition.achEndTime != null">
+				and achDate <![CDATA[ <= ]]> #{condition.achEndTime}
+			</if>
+			<if test="condition.audStartTime != null">
+				and audDate <![CDATA[ >= ]]> #{condition.audStartTime}
+			</if>
+			<if test="condition.audEndTime != null">
+				and audDate <![CDATA[ <= ]]> #{condition.audEndTime}
+			</if>
+			<if test="condition.auditorName != null">
+				and auditorName like CONCAT('%',#{condition.auditorName},'%')
+			</if>
+				and achLock=0
+			and achId not in 
+			(select achId from slideshow) 
+		</trim>
 	</select>
 </mapper>

@@ -11,4 +11,6 @@ public interface SlideShowMapper {
 	public List<Achievement> selectSlideShow();
 	public List<Achievement> forSlideShow(@Param("condition")AchievementCondition condition,
 		@Param("start")Integer start,@Param("count")Integer count);
+	public int count(@Param("condition")AchievementCondition condition);
+	
 }

@@ -179,18 +179,30 @@ public class BackAdminControl {
 		return "/back/admin/slideShow";
 	}
 	//在searchSlideShow
-	@RequestMapping(value="/back/admin/slideShow/search/{start}",method={RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value="/back/admin/slideShow/search/{start}",method={RequestMethod.GET})
 
-	public  String slideShowPage(Model model,@PathVariable("start") Integer start,AchievementCondition condition){
+	public  String slideShowPage(Model model,@PathVariable("start") Integer start,@ModelAttribute AchievementCondition condition){
+		if(condition!=null&&condition.getAchStartTime()!=null&&condition.getAchEndTime()!=null){
+			if (condition.getAchStartTime().length()==0) {
+				condition.setAchStartTime(null);
+			}
+			if (condition.getAchEndTime().length()==0) {
+				condition.setAchEndTime(null);
+			}
+		}
+	
 		model.addAttribute("achievements", slideShowService.forSlideShow(condition, (start-1)*count, count));
+		model.addAttribute("curPage", start);
+		model.addAttribute("totalPage",slideShowService.count(condition));
+		model.addAttribute("condition", condition);
 	return "/back/admin/searchSlideShow";
 	}
 	
 	//轮播图的添加动作，并且会刷新slideShow
 	@RequestMapping(value="/back/admin/slideShow/add",method={RequestMethod.GET,RequestMethod.POST})
-	@ResponseBody
-	public String addSlideShow(@RequestBody Integer achId){
+	public String addSlideShow( Integer achId){
 		slideShowService.insertSlideShow(achId);
+		
 		return "forward:/back/admin/slideShow";
 	}
 	

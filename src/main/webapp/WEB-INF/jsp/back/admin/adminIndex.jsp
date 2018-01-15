@@ -199,11 +199,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								value="批量导入" class="btn" type="submit">
 					</form>
 
-					<script type="text/javascript">  
-$('input[id=lefile]').change(function() {  
-$('#photoCover').val($(this).val());  
-});  
-</script>
+					<script type="text/javascript">
+						$('input[id=lefile]').change(function() {
+							$('#photoCover').val($(this).val());
+						});
+					</script>
 				</div>
 
 				<a class="btn  " type="button" href="admin/exportModel"> 导入模板下载</span>

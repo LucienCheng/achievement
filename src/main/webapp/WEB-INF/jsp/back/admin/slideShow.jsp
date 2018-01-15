@@ -50,6 +50,7 @@
 <script
 	src="/achievement/source/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript">
+
 	Array.prototype.indexOf = function(val) {
 		for (var i = 0; i < this.length; i++) {
 			if (this[i] == val)
@@ -84,7 +85,17 @@
 				window.open("/achievement/back/admin/slideShow", "_self");
 			}
 		});
-}
+	}
+	//获取子窗口的元素
+	$(function() {
+		$("#myIframe").load(function() {
+			$("#myIframe").contents().find(".addSlideShow").click(function() {
+				console.log($(this).val());
+				window.open("/achievement/back/admin/slideShow/add?achId="+$(this).val(),"_self");
+			});
+		});
+
+	});
 </script>
 </head>
 <body>
@@ -203,7 +214,8 @@
 					<h4 class="modal-title" id="myModalLabel">选择首页轮播图</h4>
 				</div>
 				<div class="modal-body" style="overflow-y:hidden;">
-					<iframe src="/achievement/back/admin/slideShow/search/1"  width="100%" height="100%"></iframe>
+					<iframe id="myIframe"src="/achievement/back/admin/slideShow/search/1"  width="100%" height="100%"></iframe>
+					
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
