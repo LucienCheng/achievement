@@ -65,8 +65,6 @@ public boolean updateAchievement(Achievement achievement);
 public int deleteAchis(List<Integer> achievements);
 //根据搜索结果返回查询的结果数量。
 public int getCount(AchievementCondition achievementCondition);
-//批量更新成果的修改的状态。这个用在审核通过的上面，同时把状态变成待审核，ismodify变成1，slideshow展示的时候会用到。
-public int updateAchiWithModify(List<Integer> achIds,Integer isModify) ;
 
 
 }

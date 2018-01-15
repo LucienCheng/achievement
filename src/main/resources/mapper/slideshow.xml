@@ -12,7 +12,7 @@
 		<result property="achDate" column="achDate" />
 		<result property="achCTR" column="achCTR" />
 		<result property="achDescribe" column="achDescribe" />
-		<result property="isModify" column="isModify" />
+	
 		<association property="user" javaType="User" column="userId">
 			<id property="userId" column="userId" />
 			<result property="userName" column="authorName"/>
@@ -35,7 +35,7 @@
 		
 	</delete>
 	<select id="selectSlideShow" resultMap="achievementResultMap">
-	select slideshow_view.* from slideshow_view where  achStatus=1 and isModify=0
+	select slideshow_view.* from slideshow_view where  achStatus=1
 	</select>
 
 	<select id="forSlideShow" resultMap="achievementResultMap">

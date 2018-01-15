@@ -28,7 +28,7 @@ public class BackLoginControl {
 			session.setAttribute("roleId",role.getRoleId() );
 			switch (role.getRoleId()) {
 			case 1: 
-				return "redirect:/back/user";
+				return "redirect:/back/user?achStatus=1";
 			case 2:
 				return "redirect:/back/auditor";
 			case 3:

@@ -13,7 +13,6 @@
 		<result property="achDate" column="achDate" />
 		<result property="achCTR" column="achCTR" />
 		<result property="achDescribe" column="achDescribe" />
-		<result property="isModify" column="isModify" />
 		<association property="user" javaType="User" column="userId">
 			<id property="userId" column="userId" />
 		</association>
@@ -25,9 +24,9 @@
 		useGeneratedKeys="true" keyProperty="achId">
 		insert into
 		achievement(achName,userId,achVideoPath,
-		achImagePath,achClassify,achStatus,achDate,achDescribe,isModify)
+		achImagePath,achClassify,achStatus,achDate,achDescribe)
 		values(#{achName},#{user.userId},#{achVideoPath},#{achImagePath},#{achClassify}
-		,#{achStatus},#{achDate},#{achDescribe},#{isModify})
+		,#{achStatus},#{achDate},#{achDescribe})
 	</insert>
 
 
@@ -115,7 +114,6 @@
 			<if test="achLock != null">achLock=#{achLock},</if>
 			<if test="achDate != null">achDate=#{achDate},</if>
 			<if test="achDescribe != null">achDescribe=#{achDescribe},</if>
-			<if test="isModify != null">isModify=#{isModify}</if>
 		</set>
 		where
 		achId=#{achId}
@@ -137,13 +135,7 @@
 			where achId=#{achId}
 		</foreach>
 	</update>
-	<update id="updateAchiWithModify">
-		<foreach collection="achIds" item="achId" separator=";" close=";">
-			update
-			achievement set isModify=#{isModify}
-			where achId=#{achId}
-		</foreach>
-	</update>
+	
 	
 	
 	<select id="selectCount" resultType="int">

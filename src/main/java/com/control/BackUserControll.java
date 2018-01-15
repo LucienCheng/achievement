@@ -41,39 +41,55 @@ public class BackUserControll {
 	private UserService userService;
 	@Resource
 	private AuditMapper auditMapper;
-	private final int count = 10;// 显示的条数
+	private final int count = 1;// 显示的条数
 
 	// 首页显示审核已通过
-	@RequestMapping(value = "/back/user/", method = { RequestMethod.GET ,RequestMethod.POST})
+	@RequestMapping(value = "/back/user", method = { RequestMethod.GET ,RequestMethod.POST})
 	public String index(HttpSession session, Model model,
 			AchievementCondition condition) {
+		condition.setAuthorId((Integer) session.getAttribute("userId"));
 		model.addAttribute("achievements", achievementService
-				.getAchiLockCondition((Integer) session.getAttribute("userId"),
-						null, 1, condition.getAchStartTime(),
-						condition.getAchEndTime(), null, null,
-						condition.getAuditorName(), condition.getAchName(),
-						null, 0, 0, count));
-		model.addAttribute("totalCount", achievementService.getCount(condition));
+				.getAchiLockCondition(condition.getAuditorId(),
+						null, condition.getAchStatus(), null,
+						null, null, null,
+						null, null,null, 0, 0, count));
+		int totalCount=achievementService.getCount(condition);
+		int totalPage=(totalCount  +  count  - 1) / count; 
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("curPage", 1);
+		model.addAttribute("condition", condition);
 		return "/back/user/userIndex";
 	}
 
-	// 获取成果userindex使用的ajax
-	@RequestMapping(value = "/back/user/achievement/{start}", method = { RequestMethod.GET })
-	@ResponseBody
-	public Map<String, Object> userSearchAchievement(HttpSession session,
-			@PathVariable("start") int start, AchievementCondition condition) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("statue", "failure");
-		map.put("achievements", achievementService.getAchiLockCondition(
-				(Integer) session.getAttribute("userId"), null,
+	// 搜索
+	@RequestMapping(value = "/back/user/{start}", method = { RequestMethod.GET })
+	
+	public String userSearchAchievement(HttpSession session,
+			@PathVariable("start") int start, AchievementCondition condition,Model model) {
+		if(condition!=null&&condition.getAchStartTime()!=null&&condition.getAchEndTime()!=null){
+			if (condition.getAchStartTime().length()==0) {
+				condition.setAchStartTime(null);
+			}
+			if (condition.getAchEndTime().length()==0) {
+				condition.setAchEndTime(null);
+			}
+		}
+		condition.setAuthorId((Integer) session.getAttribute("userId"));
+		model.addAttribute("achievements", achievementService.getAchiLockCondition(
+				condition.getAuditorId(), null,
 				condition.getAchStatus(), condition.getAchStartTime(),
 				condition.getAchEndTime(), null, null,
 				condition.getAuditorName(), condition.getAchName(), null, 0,
-				start, count));
+				(start-1)*count, count));
 
-		map.put("totalCount", achievementService.getCount(condition));
-		map.put("statue", "success");
-		return map;
+		int totalCount=achievementService.getCount(condition);
+		int totalPage=(totalCount  +  count  - 1) / count; 
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("curPage", start);
+		model.addAttribute("condition", condition);
+		return "/back/user/userIndex";
 	}
 
 	// 个人资料
@@ -122,15 +138,11 @@ public class BackUserControll {
 	@Transactional
 	public String modifySave(Model model, @RequestParam MultipartFile image,
 			@RequestParam MultipartFile video, HttpServletRequest request,
-			Achievement achievement, List<Integer> oldModules,
-			List<Integer> newModules) {
+			Achievement achievement) {
 		List<Integer> achIds = new ArrayList<Integer>();
 		achIds.add(achievement.getAchId());
 		// 将修改的成果设置为0，待审核状态
 		achievementService.updateAchiWithSta(achIds, 0);
-		if(achievement.getAchStatus()==1){
-			achievementService.updateAchiWithModify(achIds, 1);
-		}
 		String imagePath = null;
 		String videoPath = null;
 		achievement.setAchDate(TimeToolService.getCurrentTime());
@@ -168,27 +180,14 @@ public class BackUserControll {
 	}
 
 	// 批量删除achievement
-	@RequestMapping(value = "/back/user/achievement/delete/{start}", method = { RequestMethod.POST })
+	@RequestMapping(value = "/back/user/achievement/delete", method = { RequestMethod.POST })
 	@ResponseBody
-	public Map<String, Object> deleteAchievement(List<Integer> achievements,
-			AchievementCondition condition, @PathVariable("start") int start,
-			HttpSession session) {
+	public Map<String, Object> deleteAchievement(@RequestBody List<Integer> achievements) {
+		System.out.println("test");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("statue", "failure");
 		int result = achievementService.deleteAchis(achievements);
-		if (result > 0) {
-			List<Achievement> achievements2 = achievementService
-					.getAchiLockCondition(
-							(Integer) session.getAttribute("userId"), null,
-							condition.getAchStatus(),
-							condition.getAchStartTime(),
-							condition.getAchEndTime(), null, null,
-							condition.getAuditorName(), condition.getAchName(),
-							null, 0, start, count);
-			map.put("totalCount", achievementService.getCount(condition));
-			map.put("achievements", achievements2);
 			map.put("statue", "success");
-		}
 		return map;
 	}
 

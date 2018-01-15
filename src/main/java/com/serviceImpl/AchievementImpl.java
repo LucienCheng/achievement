@@ -174,17 +174,4 @@ public class AchievementImpl implements AchievementService {
 		System.out.println("test");
 		return achiMapper.selectCount(achievementCondition);
 	}
-	@Override
-	public int updateAchiWithModify(List<Integer> achIds, Integer isModify) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	
-
-	
-
-
-
-	
 }

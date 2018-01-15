@@ -8,14 +8,13 @@ public class Achievement {
 	private String achVideoPath;
 	private Integer achLock;
 	private String achImagePath;
-	private Integer isModify;
 	private String achClassify;
 	private Integer achCTR;
 	private String achDescribe;
 	private String achDate;
 	public Achievement(Integer achId, String achName, User user, Integer achStatus,
 			String achVideoPath, Integer achLock, String achImagePath,
-			Integer isModify, String achClassify, Integer achCTR, String achDescribe,
+		 String achClassify, Integer achCTR, String achDescribe,
 			String achDate) {
 		super();
 		this.achId = achId;
@@ -25,7 +24,6 @@ public class Achievement {
 		this.achVideoPath = achVideoPath;
 		this.achLock = achLock;
 		this.achImagePath = achImagePath;
-		this.isModify = isModify;
 		this.achClassify = achClassify;
 		this.achCTR = achCTR;
 		this.achDescribe = achDescribe;
@@ -71,12 +69,7 @@ public Integer getAchId() {
 	public void setAchImagePath(String achImagePath) {
 		this.achImagePath = achImagePath;
 	}
-	public Integer getIsModify() {
-		return isModify;
-	}
-	public void setIsModify(Integer isModify) {
-		this.isModify = isModify;
-	}
+	
 	public String getAchClassify() {
 		return achClassify;
 	}

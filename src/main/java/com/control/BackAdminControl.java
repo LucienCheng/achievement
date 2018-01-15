@@ -190,10 +190,11 @@ public class BackAdminControl {
 				condition.setAchEndTime(null);
 			}
 		}
-	
+		int totalCount=slideShowService.count(condition);
+		int totalPage=(totalCount  +  count  - 1) / count; 
 		model.addAttribute("achievements", slideShowService.forSlideShow(condition, (start-1)*count, count));
 		model.addAttribute("curPage", start);
-		model.addAttribute("totalPage",slideShowService.count(condition));
+		model.addAttribute("totalPage",totalPage);
 		model.addAttribute("condition", condition);
 	return "/back/admin/searchSlideShow";
 	}
