@@ -204,7 +204,7 @@ public class BackUserControll {
 		return map;
 	}
 	//添加新建模块直接调到编辑模块的界面
-	@RequestMapping(value = "/back/user/addModule", method = RequestMethod.POST)
+	@RequestMapping(value = "/back/user/addModule", method = RequestMethod.GET)
 	public String addModule(Integer achId,Model model) {
 		model.addAttribute("achId", achId);
 		return "/back/user/module";
