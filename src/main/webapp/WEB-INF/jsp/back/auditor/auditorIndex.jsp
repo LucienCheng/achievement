@@ -204,7 +204,7 @@
 					<li
 						<c:if test="${condition.achStatus == 2}"> class="active" </c:if>><a
 						href="/achievement/back/auditor/audited/1?achStatus=2">审核未通过 </a></li>
-					<li><a href="/achievement/back/user/personInfo">个人资料修改</a></li>
+					<li><a href="/achievement/back/auditor/personInfo">个人资料修改</a></li>
 				</ul>
 			</div>
 			<!--/span-->

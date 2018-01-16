@@ -205,7 +205,7 @@
 					</div>
 				</div>
 				<div class="row-fluid">
-					<button class="btn btn-primary ">添加</button>
+					<button class="btn btn-primary " onclick="window.open('/achievement/back/user/achievement/add','_self')">添加</button>
 					<button class="btn btn-danger " onclick="deleteUser();">删除</button>
 
 

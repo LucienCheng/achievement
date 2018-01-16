@@ -124,10 +124,13 @@ public class BackUserControll {
 	}
 
 	// 进入添加成果界面，并且新建一个achievement
-	@RequestMapping(value = "/back/user/achievement/add", method = { RequestMethod.POST })
+	@RequestMapping(value = "/back/user/achievement/add", method = { RequestMethod.POST ,RequestMethod.GET})
 	@Transactional
-	public String addAchievement(Model model) {
+	public String addAchievement(Model model,HttpSession session) {
 		Achievement achievement=new Achievement();
+		User user=new User();
+		user.setUserId((Integer)session.getAttribute("userId"));
+		achievement.setUser(user);
 		achievementService.insertAchi(achievement);
 		model.addAttribute("achId", achievement.getAchId());
 		return "/back/user/addAchievement";
