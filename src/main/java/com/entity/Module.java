@@ -41,10 +41,12 @@ public String getModDescribe() {
 public void setModDescribe(String modDescribe) {
 	this.modDescribe = modDescribe;
 }
+
 @Override
 public String toString() {
 	return "Module [modId=" + modId + ", modName=" + modName + ", modContent="
-			+ modContent + ", modDescribe=" + modDescribe + "]";
+			+ modContent + ", modDescribe=" + modDescribe + ", achId=" + achId
+			+ "]";
 }
 public Integer getAchId() {
 	return achId;

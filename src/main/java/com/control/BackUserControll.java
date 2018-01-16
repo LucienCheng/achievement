@@ -109,7 +109,7 @@ public class BackUserControll {
 	}
 
 	// 进入修改界面
-	@RequestMapping(value = "/back/user/achievement/modify", method = { RequestMethod.POST })
+	@RequestMapping(value = "/back/user/achievement/modify", method = { RequestMethod.POST,RequestMethod.GET })
 	@Transactional
 	public String modifyAchievement(Integer achId, Model model) {
 
@@ -212,6 +212,7 @@ public class BackUserControll {
 	//保存新建模块，传进来的是成果id和模块内容，然后返回上一层
 		@RequestMapping(value = "/back/user/saveModule", method = RequestMethod.POST)
 		public String saveModule(Module module) {
+			System.out.println(module);
 			moduleService.insertModules(module);
 			List<Integer> achIds=new ArrayList<Integer>();
 			achIds.add(module.getAchId());

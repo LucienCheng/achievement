@@ -48,7 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
 					<li><a href="/achievement/back/admin"> 用户管理</a></li>
 					<li class="active"><a href="javascript:void(0);"> 个人消息修改</a></li>
-					<li><a href="/achievement/back/admin/slideShow"> 首页轮播图</a></li>
+					<li ><a href="/achievement/back/admin/slideShow"> 首页轮播图</a></li>
 				</ul>
 			</div>
 		</c:if>
@@ -56,10 +56,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<c:if test="${roleId == 2 }">
 			<div class="span2" id="sidebar">
 				<ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
-					<li><a href="admin.html">待审核</a></li>
-					<li ><a href="personInfo.html"> 已通过</a></li>
-					<li><a href="#"> 未通过</a></li>
-					<li class="active"><a href="javascript:void(0);"> 个人资料</a></li>
+					<li
+						<c:if test="${condition.achStatus == 0}"> class="active" </c:if>><a
+						href="/achievement/back/auditor/1?achStatus=0">待审核</a></li>
+					<li
+						<c:if test="${condition.achStatus == 1}"> class="active" </c:if>><a
+						href="/achievement/back/auditor/audited/1?achStatus=1">审核通过 </a></li>
+					<li
+						<c:if test="${condition.achStatus == 2}"> class="active" </c:if>><a
+						href="/achievement/back/auditor/audited/1?achStatus=2">审核未通过 </a></li>
+					
+					<li class="active"><a href="/achievement/back/user/personInfo">个人资料修改</a></li>
 				</ul>
 			</div>
 		</c:if>
@@ -67,11 +74,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<c:if test="${roleId == 1 }">
 			<div class="span2" id="sidebar">
 				<ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
-					<li><a href="admin.html">待审核</a></li>
-					<li><a href="#"> 待编辑</a></li>
-					<li ><a href="personInfo.html"> 已通过</a></li>
-					<li><a href="#"> 未通过</a></li>
-					<li class="active"><a href="javascript:void(0);"> 个人资料</a></li>
+					<li <c:if test="${condition.achStatus == 1}"> class="active" </c:if> ><a href="/achievement/back/user?achStatus=1">审核通过</a></li>
+					<li<c:if test="${condition.achStatus == 2}"> class="active" </c:if> ><a href="/achievement/back/user?achStatus=2">审核未通过 </a></li>
+					<li<c:if test="${condition.achStatus == -1}"> class="active" </c:if> ><a href="/achievement/back/user?achStatus=-1">待编辑 </a></li>
+					<li<c:if test="${condition.achStatus == 0}"> class="active" </c:if> ><a href="/achievement/back/user?achStatus=0">待审核 </a></li>
+					<li class="active"><a href="/achievement/back/user/personInfo">个人资料修改</a></li>
 				</ul>
 			</div>
 		</c:if>

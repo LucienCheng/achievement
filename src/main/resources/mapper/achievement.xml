@@ -68,9 +68,6 @@
 			<if test="auditorName != null">
 				and auditorName like CONCAT('%',#{auditorName},'%')
 			</if>
-			<if test="achLock != null">
-				and achLock=#{achLock}
-			</if>
 			<if test="achId != null">
 			and achId=#{achId}
 			</if>
@@ -173,9 +170,6 @@
 			</if>
 			<if test="auditorName != null">
 				and auditorName like CONCAT('%',#{auditorName},'%')
-			</if>
-			<if test="achLock != null">
-				and achLock=#{achLock}
 			</if>
 		</trim>
 	</select>

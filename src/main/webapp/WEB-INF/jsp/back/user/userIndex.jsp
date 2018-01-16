@@ -190,6 +190,7 @@
 					<li<c:if test="${condition.achStatus == 2}"> class="active" </c:if> ><a href="/achievement/back/user?achStatus=2">审核未通过 </a></li>
 					<li<c:if test="${condition.achStatus == -1}"> class="active" </c:if> ><a href="/achievement/back/user?achStatus=-1">待编辑 </a></li>
 					<li<c:if test="${condition.achStatus == 0}"> class="active" </c:if> ><a href="/achievement/back/user?achStatus=0">待审核 </a></li>
+					<li><a href="/achievement/back/user/personInfo">个人资料修改</a></li>
 				</ul>
 			</div>
 			<!--/span-->
@@ -295,11 +296,9 @@
 												</a>
 													<div class="media-body">${achievement.achDescribe }</div></td>
 												<td>${achievement.achDate }</td>
-												<c:if test="${condition.achStatus == -1 || condition.achStatus == 0}">
 												<td><button class="btn btn-warning addSlideShow"
 														value='${achievement.achId }'>修改</button></td>
-											
-										</c:if>	</tr>
+											</tr>
 										</c:forEach>
 
 									</tbody>

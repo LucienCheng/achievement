@@ -23,6 +23,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    这是成果添加或者修改成果的界面
+    这是成果修改成果和模块设置页面
   </body>
 </html>

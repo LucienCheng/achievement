@@ -30,7 +30,7 @@ public class BackLoginControl {
 			case 1: 
 				return "redirect:/back/user?achStatus=1";
 			case 2:
-				return "redirect:/back/auditor";
+				return "redirect:/back/auditor/1";
 			case 3:
 				return "redirect:/back/admin";
 			}
