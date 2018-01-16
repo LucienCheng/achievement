@@ -33,7 +33,7 @@ public class UserServiceImpl  implements UserService{
 		// TODO Auto-generated method stub
 		UserCondition condition=new UserCondition();
 		condition.setUserId(userId);
-		List<User> users= getUser(condition, null, null);
+		List<User> users= getUser(condition,null, null, null);
 		if(users.size()==0){
 			return null;
 		}else {
@@ -42,10 +42,10 @@ public class UserServiceImpl  implements UserService{
 	}
 
 	@Override
-	public List<User> getUserByConditon(UserCondition condition,
+	public List<User> getUserByConditon(UserCondition condition,Integer userId,
 			Integer start, Integer count) {
 		// TODO Auto-generated method stub
-		return getUser(condition, start, count);
+		return getUser(condition, userId,start, count);
 	}
 
 	@Override
@@ -66,10 +66,9 @@ public class UserServiceImpl  implements UserService{
 		return userMapper.updateUser(user);
 	}
 
-	@Override
-	public List<User> getUser(UserCondition condition, Integer start, Integer count) {
+	private List<User> getUser(UserCondition condition, Integer userId,Integer start, Integer count) {
 		// TODO Auto-generated method stub
-		return userMapper.searchUser(condition, start, count);
+		return userMapper.searchUser(condition, userId,start, count);
 	}
 
 	@Override

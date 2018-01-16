@@ -11,7 +11,7 @@ public interface UserService {
 	//通过搜索用户id获得用户
 	public User getUserById(Integer userId );
 	//通过搜索条件搜索用户
-	public List<User> getUserByConditon(UserCondition condition, Integer start, Integer count);
+	public List<User> getUserByConditon(UserCondition condition, Integer userId,Integer start, Integer count);
 	//批量删除用户
 	public int deleteUsers(List<Integer> users);
 	//批量插入记录
@@ -23,6 +23,4 @@ public interface UserService {
 	//获得总的个数
 	public int getUserCount(UserCondition condition);
 
-	//完整的搜索用户
-	public List<User> getUser(UserCondition condition, Integer start, Integer count);
 }

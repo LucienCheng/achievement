@@ -31,6 +31,9 @@
 			<if test="condition.userWorkNum != null">
 				and userWorkNum like CONCAT('%',#{condition.userWorkNum},'%')
 			</if>
+			<if test="userId != null">
+				and userId !=#{userId}
+			</if>
 		</trim>
 		<if test="count!=null and start!=null">
 			limit #{start},#{count}

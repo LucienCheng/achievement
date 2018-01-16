@@ -12,6 +12,14 @@
 	<mvc:resources location="/ueditor/" mapping="/ueditor/**"></mvc:resources>
 	<mvc:resources location="/source/" mapping="/source/**"></mvc:resources>
 	<context:component-scan base-package="com"></context:component-scan>
+	<!-- 设置拦截器 -->
+	        <mvc:interceptors>  
+            <!-- 多个拦截器，顺序执行 -->  
+            <mvc:interceptor>  
+                <mvc:mapping path="/**"/>  
+                <bean class="com.interceptor.LoginInterceptor"></bean>  
+            </mvc:interceptor>  
+        </mvc:interceptors>  
 	<!-- 视图资源解析器 -->
 	
 	<bean id="internalResourceViewResolver"

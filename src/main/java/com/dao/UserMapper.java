@@ -13,7 +13,7 @@ public interface UserMapper {
 	//返回用户的个数
 	public int searchUserCount(UserCondition condition);
 	//搜索用户
-	public List<User> searchUser(@Param("condition")UserCondition condition,@Param("start") Integer start,@Param("count") Integer count);
+	public List<User> searchUser(@Param("condition")UserCondition condition,@Param("userId") Integer userId,@Param("start") Integer start,@Param("count") Integer count);
 	//批量插入记录
 	public int insertUsers(List<User> users);
 	//批量删除用户

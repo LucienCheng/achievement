@@ -44,14 +44,17 @@ public class BackAdminControl {
 	private UserService userService;
 	@Resource(name="slideShowImpl")
 	private SlideShowService slideShowService;
-	private final int count=1;	
+	private final int count=10;	
 	//在执行action时都会加载这个属性，当model存在的时候，就直接使用，当不存在的时候，就会进行创建，然后放到model里。相当于一个静态类。
 
 	//首页
 		@RequestMapping(value="/back/admin",method={RequestMethod.GET,RequestMethod.POST})
-		public String index(Model model,UserCondition userCondition) {
-			List<User> users=userService.getUserByConditon(userCondition, 0, count);
+		public String index(Model model,UserCondition userCondition,HttpSession session) {
+			List<User> users=userService.getUserByConditon(userCondition, (Integer)session.getAttribute("userId"),0, count);
 			int totalCount=userService.getUserCount(userCondition);
+			if (totalCount>0) {
+				totalCount--;
+			}
 			int totalPage=(totalCount  +  count  - 1) / count; 
 			JSONArray userJson=new JSONArray(users);
 			model.addAttribute("userJson",userJson);
@@ -64,9 +67,12 @@ public class BackAdminControl {
 		}
 		//根据条件搜索用户
 		@RequestMapping(value="/back/admin/{start}",method={RequestMethod.GET,RequestMethod.POST})
-		public String searchUsers(@PathVariable int start,UserCondition userCondition,Model model) {
-			List<User> users=userService.getUserByConditon(userCondition, (start-1)*count, count);
+		public String searchUsers(@PathVariable int start,UserCondition userCondition,Model model,HttpSession session) {
+			List<User> users=userService.getUserByConditon(userCondition, (Integer)session.getAttribute("userId"),(start-1)*count, count);
 			int totalCount=userService.getUserCount(userCondition);
+			if (totalCount>0) {
+				totalCount--;
+			}
 			int totalPage=(totalCount  +  count  - 1) / count; 
 			JSONArray userJson=new JSONArray(users);
 			model.addAttribute("userJson",userJson);
