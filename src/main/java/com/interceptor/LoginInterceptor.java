@@ -35,7 +35,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         String url = request.getRequestURI();  
        System.out.println(url);
        //登录的就是不会拦截
-        if(url.indexOf("/back/login")>=0||"/achievement/back".equals(url)||
+        if(url.indexOf("/back/login")>=0||"/achievement/back".equals(url)||url.indexOf("/front")>=0||
         		url.indexOf("/source")>=0||url.indexOf("/file")>=0||url.indexOf("/ueditor")>=0){  
             return true;  
         }  
