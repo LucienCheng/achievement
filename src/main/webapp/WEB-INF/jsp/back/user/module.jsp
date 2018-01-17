@@ -51,7 +51,7 @@
 					value="${module.modName }"		class="form-control" placeholder="模块名称">
 				</div>
 				<div class="form-group">
-					<label for="name">模块描述</label> <input type="text" name="modContent"
+					<label for="name">模块描述</label> <input type="text" name="modDescribe"
 				value="${module.modDescribe }"		class="form-control" placeholder="模块描述">
 				</div>
 		</div>
@@ -64,7 +64,7 @@
 							<div class="muted pull-left">模块内容编辑</div>
 						</div>
 						<div class="block-content collapse in">
-								<script id="editor" type="text/plain" name="modDescribe"
+								<script id="editor" type="text/plain" name="modContent"
 									style="width:100%;height:700px;">
 									${module.modContent }
 								</script>

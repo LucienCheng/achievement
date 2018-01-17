@@ -1,0 +1,5 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Wed Dec 13 10:10:27 CST 2017
+http\://repo.maven.apache.org/maven2/.lastUpdated=1513131027546
+@default-central-https\://repo.maven.apache.org/maven2/.lastUpdated=1508171151565
+https\://repo.maven.apache.org/maven2/.error=Could not transfer artifact com.sun.mail\:javax.mail\:jar\:1.5.0 from/to central (https\://repo.maven.apache.org/maven2)\: connect timed out

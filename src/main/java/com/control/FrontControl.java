@@ -44,45 +44,29 @@ public class FrontControl {
 	}
 
 	// 二级页面最热
-	@RequestMapping(value = "/front/HotAchievement", method = { RequestMethod.GET })
-	public String getHotAchievement(Model model) {
-		List<Achievement > achievements=achievementService.getHotAchi(null, null, null, 0, count);
-		model.addAttribute("achievements",achievements);
-		return "/front/second";
-	}
+	
 
 	@RequestMapping(value = "/front/HotAchievement/{start}", method = { RequestMethod.GET })
-	@ResponseBody
-	public Map<String, Object> getHotAchievement(
+	public String getHotAchievement(Model model,
 			@PathVariable("start") Integer start, AchievementCondition condition) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("statue", "failure");
-		map.put("achievements", achievementService.getHotAchi(
+		
+		model.addAttribute("achievements", achievementService.getHotAchi(
 				condition.getAuthorName(), condition.getAchStartTime(),
 				condition.getAchEndTime(), start, count));
-		map.put("statue", "success");
-		return map;
+		return "/front/second";
 	}
 
 	// 二级页面最新
-	@RequestMapping(value = "/front/NewAchievement", method = { RequestMethod.GET })
-	public String getNewAchievement(Model model) {
-		model.addAttribute("achievements",
-				achievementService.getNewAchi(null, null, null, 0, count));
-		return "/front/second";
-	}
 
 	@RequestMapping(value = "/front/NewAchievement/{start}", method = { RequestMethod.GET })
 	@ResponseBody
-	public Map<String, Object> getNewAchievement(
+	public String getNewAchievement(Model model,
 			@PathVariable("start") Integer start, AchievementCondition condition) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("statue", "failure");
-		map.put("achievements", achievementService.getHotAchi(
+		model.addAttribute("achievements", achievementService.getHotAchi(
 				condition.getAuthorName(), condition.getAchStartTime(),
 				condition.getAchEndTime(), start, count));
-		map.put("statue", "success");
-		return map;
+		
+		return "/front/second";
 	}
 
 	// 三级页面的视频，同时增加点击量
