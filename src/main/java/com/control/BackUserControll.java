@@ -171,7 +171,7 @@ public class BackUserControll {
 		achievement.setAchVideoPath(videoPath);
 		achievementService.updateAchievement(achievement);
 		// 保存退出
-		return "redirect:/back/user";
+		return "redirect:/back/user?achStatus=0";
 	}
 
 	// 批量删除achievement

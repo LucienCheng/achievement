@@ -18,8 +18,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
+<!-- -------------------------------------添加的link------------------------------------------------------------------- -->
+<link href="/achievement/source/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet" media="screen" />
+
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<!-- -------------------------------------添加的script------------------------------------------------------------------- -->
 
 <script src="/achievement/source/vendors/jquery-1.9.1.min.js"></script>
+	src="/achievement/source/bootstrap/js/bootstrap.js"></script>
+<script
+	src="/achievement/source/bootstrap/js/bootstrap.min.js"></script>
 <!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
@@ -81,6 +90,7 @@ function deleteModule() {
 </head>
 
 <body>
+
 	这是成果修改成果和模块设置页面
 	<form action="/achievement/back/user/achievement/save"
 		enctype="multipart/form-data" method="post">
@@ -105,6 +115,7 @@ function deleteModule() {
 
 
 
+
 	<hr width="100%">
 	下面是一个关于模块页面
 	<button onclick="window.open('/achievement/back/user/addModule?achId='+'${achievement.achId }','_self');">添加模块</button>
@@ -124,6 +135,7 @@ function deleteModule() {
 				<tr>
 					<td><input type="checkbox"
 onclick="if(this.checked == true) {addCheck('${module.modId }');} else { removeCheck('${module.modId }'); }" /></td>
+					<td >${module.modName }</td>
 					<td colspan="2">${module.modDescribe }</td>
 					<td><button class="btn btn-warning addSlideShow"
 							value='${module.modId }'
