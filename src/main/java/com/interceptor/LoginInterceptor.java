@@ -58,7 +58,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         		response.sendRedirect("/achievement/back");
 			}
 		}
-        System.out.println(map.get(roleId));
+     
         return false;  
 	}
 
