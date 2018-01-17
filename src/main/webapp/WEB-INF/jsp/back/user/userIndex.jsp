@@ -297,7 +297,7 @@
 													<div class="media-body">${achievement.achDescribe }</div></td>
 												<td>${achievement.achDate }</td>
 												<td><button class="btn btn-warning addSlideShow"
-														value='${achievement.achId }'>修改</button></td>
+														value='${achievement.achId }' onclick="window.open('/achievement/back/user/achievement/modify?achId='+'${achievement.achId }','_self');">修改</button></td>
 											</tr>
 										</c:forEach>
 

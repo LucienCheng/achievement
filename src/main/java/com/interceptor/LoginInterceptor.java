@@ -42,7 +42,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         //获取Session  
         HttpSession session = request.getSession();  
         Integer roleId = (Integer)session.getAttribute("roleId");  
-        System.out.println(roleId);
+        
         Map<Integer, String> map=new HashMap<Integer, String>();
         map.put(1, "/back/user");
         map.put(2, "/back/auditor");
@@ -58,6 +58,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         		response.sendRedirect("/achievement/back");
 			}
 		}
+        System.out.println(url.indexOf(map.get(roleId)));
         return false;  
 	}
 

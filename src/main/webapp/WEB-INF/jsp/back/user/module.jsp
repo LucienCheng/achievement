@@ -37,15 +37,22 @@
 <body>
 
 
-	<form class="container-fluid" method="post" action="/achievement/back/user/saveModule" method="post">
+	<form class="container-fluid" method="post" 
+	<c:if test="${modOpera == 'add' }">
+	action="/achievement/back/user/saveModule"
+	</c:if>
+	<c:if test="${modOpera == 'modify' }">
+	action="/achievement/back/user/modifyModule"
+	</c:if>
+	 method="post">
 		<div class="row-fluid " role="form">
 				<div class="form-group">
 					<label for="name">模块名称</label> <input type="text" name="modName"
-						class="form-control" placeholder="模块名称">
+					value="${module.modName }"		class="form-control" placeholder="模块名称">
 				</div>
 				<div class="form-group">
 					<label for="name">模块描述</label> <input type="text" name="modContent"
-						class="form-control" placeholder="模块描述">
+				value="${module.modDescribe }"		class="form-control" placeholder="模块描述">
 				</div>
 		</div>
 		<div class="row-fluid">
@@ -59,10 +66,11 @@
 						<div class="block-content collapse in">
 								<script id="editor" type="text/plain" name="modDescribe"
 									style="width:100%;height:700px;">
-									初始化内容
+									${module.modContent }
 								</script>
 								<input type="submit" value="发送">
 								<input type="hidden" value='${achId }' name="achId">
+								<input type="hidden" value='${module.modId }' name="modId">
 						</div>
 					</div>
 					<!-- /block -->
