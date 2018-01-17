@@ -124,6 +124,7 @@ function deleteModule() {
 				<tr>
 					<td><input type="checkbox"
 onclick="if(this.checked == true) {addCheck('${module.modId }');} else { removeCheck('${module.modId }'); }" /></td>
+					<td >${module.modName }</td>
 					<td colspan="2">${module.modDescribe }</td>
 					<td><button class="btn btn-warning addSlideShow"
 							value='${module.modId }'
