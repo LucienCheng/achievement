@@ -24,7 +24,7 @@
 		where audId=#{audId}
 	</delete>
 	<!-- 选择所有审核记录 -->
-	<select id="selectAudit" resultType="list">
+	<select id="selectAudit" resultType="Audit">
 	select * from audit
 	<where>
 	achId=#{achId}

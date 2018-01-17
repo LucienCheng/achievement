@@ -292,8 +292,8 @@
 												<td>${achievement.achName }</td>
 												<td class="media" colspan="2"><a class="pull-left"
 													href="#"> <img class="media-object"
-														src='/achievement/${achievement.achImagePath }' />
-												</a>
+														src='${achievement.achImagePath }' width="30px" height="20px"/>
+												</a>	
 													<div class="media-body">${achievement.achDescribe }</div></td>
 												<td>${achievement.achDate }</td>
 												<td><button class="btn btn-warning addSlideShow"
