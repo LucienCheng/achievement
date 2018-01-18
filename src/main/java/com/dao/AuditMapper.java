@@ -11,5 +11,5 @@ public interface AuditMapper {
 			@Param("auditorId")Integer auditorId);//插入一个记录
 	public int insertAudit(Audit audit);//插入一个记录
 	public int deleteAudit(Audit audit);//删除一个记录
-	public List<Audit> selectAudit(int achId);//选择一个记录
+	public Audit selectAudit(int achId);//选择一个记录
 }

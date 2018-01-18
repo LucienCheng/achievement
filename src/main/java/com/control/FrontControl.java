@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.json.JsonArray;
 import javax.websocket.server.PathParam;
 
+import org.json.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -28,7 +30,7 @@ public class FrontControl {
 	private AchievementService achievementService;
 	@Resource
 	private SlideShowService slideShowService;
-	@Resource
+	@Resource(name="moduleImpl")
 	private ModuleService moduleService;
 	private final int count = 10;
 //检验某个成果是否为可以发布的状态。通过status判断
@@ -40,7 +42,13 @@ public class FrontControl {
 				achievementService.getHotAchi(null, null, null, 0, 5));
 		model.addAttribute("newAchievements",
 				achievementService.getNewAchi(null, null, null, 0, 5));
-		model.addAttribute("slideShow", slideShowService.selectSlideShow());
+		Map<String, Integer> map=new HashMap<String, Integer>();
+		List<Achievement> achievements=slideShowService.selectSlideShow();
+		for (Achievement achievement : achievements) {
+			map.put(achievement.getAchImagePath(), achievement.getAchId());
+		}
+		JSONArray slideShow=new JSONArray(map);
+		model.addAttribute("slideShow", slideShow);
 		return "/front/index";
 	}
 

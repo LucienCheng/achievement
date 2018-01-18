@@ -12,6 +12,7 @@ public class Achievement {
 	private Integer achCTR;
 	private String achDescribe;
 	private String achDate;
+	private Audit audit;
 	public Achievement(Integer achId, String achName, User user, Integer achStatus,
 			String achVideoPath, Integer achLock, String achImagePath,
 		 String achClassify, Integer achCTR, String achDescribe,
@@ -99,6 +100,12 @@ public Integer getAchId() {
 	}
 	public void setAchStatus(Integer achStatus) {
 		this.achStatus = achStatus;
+	}
+	public Audit getAudit() {
+		return audit;
+	}
+	public void setAudit(Audit audit) {
+		this.audit = audit;
 	}
 
 }

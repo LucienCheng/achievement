@@ -109,7 +109,7 @@
 				<div class="nav-collapse collapse">
 					<ul class="nav pull-right">
 						<li><a href="#">预览</a></li>
-						<li><a href="#">登出</a></li>
+						<li><a href="/achievement/back/loginOut">登出</a></li>
 					</ul>
 				</div>
 				<!--/.nav-collapse -->

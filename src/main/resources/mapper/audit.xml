@@ -30,6 +30,7 @@
 	achId=#{achId}
 	</where>
 	order by audDate
+	limit 0,1
 	</select>
 	
 

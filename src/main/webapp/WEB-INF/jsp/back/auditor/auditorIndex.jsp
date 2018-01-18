@@ -182,7 +182,7 @@
 				<div class="nav-collapse collapse">
 					<ul class="nav pull-right">
 						<li><a href="#">预览</a></li>
-						<li><a href="#">登出</a></li>
+						<li><a href="/achievement/back/loginOut">登出</a></li>
 					</ul>
 				</div>
 				<!--/.nav-collapse -->
@@ -323,7 +323,7 @@
 															onclick='addAudit(${achievement.achId });'>未通过</button>
 													</c:if>
 													<button class="btn btn-primative addSlideShow"
-														data-toggle="modal" data-target="#myModal"
+														 onclick="window.open('/achievement/back/auditor/${achievement.achId }/video');"
 														value='${achievement.achId }'>预览</button></td>
 
 
