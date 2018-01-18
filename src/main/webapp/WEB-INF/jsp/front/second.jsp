@@ -23,9 +23,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-  ${test }
+  ${error }这个是用来判断是否正确的。
   ${achievements }
   <br>
   二级界面，展示最新或者最热
+  分页可以参考管理员界面
   </body>
 </html>

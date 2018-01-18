@@ -23,8 +23,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-  ${video }
+  <video width="320" height="240" controls> 
+			<source src="${video }" type="video/mp4"></video>
+
   <br>
-    展示一个成果的视屏。
+    展示一个成果的视屏。<input type="button" value="点击进入"onclick='window.open("/achievement/front/modules/${achId}","_self");'>
   </body>
 </html>
