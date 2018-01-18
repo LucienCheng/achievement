@@ -117,10 +117,10 @@ window.open(" /achievement/back/user/addModule?achId="+${achievement.achId },"_s
         <div class="col-md-10">
           <ul id="mytab" class="nav nav-tabs">
             <li class="active">
-              <a href="#xw1" data-toggle='tab'>成果展示</a>
+              <a href="#xw1" data-toggle='tab'>成果基本信息填写</a>
             </li>
             <li >
-              <a href="#xw2" data-toggle='tab'>成果描述</a>
+              <a href="#xw2" data-toggle='tab'>成果模块</a>
             </li>
           </ul>
           </div>
@@ -191,9 +191,9 @@ window.open(" /achievement/back/user/addModule?achId="+${achievement.achId },"_s
 onclick="if(this.checked == true) {addCheck('${module.modId }');} else { removeCheck('${module.modId }'); }" /></td>
 					<td >${module.modName }</td>
 					<td colspan="2">${module.modDescribe }</td>
-					<td><button class="btn btn-warning addSlideShow"
-							value='${module.modId }'
-							onclick="window.open('/achievement/back/user/modifyModule?modId='+'${module.modId }','_self');">修改</button></td>
+					<td><input type="button" class="btn btn-warning addSlideShow"
+							value='修改' 
+							onclick="window.open('/achievement/back/user/modifyModule?modId='+'${module.modId }','_self');"></button></td>
 				</tr>
 			</c:forEach>
 
