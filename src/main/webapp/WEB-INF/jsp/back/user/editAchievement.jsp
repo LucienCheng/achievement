@@ -26,6 +26,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- -------------------------------------添加的script------------------------------------------------------------------- -->
 
 <script src="/achievement/source/vendors/jquery-1.9.1.min.js"></script>
+<script
 	src="/achievement/source/bootstrap/js/bootstrap.js"></script>
 <script
 	src="/achievement/source/bootstrap/js/bootstrap.min.js"></script>
@@ -85,40 +86,93 @@ function deleteModule() {
 			}
 		});
 	}
-
+function bounce(){
+console.log("test");
+window.open('/achievement/back/user/addModule?achId='+'${achievement.achId }','_self');
+}
 </script>
 </head>
 
 <body>
-
-	这是成果修改成果和模块设置页面
+	<!---添加的内容开始----------------------------------------------------------------------------------------------->
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<a class="btn btn-navbar" data-toggle="collapse"
+					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span>
+				</a> <a class="brand" href="#">首页</a>
+				<div class="nav-collapse collapse">
+					<ul class="nav pull-right">
+						<li><a href="#">预览</a></li>
+						<li><a href="#">登出</a></li>
+					</ul>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	 <div style="height: 60px;"></div>
+	<div class="container">     
+      <div class="row">
+        <div class="col-md-10">
+          <ul id="mytab" class="nav nav-tabs">
+            <li class="active">
+              <a href="#xw1" data-toggle='tab'>成果展示</a>
+            </li>
+            <li>
+              <a href="#xw2" data-toggle='tab'>成果描述</a>
+            </li>
+          </ul>
+       <div class="tab-content">
+    <div class="tab-pane active fade in" id="xw1">
+    
+    <!---结束----------------------------------------------------------------------------------------------->
+    
 	<form action="/achievement/back/user/achievement/save"
 		enctype="multipart/form-data" method="post">
-		<input type="hidden" value="${achievement.achId }" name="achId">
-		<input value="保存并退出" type="submit"> <input value="不保存退出"
-			type="button"
-			<c:if test="${operator == 'add'}">onclick="deleteAch('${achievement.achId }');" </c:if>
-			<c:if test="${operator == 'modify'}">onclick="window.open('/achievement/back/user?achStatus=0','_self');"</c:if>><br>
-		成果名字：<input value="${achievement.achName }" type="text" name="achName"><br>
-		成果描述：<input value="${achievement.achDescribe }" type="text"
-			name="achDescribe"><br> <img alt=""
-			src="${achievement.achImagePath }"> 成果图片：<input type="file"
-			name="image"><br>
-		<video width="320" height="240" controls> <source
-			src="${achievement.achVideoPath }" type="video/mp4"></video>
-		成果视屏：<input type="file" name="video"><br> 成果分类： <select
-			name="achClassify">
+		<div class="col-md-12" >
+			<span>成果名字：</span>
+			<input value="${achievement.achName }" type="text" name="achName">
+		</div>
+		<div class="col-md-12" style="margin:10px 0px 10px 0px;">
+			<span>成果描述：</span>
+			<input value="${achievement.achDescribe }" type="text" name="achDescribe">
+		</div>
+		<div>
+			<img alt="" src="${achievement.achImagePath }">
+			<sapn>成果图片：</sapn>
+			<input type="file" name="image">
+		</div>
+		<div>
+			<video width="320" height="240" controls> 
+			<source src="${achievement.achVideoPath }" type="video/mp4"></video>
+			<span>成果视频：</span>
+			<input type="file" name="video">
+		</div>
+		<div style="maigin:10px 0px 10px 0px;">
+			<span>成果分类：</span> 
+			<select name="achClassify">
 			<option value="科研">科研</option>
 			<option value="生活">生活</option>
 		</select>
+		</div>
+			<input type="hidden" value="${achievement.achId }" name="achId">
+			<input value="保存并退出" type="submit" class="btn btn-success"> 
+			<input value="不保存退出" type="button" class="btn btn-warning"
+				<c:if test="${operator == 'add'}">onclick="deleteAch('${achievement.achId }');" </c:if>
+				<c:if test="${operator == 'modify'}">onclick="window.open('/achievement/back/user?achStatus=0','_self');"</c:if>
 	</form>
+</div>
 
 
-
-
+	<div class="tab-pane fade in" id="xw2">
+	
+	<!---此处添加了id为xw2的div，以及后续的闭包div---------------------------------------------------------------------------------->
+	
 	<hr width="100%">
 	下面是一个关于模块页面
-	<button onclick="window.open('/achievement/back/user/addModule?achId='+'${achievement.achId }','_self');">添加模块</button>
+	<button onclick="bounce();">添加模块</button>
 	<button onclick="deleteModule();">删除模块</button>
 	<table class="table table-hover">
 		<thead>
@@ -145,8 +199,8 @@ onclick="if(this.checked == true) {addCheck('${module.modId }');} else { removeC
 
 		</tbody>
 	</table>
-
-
+</div>
+</div>
 
 </body>
 </html>
