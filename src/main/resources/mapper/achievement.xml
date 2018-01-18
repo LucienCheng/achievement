@@ -103,7 +103,6 @@
 		<set>
 			<if test="achCTR != null">achCTR=#{achCTR},</if>
 			<if test="achName != null">achName=#{achName},</if>
-			<if test="user.userId != null">userId=#{user.userId},</if>
 			<if test="achVideoPath != null">achVideoPath=#{achVideoPath},</if>
 			<if test="achImagePath != null">achImagePath=#{achImagePath},</if>
 			<if test="achClassify != null">achClassify=#{achClassify},</if>

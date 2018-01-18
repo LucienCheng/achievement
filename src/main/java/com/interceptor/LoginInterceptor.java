@@ -47,16 +47,24 @@ public class LoginInterceptor implements HandlerInterceptor {
         map.put(1, "/back/user");
         map.put(2, "/back/auditor");
         map.put(3, "/back/admin");
-        if(roleId == null){  
+        if(roleId == null ){  
         	response.sendRedirect("/achievement/back");
         }  
         else {
-        	if(url.indexOf(map.get(roleId))>=0){
-        		return true;
-        	}
-        	else {
+        	String roleNameString=map.get(roleId);
+        	System.out.println(roleNameString);
+        	if (roleNameString==null) {
         		response.sendRedirect("/achievement/back");
 			}
+        	else {
+        		if(url.indexOf(roleNameString)>=0){
+            		return true;
+            	}
+            	else {
+            		response.sendRedirect("/achievement/back");
+    			}
+			}
+        	
 		}
      
         return false;  

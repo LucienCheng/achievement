@@ -18,12 +18,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<!-- -------------------------------------添加的link------------------------------------------------------------------- -->
 <link href="/achievement/source/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet" media="screen" />
 
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<!-- -------------------------------------添加的script------------------------------------------------------------------- -->
 
 <script src="/achievement/source/vendors/jquery-1.9.1.min.js"></script>
 <script
@@ -94,7 +92,7 @@ window.open(" /achievement/back/user/addModule?achId="+${achievement.achId },"_s
 </head>
 
 <body>
-	<!---添加的内容开始----------------------------------------------------------------------------------------------->
+	
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container-fluid">
@@ -117,17 +115,15 @@ window.open(" /achievement/back/user/addModule?achId="+${achievement.achId },"_s
         <div class="col-md-10">
           <ul id="mytab" class="nav nav-tabs">
             <li class="active">
-              <a href="#xw1" data-toggle='tab'>成果展示</a>
+              <a href="#xw1" data-toggle='tab'>成果基本信息填写</a>
             </li>
             <li >
-              <a href="#xw2" data-toggle='tab'>成果描述</a>
+              <a href="#xw2" data-toggle='tab'>成果模块</a>
             </li>
           </ul>
           </div>
        <div class="tab-content">
     <div class="tab-pane active fade in" id="xw1">
-    
-    <!---结束----------------------------------------------------------------------------------------------->
     
 	<form action="/achievement/back/user/achievement/save"
 		enctype="multipart/form-data" method="post">
@@ -168,8 +164,6 @@ window.open(" /achievement/back/user/addModule?achId="+${achievement.achId },"_s
 
 	<div class="tab-pane fade in" id="xw2">
 	
-	<!---此处添加了id为xw2的div，以及后续的闭包div---------------------------------------------------------------------------------->
-	
 	<hr width="100%">
 	下面是一个关于模块页面
 	<input type="button" value="添加模块" onclick="bounce();">
@@ -191,9 +185,9 @@ window.open(" /achievement/back/user/addModule?achId="+${achievement.achId },"_s
 onclick="if(this.checked == true) {addCheck('${module.modId }');} else { removeCheck('${module.modId }'); }" /></td>
 					<td >${module.modName }</td>
 					<td colspan="2">${module.modDescribe }</td>
-					<td><button class="btn btn-warning addSlideShow"
-							value='${module.modId }'
-							onclick="window.open('/achievement/back/user/modifyModule?modId='+'${module.modId }','_self');">修改</button></td>
+					<td><input type="button" class="btn btn-warning addSlideShow"
+							value='修改' 
+							onclick="window.open('/achievement/back/user/modifyModule?modId='+'${module.modId }','_self');"></button></td>
 				</tr>
 			</c:forEach>
 

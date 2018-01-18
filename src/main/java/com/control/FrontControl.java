@@ -31,7 +31,8 @@ public class FrontControl {
 	@Resource
 	private ModuleService moduleService;
 	private final int count = 10;
-
+//检验某个成果是否为可以发布的状态。通过status判断
+	
 	// 一级界面
 	@RequestMapping(value = "/front/index", method = { RequestMethod.GET })
 	public String front(Model model) {
@@ -49,23 +50,26 @@ public class FrontControl {
 	@RequestMapping(value = "/front/HotAchievement/{start}", method = { RequestMethod.GET })
 	public String getHotAchievement(Model model,
 			@PathVariable("start") Integer start, AchievementCondition condition) {
-		
+		if (start==null ||start==0) {
+			start=1;
+		}
 		model.addAttribute("achievements", achievementService.getHotAchi(
 				condition.getAuthorName(), condition.getAchStartTime(),
-				condition.getAchEndTime(), start, count));
+				condition.getAchEndTime(), (start-1)*count, count));
 		return "/front/second";
 	}
 
 	// 二级页面最新
 
 	@RequestMapping(value = "/front/NewAchievement/{start}", method = { RequestMethod.GET })
-	@ResponseBody
 	public String getNewAchievement(Model model,
 			@PathVariable("start") Integer start, AchievementCondition condition) {
+		if (start==null ||start==0) {
+			start=1;
+		}
 		model.addAttribute("achievements", achievementService.getHotAchi(
 				condition.getAuthorName(), condition.getAchStartTime(),
-				condition.getAchEndTime(), start, count));
-		
+				condition.getAchEndTime(), (start-1)*count, count));
 		return "/front/second";
 	}
 
@@ -77,12 +81,15 @@ public class FrontControl {
 
 		Achievement achievement = achievementService
 				.getAchiByAchId(achievementId);
+		
 		if(achievement.getAchStatus()!=1){
+			System.out.println(achievement.getAchId());
 			model.addAttribute("error", "成果更新状态了，不能查看，需要回退到上一步");
-			return "forward:/front/second";
+			return "forward:/front/HotAchievement/1";
 		}
 		else {
 			model.addAttribute("video", achievement.getAchVideoPath());
+			model.addAttribute("achId", achievementId);
 			achievement.setAchCTR(achievement.getAchCTR() + 1);
 			achievementService.updateAchievement(achievement);
 			return "/front/video";
@@ -96,8 +103,9 @@ public class FrontControl {
 		Achievement achievement = achievementService
 				.getAchiByAchId(achId);
 		if (achievement.getAchStatus()!=1) {
+			System.out.println(achievement.getAchId());
 			model.addAttribute("error", "成果更新状态了，不能查看，需要回退到上一步");
-			return "forward:/front/second";
+			return "forward:/front/HotAchievement/1";
 		}
 		else {
 			model.addAttribute("modules", moduleService.selectModuleByAchId(achId));

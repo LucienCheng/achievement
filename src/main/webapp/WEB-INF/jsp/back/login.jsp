@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <title>登录页面_免费简洁响应式Bootstrap后台主题模板BootAdmin - JS代码网</title>
+    <title>湖南大学成果展示后台登录</title>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <!-- Bootstrap -->
     <link href="/achievement/source/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
