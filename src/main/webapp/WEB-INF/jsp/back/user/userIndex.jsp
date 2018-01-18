@@ -173,7 +173,7 @@
 				<div class="nav-collapse collapse">
 					<ul class="nav pull-right">
 						<li><a href="#">预览</a></li>
-						<li><a href="#">登出</a></li>
+						<li><a href="/achievement/back/loginOut">登出</a></li>
 					</ul>
 				</div>
 				<!--/.nav-collapse -->
@@ -277,10 +277,10 @@
 											<th><input type="checkbox" /></th>
 											<th>成果名称</th>
 											<th colspan="2">成果内容</th>
-											<th>时间</th>
-											<c:if test="${condition.achStatus == -1 || condition.achStatus == 0}">
-											<th>操作</th>
+											<c:if test="${condition.achStatus == 2}">
+											<th>意见</th>
 											</c:if>
+											<th>操作</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -295,9 +295,15 @@
 														src='${achievement.achImagePath }' width="30px" height="20px"/>
 												</a>	
 													<div class="media-body">${achievement.achDescribe }</div></td>
-												<td>${achievement.achDate }</td>
+												<c:if test="${condition.achStatus == 2}">
+												<td>${achievement.audit.opinion }</td>
+												</c:if>	
 												<td><button class="btn btn-warning addSlideShow"
-														value='${achievement.achId }' onclick="window.open('/achievement/back/user/achievement/modify?achId='+'${achievement.achId }','_self');">修改</button></td>
+														value='${achievement.achId }' onclick="window.open('/achievement/back/user/achievement/modify?achId='+'${achievement.achId }','_self');">修改</button>
+															<button class="btn btn-primative addSlideShow"
+														data-toggle="modal" data-target="#myModal" onclick="window.open('/achievement/back/user/${achievement.achId }/video');"
+														value='${achievement.achId }'>预览</button>
+														</td>
 											</tr>
 										</c:forEach>
 
