@@ -88,7 +88,7 @@ function deleteModule() {
 	}
 function bounce(){
 console.log("test");
-window.open('/achievement/back/user/addModule?achId='+'${achievement.achId }','_self');
+window.open(" /achievement/back/user/addModule?achId="+${achievement.achId },"_self");
 }
 </script>
 </head>
@@ -114,16 +114,16 @@ window.open('/achievement/back/user/addModule?achId='+'${achievement.achId }','_
 	</div>
 	 <div style="height: 60px;"></div>
 	<div class="container">     
-      <div class="row">
         <div class="col-md-10">
           <ul id="mytab" class="nav nav-tabs">
             <li class="active">
               <a href="#xw1" data-toggle='tab'>成果展示</a>
             </li>
-            <li>
+            <li >
               <a href="#xw2" data-toggle='tab'>成果描述</a>
             </li>
           </ul>
+          </div>
        <div class="tab-content">
     <div class="tab-pane active fade in" id="xw1">
     
@@ -162,8 +162,8 @@ window.open('/achievement/back/user/addModule?achId='+'${achievement.achId }','_
 			<input value="不保存退出" type="button" class="btn btn-warning"
 				<c:if test="${operator == 'add'}">onclick="deleteAch('${achievement.achId }');" </c:if>
 				<c:if test="${operator == 'modify'}">onclick="window.open('/achievement/back/user?achStatus=0','_self');"</c:if>
-	</form>
-</div>
+		</form>
+	</div>
 
 
 	<div class="tab-pane fade in" id="xw2">
@@ -172,8 +172,8 @@ window.open('/achievement/back/user/addModule?achId='+'${achievement.achId }','_
 	
 	<hr width="100%">
 	下面是一个关于模块页面
-	<button onclick="bounce();">添加模块</button>
-	<button onclick="deleteModule();">删除模块</button>
+	<input type="button" value="添加模块" onclick="bounce();">
+	<input type="button" value="删除模块" onclick="deleteModule();">
 	<table class="table table-hover">
 		<thead>
 			<tr>
@@ -201,6 +201,7 @@ onclick="if(this.checked == true) {addCheck('${module.modId }');} else { removeC
 	</table>
 </div>
 </div>
+
 
 </body>
 </html>
