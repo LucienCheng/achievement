@@ -49,11 +49,11 @@ var map= ${slideShowMap };
 <div class="col-sm-2">
 	<div class="aside_banner" id="aside_banner1" style="background: #0F0D0D;width:auto;height: auto;float: right;position: relative;margin: 5px;">
 	<c:forEach items="${hotAchievements }" var="achievement">
-	<div><img src="${achievement.achImagePath }" class="img-rounded img-thumbnail"></div>
+	<div><img src="${achievement.achImagePath }" class="img-rounded img-thumbnail" onclick='window.open("/achievement/front/${achievement.achId}/video?Url="+getUrl(),"_self");'></div>
 	</c:forEach>
 		<div>
-			<button class="col-sm-6 btn btn-default btn-lg" style="height: 140px;"><span class="glyphicon glyphicon-fire" style="font-size: 35px;color: #C54D4D;"></span><br>最热</button>
-			<button class="col-sm-6 btn btn-default btn-lg" style="height: 140px;"><span class="glyphicon glyphicon-flag" style="font-size: 35px;color: #C54D4D;"></span><br>最新</button>
+			<button class="col-sm-6 btn btn-default btn-lg" style="height: 140px;" onclick="window.open('/achievement/front/HotAchievement/1','_self')"><span class="glyphicon glyphicon-fire" style="font-size: 35px;color: #C54D4D;"></span><br>最热</button>
+			<button class="col-sm-6 btn btn-default btn-lg" style="height: 140px;" onclick="window.open('/achievement/front/NewAchievement/1','_self')"><span class="glyphicon glyphicon-flag" style="font-size: 35px;color: #C54D4D;"></span><br>最新</button>
 		</div>
 		
 	</div>
@@ -61,7 +61,7 @@ var map= ${slideShowMap };
 	<div class="col-sm-12">
 	<div class="lower_banner " id="lower_banner1" style="background: #0F0D0D;float: left;">
 	<c:forEach items="${newAchievements }" var="achievement">
-	<div class="col-sm-2"><img src="${achievement.achImagePath }" class="img-rounded img-thumbnail"></div>
+	<div class="col-sm-2"><img src="${achievement.achImagePath }" class="img-rounded img-thumbnail" onclick='window.open("/achievement/front/${achievement.achId}/video?Url="+getUrl(),"_self");'></div>
 	
 	</c:forEach>
 	</div>
@@ -78,12 +78,6 @@ var map= ${slideShowMap };
 		},
 	});
 </script>
-  ${hotAchievements }
-  <br>
-   ${newAchievements }
-  <br>
-   ${slideShow }
-  <br>
-   一级界面，展示成果图片
+
   </body>
 </html>
