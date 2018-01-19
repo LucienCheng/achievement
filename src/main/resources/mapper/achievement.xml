@@ -15,6 +15,7 @@
 		<result property="achDescribe" column="achDescribe" />
 		<association property="user" javaType="User" column="userId">
 			<id property="userId" column="userId" />
+			<result property="userName" column="authorName"/>
 		</association>
 	</resultMap>
 
@@ -73,12 +74,12 @@
 			</if>
 			
 		</trim>
-		<if test="condition==0 and start!=null and count != null">
+		<if test="condition == 0 and start!=null and count != null">
 			ORDER BY
 			achDate DESC
 			LIMIT #{start},#{count}
 		</if>
-		<if test="condition==1 and start!=null and count != null">
+		<if test="condition == 1 and start!=null and count != null">
 			ORDER BY
 			achCTR DESC,achDate DESC
 			LIMIT

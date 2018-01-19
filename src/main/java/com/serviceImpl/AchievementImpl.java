@@ -123,7 +123,7 @@ public class AchievementImpl implements AchievementService {
 	@Override
 	public List<Achievement> getNewAchi(String authorName, String achStartTime,
 			String achEndTime, Integer start, Integer count) {
-		return achiMapper.searchAchi(null, null, null, null, null, null, authorName, 
+		return achiMapper.searchAchi(null, null, null, null, null, 1, authorName, 
 				achStartTime, achEndTime, null, null, null, null,start, count, 0);
 		 
 	}
@@ -131,7 +131,7 @@ public class AchievementImpl implements AchievementService {
 	@Override
 	public List<Achievement> getHotAchi(String authorName, String achStartTime,
 			String achEndTime, Integer start, Integer count) {
-		return achiMapper.searchAchi(null, null, null, null, null, null, authorName, achStartTime, achEndTime,
+		return achiMapper.searchAchi(null, null, null, null, null, 1, authorName, achStartTime, achEndTime,
 				null, null, null, null,start, count, 1);
 		
 	}

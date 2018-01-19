@@ -87,7 +87,7 @@ get("file/image/1509161157377_images.");
   <br>
    ${newAchievements }
   <br>
-   ${slideShow }
+  
   <br>
    一级界面，展示成果图片
  
