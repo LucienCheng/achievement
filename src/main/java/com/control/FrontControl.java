@@ -6,22 +6,17 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.json.JsonArray;
-import javax.websocket.server.PathParam;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.entity.Achievement;
 import com.entity.AchievementCondition;
-import com.entity.Module;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.service.AchievementService;
@@ -162,6 +157,7 @@ System.out.println(Url);
 		}
 		else {
 			model.addAttribute("modules", moduleService.selectModuleByAchId(achId));
+			model.addAttribute("achievement", achievement);
 			return "/front/modules";
 		}
 		
