@@ -1,5 +1,14 @@
 window.requestAnimationFrame = window.requestAnimationFrame||function(a){return setTimeout(a,1000/60)};
 window.cancelAnimationFrame = window.cancelAnimationFrame||clearTimeout;
+function get(imagePath){
+	console.log(imagePath);
+	return map[''+imagePath+''];
+	}
+function getUrl(){
+	var url = document.location.toString();
+	var arrUrl=url.split("/achievement");
+	return arrUrl[1];
+	}
 function FragmentBanner(option) {
 
 	//实例化时，可传的参数
@@ -96,9 +105,7 @@ FragmentBanner.prototype = {
 
 				var newI = document.createElement('i');
 				newI.setIndex=n;
-				newI.onclick=function(obj){
-					window.open('img[i]')
-				}.bind(this.newI)
+				
 				this.setCss(newI,{
 					width : w+'px',
 					height : h+'px',
@@ -111,6 +118,9 @@ FragmentBanner.prototype = {
 				});
 				this.elem.view.appendChild(newI);
 				this.elem.viewBox.push(newI);
+				newI.onclick=function(obj){
+					window.open("/achievement/front/"+get(this.imgs[this.index])+"/video?Url="+getUrl(),"_self");
+					}.bind(this,newI)
 				// document.getElementByTagName('this.elem').onclick=function(){window.open('auditor1.html')};
 				// document.getElementByName("newI").onclick=function(){window.open("auditor1.html")};
 			}

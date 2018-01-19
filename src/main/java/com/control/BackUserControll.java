@@ -189,6 +189,7 @@ public class BackUserControll {
 			videoPath = achievementService.saveVideo(video, request);
 		}
 		achievement.setAchVideoPath(videoPath);
+		System.out.println(achievement);
 		achievementService.updateAchievement(achievement);
 		// 保存退出
 		return "redirect:/back/user?achStatus=0";

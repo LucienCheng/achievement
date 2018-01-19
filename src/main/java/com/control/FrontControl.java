@@ -1,5 +1,6 @@
 package com.control;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,17 +43,20 @@ public class FrontControl {
 	@RequestMapping(value = "/front/index", method = { RequestMethod.GET })
 	public String front(Model model) throws JsonProcessingException {
 		model.addAttribute("hotAchievements",
-				achievementService.getHotAchi(null, null, null, 0, 5));
+				achievementService.getHotAchi(null, null, null, 0, 4));
 		model.addAttribute("newAchievements",
-				achievementService.getNewAchi(null, null, null, 0, 5));
+				achievementService.getNewAchi(null, null, null, 0, 6));
 		Map<String, Integer> map=new HashMap<String, Integer>();
 		List<Achievement> achievements=slideShowService.selectSlideShow();
+		List<String> image=new ArrayList<String>();
 		for (Achievement achievement : achievements) {
+			image.add(achievement.getAchImagePath());
 			map.put(achievement.getAchImagePath(), achievement.getAchId());
 		}
+		JSONArray slideShow=new JSONArray(image);
 		 ObjectMapper mapper =new ObjectMapper();
-		model.addAttribute("slideShow", mapper.writeValueAsString(map));
-		
+		model.addAttribute("slideShowMap", mapper.writeValueAsString(map));
+		model.addAttribute("slideShow", slideShow);
 		return "/front/index";
 	}
 
