@@ -52,6 +52,7 @@ public class FrontControl {
 		}
 		 ObjectMapper mapper =new ObjectMapper();
 		model.addAttribute("slideShow", mapper.writeValueAsString(map));
+		
 		return "/front/index";
 	}
 
@@ -64,6 +65,16 @@ public class FrontControl {
 		if (start==null ||start==0) {
 			start=1;
 		}
+		if (condition != null
+				&& condition.getAchStartTime() != null
+				&& condition.getAchEndTime() != null) {
+			if (condition.getAchStartTime().length() == 0) {
+				condition.setAchStartTime(null);
+			}
+			if (condition.getAchEndTime().length() == 0) {
+				condition.setAchEndTime(null);
+			}
+		}
 		condition.setAchStatus(1);
 		int totalCount = achievementService.getCount(condition);
 		int totalPage = (totalCount + count - 1) / count;
@@ -73,6 +84,7 @@ public class FrontControl {
 		model.addAttribute("achievements", achievementService.getHotAchi(
 				condition.getAuthorName(), condition.getAchStartTime(),
 				condition.getAchEndTime(), (start-1)*count, count));
+		model.addAttribute("condition",condition );
 		return "/front/second";
 	}
 
@@ -84,6 +96,16 @@ public class FrontControl {
 		if (start==null ||start==0) {
 			start=1;
 		}
+		if (condition != null
+				&& condition.getAchStartTime() != null
+				&& condition.getAchEndTime() != null) {
+			if (condition.getAchStartTime().length() == 0) {
+				condition.setAchStartTime(null);
+			}
+			if (condition.getAchEndTime().length() == 0) {
+				condition.setAchEndTime(null);
+			}
+		}
 		condition.setAchStatus(1);
 		int totalCount = achievementService.getCount(condition);
 		int totalPage = (totalCount + count - 1) / count;
@@ -93,6 +115,8 @@ public class FrontControl {
 		model.addAttribute("achievements", achievementService.getNewAchi(
 				condition.getAuthorName(), condition.getAchStartTime(),
 				condition.getAchEndTime(), (start-1)*count, count));
+
+		model.addAttribute("condition",condition );
 		return "/front/second";
 	}
 
@@ -101,7 +125,7 @@ public class FrontControl {
 	@Transactional
 	public String getAchievementVideo(String Url,
 			@PathVariable("achievementId") int achievementId, Model model) {
-
+System.out.println(Url);
 		Achievement achievement = achievementService
 				.getAchiByAchId(achievementId);
 		
@@ -124,6 +148,7 @@ public class FrontControl {
 	public String getAchievementModules(@PathVariable("achId") int achId,String Url,Model model) {
 		Achievement achievement = achievementService
 				.getAchiByAchId(achId);
+		System.out.println(Url);
 		if (achievement.getAchStatus()!=1) {
 			System.out.println(achievement.getAchId());
 			model.addAttribute("error", "error");
