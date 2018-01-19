@@ -261,9 +261,6 @@ var authorName = '${condition.authorName}';
 													
 													<td class="achId"><a href="javascript:void(0);" rel="${achievement.achId }">${achievement.achName }</a></td>
 				
-	
-													
-
 													<td class="media" colspan="2"><a class="pull-left "
 														href="#"> <img class="media-object img-thumbnail"
 															src='${achievement.achImagePath }' />
