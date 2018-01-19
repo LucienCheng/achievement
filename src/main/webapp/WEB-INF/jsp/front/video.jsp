@@ -17,6 +17,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
+	
+	<link rel="stylesheet" type="text/css" href="/achievement/source/bootstrap-3.3.7-dist/css/bootstrap.css">
+	
+	<script type="text/javascript" src="/achievement/js/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="/achievement/source/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
@@ -24,9 +29,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-  <video width="320" height="240" controls> 
-			<source src="${video }" type="video/mp4"></video>
-
+  <body style="background-color: #FCFCFC">
+	<div class="container-fluid">
+	<div class="col-sm-3"></div>
+	<div class="col-sm-6" style="background:#BEAFF3;padding: 0px;margin-top:150px;">
+		<div style="font-size: 3em;font-style: italic;font">成果展示<br></div>
+		<div ><a href="userpage4.html" class="pull-right" style="font-size: 1.25em;text-decoration:none;"><span class="glyphicon glyphicon-circle-arrow-right"></span> 进入</a></div>
+		
+		<video controls autoplay height="550px" width="944px;">
+		</video>
+</div>
+	<div class="col-sm-3"></div>
+</div>
   <br>
     展示一个成果的视屏。
     <c:choose>
