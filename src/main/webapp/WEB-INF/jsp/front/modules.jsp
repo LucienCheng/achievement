@@ -4,6 +4,7 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
@@ -69,7 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        </button>
 	      </div>
 	      <div class="collapse navbar-collapse">
-	      	<li class="active"><a href="#">首页</a></li>
+	      	<li class="active"><a href="/achievement/front/index">首页</a></li>
 	      </div>
 	    </div>
 	</nav>  
@@ -83,47 +84,50 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li class="active">
               <a href="#xw1" data-toggle='tab'>成果展示</a>
             </li>
-            <li>
-              <a href="#xw2" data-toggle='tab'>模块展示</a>
+            <c:forEach items="${modules }" var="module">
+             <li>
+              <a href='#${module.modId }' data-toggle='tab'>${module.modName }</a>
             </li>
+            </c:forEach>
+           
           </ul>
         <div class="tab-content">
             <div class="tab-pane active fade in" id="xw1">
               <div class="col-md-12 font">
-              		<h3>成果名称</h3>
+              		<h3>成果名称:${achievement.achName }</h3>
               </div>
               <div class="col-md-12 font_inner" >
               	<div class="col-md-7">
               		<video controls autoplay height="550px" width="944px;" style="border:solid;">
-						<source src="" type="">
+						<source src="${achievement.achVideoPath }" >
 					</video>
 				</div>
 				<div class="col-md-5">
-					<img src="images/a1.png" class="img-responsive pull-right">
+					<img src="${achievement.achImagePath }" class="img-responsive pull-right">
 				</div>
 				<div class="col-md-12" style="padding-top: 55px;">
 					<h4>成果描述:</h4>
-					<div>这是对成果的文字性描述段落</div>
+					<div>${achievement.achDescribe }</div>
 				</div>
               </div>
             </div>
-        <div class="tab-pane fade in" id="xw2">
+            
+          <c:forEach items="${modules }" var="module">
+            <div class="tab-pane fade in" id="${module.modId }">
           	<div class="col-md-12 font">
-              <h3>模块展示</h3>
             </div>
             <div class="col-md-12 " style="margin-top: 10px;">
-              	<div class="col-md-12 " id="model_name">模块名称</div>
+              	<div class="col-md-12 " id="model_name">${module.modName }</div>
               	<div class="col-md-3"></div>
-              	<div class="col-md-6" id="model_descript">1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</div>
+              	<div class="col-md-6" id="model_descript">${module.modContent }</div>
               	<div class="col-md-3"></div>
             </div>
         </div>
+           </c:forEach>
+       
        </div>
       </div>
      </div>
     </div>
-</body>
-  ${ modules}
-   三级界面，模块展示
   </body>
 </html>
