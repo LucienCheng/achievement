@@ -9,6 +9,7 @@ import javax.json.JsonArray;
 import javax.websocket.server.PathParam;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.entity.Achievement;
 import com.entity.AchievementCondition;
 import com.entity.Module;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.service.AchievementService;
 import com.service.ModuleService;
 import com.service.SlideShowService;
@@ -37,7 +40,7 @@ public class FrontControl {
 	
 	// 一级界面
 	@RequestMapping(value = "/front/index", method = { RequestMethod.GET })
-	public String front(Model model) {
+	public String front(Model model) throws JsonProcessingException {
 		model.addAttribute("hotAchievements",
 				achievementService.getHotAchi(null, null, null, 0, 5));
 		model.addAttribute("newAchievements",
@@ -47,20 +50,26 @@ public class FrontControl {
 		for (Achievement achievement : achievements) {
 			map.put(achievement.getAchImagePath(), achievement.getAchId());
 		}
-		JSONArray slideShow=new JSONArray(map);
-		model.addAttribute("slideShow", slideShow);
+		 ObjectMapper mapper =new ObjectMapper();
+		model.addAttribute("slideShow", mapper.writeValueAsString(map));
 		return "/front/index";
 	}
 
 	// 二级页面最热
 	
 
-	@RequestMapping(value = "/front/HotAchievement/{start}", method = { RequestMethod.GET })
-	public String getHotAchievement(Model model,
+	@RequestMapping(value = "/front/HotAchievement/{start}", method = { RequestMethod.GET,RequestMethod.POST })
+	public String getHotAchievement(Model model, 
 			@PathVariable("start") Integer start, AchievementCondition condition) {
 		if (start==null ||start==0) {
 			start=1;
 		}
+		condition.setAchStatus(1);
+		int totalCount = achievementService.getCount(condition);
+		int totalPage = (totalCount + count - 1) / count;
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("curPage", start);
+		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("achievements", achievementService.getHotAchi(
 				condition.getAuthorName(), condition.getAchStartTime(),
 				condition.getAchEndTime(), (start-1)*count, count));
@@ -69,22 +78,28 @@ public class FrontControl {
 
 	// 二级页面最新
 
-	@RequestMapping(value = "/front/NewAchievement/{start}", method = { RequestMethod.GET })
+	@RequestMapping(value = "/front/NewAchievement/{start}", method = { RequestMethod.GET ,RequestMethod.POST })
 	public String getNewAchievement(Model model,
 			@PathVariable("start") Integer start, AchievementCondition condition) {
 		if (start==null ||start==0) {
 			start=1;
 		}
-		model.addAttribute("achievements", achievementService.getHotAchi(
+		condition.setAchStatus(1);
+		int totalCount = achievementService.getCount(condition);
+		int totalPage = (totalCount + count - 1) / count;
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("curPage", start);
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("achievements", achievementService.getNewAchi(
 				condition.getAuthorName(), condition.getAchStartTime(),
 				condition.getAchEndTime(), (start-1)*count, count));
 		return "/front/second";
 	}
 
 	// 三级页面的视频，同时增加点击量
-	@RequestMapping(value = "/front/{achievementId}/video", method = { RequestMethod.GET })
+	@RequestMapping(value = "/front/{achievementId}/video", method = { RequestMethod.GET,RequestMethod.POST })
 	@Transactional
-	public String getAchievementVideo(
+	public String getAchievementVideo(String Url,
 			@PathVariable("achievementId") int achievementId, Model model) {
 
 		Achievement achievement = achievementService
@@ -92,8 +107,8 @@ public class FrontControl {
 		
 		if(achievement.getAchStatus()!=1){
 			System.out.println(achievement.getAchId());
-			model.addAttribute("error", "成果更新状态了，不能查看，需要回退到上一步");
-			return "forward:/front/HotAchievement/1";
+			model.addAttribute("error", "error");
+			return "forward:"+Url;
 		}
 		else {
 			model.addAttribute("video", achievement.getAchVideoPath());
@@ -105,15 +120,14 @@ public class FrontControl {
 		
 	}
 	// 三级页面模块，初始页面
-	@RequestMapping(value = "/front/modules/{achId}", method = { RequestMethod.GET })
-	public String getAchievementModules(@PathVariable("achId") int achId,
-			Model model) {
+	@RequestMapping(value = "/front/modules/{achId}", method = { RequestMethod.GET,RequestMethod.POST })
+	public String getAchievementModules(@PathVariable("achId") int achId,String Url,Model model) {
 		Achievement achievement = achievementService
 				.getAchiByAchId(achId);
 		if (achievement.getAchStatus()!=1) {
 			System.out.println(achievement.getAchId());
-			model.addAttribute("error", "成果更新状态了，不能查看，需要回退到上一步");
-			return "forward:/front/HotAchievement/1";
+			model.addAttribute("error", "error");
+			return "forward:"+Url;
 		}
 		else {
 			model.addAttribute("modules", moduleService.selectModuleByAchId(achId));

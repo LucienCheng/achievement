@@ -11,6 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <title>My JSP 'index.jsp' starting page</title>
     
+<script src="/achievement/source/vendors/jquery-1.9.1.min.js"></script>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -19,7 +20,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-
+<script type="text/javascript">
+var map= ${slideShow };
+function get(imagePath){
+console.log(map[''+imagePath+'']);
+}
+get("file/image/1509161157377_images.");
+</script>
   </head>
   
   <body>
@@ -27,7 +34,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <br>
    ${newAchievements }
   <br>
-   ${slideShow }
+  
   <br>
    一级界面，展示成果图片
   </body>
