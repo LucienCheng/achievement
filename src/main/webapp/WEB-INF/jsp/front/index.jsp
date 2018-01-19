@@ -25,7 +25,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<script type="text/javascript" src="/achievement/source/jquery-3.2.1/jquery.js"></script>
 	<script type="text/javascript" src="/achievement/source/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
-	
+	<script type="text/javascript" src="/achievement/source/js/banner.js"></script>
 
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
@@ -71,8 +71,8 @@ get("file/image/1509161157377_images.");
 		<div class="col-sm-2"><img src="/achievement/source/images/a5.png" class="img-rounded img-thumbnail"></div>
 	</div>
 	</div>
-	 </body>
-<script type="text/javascript" src="js/banner.js"></script>
+	
+
 <script type="text/javascript">
 	var banenr2 = new FragmentBanner({
 		container : "#banner2",//选择容器 必选
@@ -87,8 +87,8 @@ get("file/image/1509161157377_images.");
   <br>
    ${newAchievements }
   <br>
-  
+   ${slideShow }
   <br>
    一级界面，展示成果图片
- 
+  </body>
 </html>
