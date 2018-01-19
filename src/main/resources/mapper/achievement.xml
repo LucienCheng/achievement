@@ -35,7 +35,7 @@
 	<select id="searchAchi" resultMap="achievementResultMap">
 		SELECT * from achievement_view
 		<trim prefix="where" prefixOverrides="and | or">
-
+			
 			<if test="authorId != null">
 				and authorId=#{authorId}
 			</if>
