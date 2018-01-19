@@ -18,12 +18,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<!-- -------------------------------------添加的link------------------------------------------------------------------- -->
 <link href="/achievement/source/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet" media="screen" />
 
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<!-- -------------------------------------添加的script------------------------------------------------------------------- -->
 
 <script src="/achievement/source/vendors/jquery-1.9.1.min.js"></script>
 <script
@@ -94,7 +92,7 @@ window.open(" /achievement/back/user/addModule?achId="+${achievement.achId },"_s
 </head>
 
 <body>
-	<!---添加的内容开始----------------------------------------------------------------------------------------------->
+	
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container-fluid">
@@ -126,8 +124,6 @@ window.open(" /achievement/back/user/addModule?achId="+${achievement.achId },"_s
           </div>
        <div class="tab-content">
     <div class="tab-pane active fade in" id="xw1">
-    
-    <!---结束----------------------------------------------------------------------------------------------->
     
 	<form action="/achievement/back/user/achievement/save"
 		enctype="multipart/form-data" method="post">
@@ -167,8 +163,6 @@ window.open(" /achievement/back/user/addModule?achId="+${achievement.achId },"_s
 
 
 	<div class="tab-pane fade in" id="xw2">
-	
-	<!---此处添加了id为xw2的div，以及后续的闭包div---------------------------------------------------------------------------------->
 	
 	<hr width="100%">
 	下面是一个关于模块页面

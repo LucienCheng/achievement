@@ -1,0 +1,9 @@
+div .img-rounded{
+	-webkit-transition: width 1s, height 1s, -webkit-transform 1s; /* For Safari 3.1 to 6.0 */
+    transition: width 1s, height 1s, transform 1s;
+}
+div .img-rounded:hover{
+	
+	-webkit-transform: rotate(5deg); /* Chrome, Safari, Opera */
+    transform: rotate(5deg);
+}
