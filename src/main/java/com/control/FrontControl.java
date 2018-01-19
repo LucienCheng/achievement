@@ -123,7 +123,7 @@ public class FrontControl {
 	// 三级页面的视频，同时增加点击量
 	@RequestMapping(value = "/front/{achievementId}/video", method = { RequestMethod.GET,RequestMethod.POST })
 	@Transactional
-	public String getAchievementVideo(String Url,
+	public String getAchievementVideo(String Url,AchievementCondition condition,
 			@PathVariable("achievementId") int achievementId, Model model) {
 System.out.println(Url);
 		Achievement achievement = achievementService
@@ -145,7 +145,9 @@ System.out.println(Url);
 	}
 	// 三级页面模块，初始页面
 	@RequestMapping(value = "/front/modules/{achId}", method = { RequestMethod.GET,RequestMethod.POST })
-	public String getAchievementModules(@PathVariable("achId") int achId,String Url,Model model) {
+	public String getAchievementModules(@PathVariable("achId") int achId,String Url,
+			AchievementCondition condition,
+			Model model) {
 		Achievement achievement = achievementService
 				.getAchiByAchId(achId);
 		System.out.println(Url);
