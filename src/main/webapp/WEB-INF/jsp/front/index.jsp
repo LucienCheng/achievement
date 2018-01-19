@@ -11,6 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <title>My JSP 'index.jsp' starting page</title>
     
+<script src="/achievement/source/vendors/jquery-1.9.1.min.js"></script>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -22,13 +23,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="/achievement/source/css/picture.css">
 	
 	
-	<script type="text/javascript" src="/achievement/js/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="/achievement/source/jquery-3.2.1/jquery.js"></script>
 	<script type="text/javascript" src="/achievement/source/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 	
+
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-
+<script type="text/javascript">
+var map= ${slideShow };
+function get(imagePath){
+console.log(map[''+imagePath+'']);
+}
+get("file/image/1509161157377_images.");
+</script>
   </head>
   
   <body style="background-color:#0F0D0D;">
@@ -42,10 +50,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 <div class="col-sm-2">
 	<div class="aside_banner" id="aside_banner1" style="background: #0F0D0D;width:auto;height: auto;float: right;position: relative;margin: 5px;">
-		<div><img src="images/a1.png" class="img-rounded img-thumbnail"></div>
-		<div><img src="images/a2.png" class="img-rounded img-thumbnail"></div>
-		<div><img src="images/a3.png" class="img-rounded img-thumbnail"></div>
-		<div><img src="images/a4.png" class="img-rounded img-thumbnail"></div>
+		<div><img src="/achievement/source/images/a1.png" class="img-rounded img-thumbnail"></div>
+		<div><img src="/achievement/source/images/a2.png" class="img-rounded img-thumbnail"></div>
+		<div><img src="/achievement/source/images/a3.png" class="img-rounded img-thumbnail"></div>
+		<div><img src="/achievement/source/images/a4.png" class="img-rounded img-thumbnail"></div>
 		<div>
 			<button class="col-sm-6 btn btn-default btn-lg" style="height: 140px;"><span class="glyphicon glyphicon-fire" style="font-size: 35px;color: #C54D4D;"></span><br>最热</button>
 			<button class="col-sm-6 btn btn-default btn-lg" style="height: 140px;"><span class="glyphicon glyphicon-flag" style="font-size: 35px;color: #C54D4D;"></span><br>最新</button>
@@ -55,20 +63,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
 	<div class="col-sm-12">
 	<div class="lower_banner " id="lower_banner1" style="background: #0F0D0D;float: left;">
-		<div class="col-sm-2"><img src="images/a1.png" class="img-rounded img-thumbnail"></div>
-		<div class="col-sm-2"><img src="images/a2.png" class="img-rounded img-thumbnail"></div>
-		<div class="col-sm-2"><img src="images/a3.png" class="img-rounded img-thumbnail"></div>
-		<div class="col-sm-2"><img src="images/a4.png" class="img-rounded img-thumbnail"></div>
-		<div class="col-sm-2"><img src="images/a5.png" class="img-rounded img-thumbnail"></div>
-		<div class="col-sm-2"><img src="images/a5.png" class="img-rounded img-thumbnail"></div>
+		<div class="col-sm-2"><img src="/achievement/source/images/a1.png" class="img-rounded img-thumbnail"></div>
+		<div class="col-sm-2"><img src="/achievement/source/images/a2.png" class="img-rounded img-thumbnail"></div>
+		<div class="col-sm-2"><img src="/achievement/source/images/a3.png" class="img-rounded img-thumbnail"></div>
+		<div class="col-sm-2"><img src="/achievement/source/images/a4.png" class="img-rounded img-thumbnail"></div>
+		<div class="col-sm-2"><img src="/achievement/source/images/a5.png" class="img-rounded img-thumbnail"></div>
+		<div class="col-sm-2"><img src="/achievement/source/images/a5.png" class="img-rounded img-thumbnail"></div>
 	</div>
 	</div>
-	
+	 </body>
 <script type="text/javascript" src="js/banner.js"></script>
 <script type="text/javascript">
 	var banenr2 = new FragmentBanner({
 		container : "#banner2",//选择容器 必选
-		imgs : ['images/a1.png','images/a2.png','images/a3.png','images/a4.png','images/a5.png'],//图片集合 
+		imgs : ['/achievement/source/images/a1.png','/achievement/source/images/a2.png','/achievement/source/images/a3.png','/achievement/source/images/a4.png','/achievement/source/images/a5.png'],//图片集合 
 		size : {
 			width : 1580,
 			height : 800
@@ -82,5 +90,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    ${slideShow }
   <br>
    一级界面，展示成果图片
-  </body>
+ 
 </html>
