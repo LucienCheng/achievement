@@ -284,6 +284,7 @@ public class BackUserControll {
 			Model model) {
 		Achievement achievement = achievementService.getAchiByAchId(achId);
 		model.addAttribute("modules", moduleService.selectModuleByAchId(achId));
+		model.addAttribute("achievement", achievement);
 		return "/front/modules";
 	}
 
