@@ -48,11 +48,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	src="/achievement/source/bootstrap/js/bootstrap-datetimepicker.js"></script>
 <script
 	src="/achievement/source/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
-
 <style type="text/css">
 #img_show {
 	width:204px;
 	height:236px;
+}
+.breadcrumb li{
+	font-size:1.5em;
 }
 </style>
 
@@ -157,15 +159,11 @@ var authorName = '${condition.authorName}';
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container-fluid">
-				<a class="btn btn-navbar" data-toggle="collapse"
-					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span>
-				</a>
 				<ol class="breadcrumb">
 					<li><a href="/achievement/front/index">首页</a> <span class="divider">/</span></li>
 					<li><a href="javascript:void(0);">展示</a></li>
 				</ol>
-				<div class="nav-collapse collapse"></div>
+				
 			</div>
 		</div>
 	</div>
@@ -269,7 +267,7 @@ class="block pull-left span12">
 						<td class="achId"><a href="javascript:void(0);" rel="${achievement.achId }">${achievement.achName }</a></td>
 
 						<td class="media" colspan="2">
-							 <img class="media-object img-rounded" href="#myModal" data-toggle="modal"  id="img_show"
+							 <img class="media-object img-rounded"  id="img_show"
 								src='${achievement.achImagePath }' /></td>				
 						<td>${achievement.achDate }</td>
 						<td>${achievement.user.userName }</td>

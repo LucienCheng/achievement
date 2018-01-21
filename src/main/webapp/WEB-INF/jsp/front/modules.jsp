@@ -52,6 +52,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			text-align: center;
 			font-size: 2em;
 		}
+		.navbar-fixed-top{
+			padding:0px;
+			margin:0px;
+			top:0;
+			left:0;
+		}
+		.breadcrumb li{
+			font-size:1.5em;
+		}
 	</style>
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
@@ -60,33 +69,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-	<div class="navbar navbar-fixed-top">
+	<div class="navbar-fixed-top col-sm-12 col-md-12">
 		<div class="navbar-inner">
 			<div class="container-fluid">
-				<a class="btn btn-navbar" data-toggle="collapse"
-					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span>
-				</a>
 				<ol class="breadcrumb">
-					<li><a href="/achievement/front/index">首页</a> <span class="divider">/</span></li>
-					<li><a href="javascript:void(0);">展示</a></span></li>
+					<li><a href="/achievement/front/index">首页</a> <span class="divider"></span></li>
+					<li><a href="javascript:void(0);">展示</a></li>
 				</ol>
-				<div class="nav-collapse collapse"></div>
 			</div>
 		</div>
 	</div>
      
    	<div style="height: 60px;"></div>
-   	<div class="col-md-1"></div>
-    <div class="container col-md-12">
+    <div class="container col-md-12 col-sm-12">
       <div class="row">
         <div class="col-md-12">
           <ul id="mytab" class="nav nav-tabs">
             <li class="active">
-              <a href="#xw1" data-toggle='tab'>成果展示</a>
-              </li>
-             <li>
-              <a href="#xw2" data-toggle='tab'>成果展示</a>
+              	<a href="#xw1" data-toggle='tab'>视频</a> 
+            </li>
+            <li>
+            	<a href="#xw2" data-toggle='tab'>图片</a>
             </li>
             <c:forEach items="${modules }" var="module">
              <li>
@@ -94,17 +97,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </li>
             </c:forEach>
           </ul>
-          
-          <!-- 成果展示界面 -->
+   
         <div class="tab-content">
             <div class="tab-pane active fade in" id="xw1">
               <div class="col-md-12 font">
               		<h3>成果名称:${achievement.achName }</h3>
               </div>
               <div class="col-md-12 col-sm-12 font_inner" >
-              	<div class="col-md-7 col-sm-12">
-              		<video controls autoplay height="550px" width="944px;">
-						<source src="${achievement.achVideoPath}" ></source>
+              	<div class="col-md-7 col-sm-7">
+              		<video controls autoplay height="550px" width="944px;" style="border:solid;">
+						<source src="${achievement.achVideoPath }" >
 					</video>
 				</div>
 				<div class="col-md-5 col-sm-5">
@@ -112,23 +114,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div>${achievement.achDescribe }</div>
 				</div>
               </div>
-            </div>
-            
-            <!-- 图片展示 -->
-            <div class="tab-pane fade in" id="xw2">
-              <div class="col-md-12 font">
-              		<h3>成果名称:${achievement.achName }</h3>
               </div>
-              <div class="col-md-12 col-sm-12 font_inner" >
-              	<div class="col-md-5 col-sm-5"></div>
-				<div class="col-md-4 col-sm-4">
-					<img src="${achievement.achImagePath}" class="img-responsive" >
-				</div>
-              </div>
-             </div>
-             
-
-            <!-- 模块展示界面   -->
+           <div class="tab-pane fade in" id="xw2">
+	           	<div class="col-md-12 font">
+	              		<h3>成果名称:${achievement.achName }</h3>
+	            </div>
+	            <div class="col-md-12 col-sm-12 font_inner" >
+	            <div class="col-md-4 col-sm-4"></div>
+					<div class="col-md-5 col-sm-5">
+						<img src="${achievement.achImagePath }" class="img-responsive">
+					</div>
+              	</div>
+           </div>
           <c:forEach items="${modules }" var="module">
             <div class="tab-pane fade in" id="${module.modId }">
           	<div class="col-md-12 font">
@@ -141,7 +138,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
         </div>
            </c:forEach>
-       
        </div>
       </div>
      </div>

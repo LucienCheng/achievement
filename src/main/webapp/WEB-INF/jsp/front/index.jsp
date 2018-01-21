@@ -38,6 +38,7 @@ var map= ${slideShowMap };
   </head>
   
   <body style="background-color:#0F0D0D;">
+  <div>
 	<div class="col-md-10 col-sm-10">
 	<div class="banner" id="banner2">
 		<div class="banner-view"></div>
@@ -65,7 +66,7 @@ var map= ${slideShowMap };
 	</c:forEach>
 	</div>
 	</div>
-	
+	</div>
 
 <script type="text/javascript">
 	var banenr2 = new FragmentBanner({
