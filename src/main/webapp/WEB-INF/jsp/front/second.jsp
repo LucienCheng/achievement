@@ -49,6 +49,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script
 	src="/achievement/source/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
 
+<style type="text/css">
+#img_show {
+	width:204px;
+	height:236px;
+}
+</style>
+
 <script type="text/javascript">
 
 function getUrl(){
@@ -156,7 +163,7 @@ var authorName = '${condition.authorName}';
 				</a>
 				<ol class="breadcrumb">
 					<li><a href="/achievement/front/index">首页</a> <span class="divider">/</span></li>
-					<li><a href="javascript:void(0);">展示</a> <span class="divider">/</span></li>
+					<li><a href="javascript:void(0);">展示</a></li>
 				</ol>
 				<div class="nav-collapse collapse"></div>
 			</div>
@@ -167,129 +174,121 @@ var authorName = '${condition.authorName}';
 			<div class="span1" id="sidebar"></div>
 			<div class="span10" id="content">
 				<c:if test="${error == 'error' }">
-					<div class="row-fluid">
-						<div class="alert alert-error alert-block">
-							<button type="button" class="close" data-dismiss="alert">
-								<span aria-hidden="true">&times;</span>
-							</button>
-							<h4>操作失败</h4>
-							用户已经更新了成果，不能查看！！
-						</div>
-					</div>
-				</c:if>
-				<div class="row-fluid"></div>
-				<div class="row-fluid ">
-					<div class="collapse in" id="collapseExample">
-						<div
-							style="background-color:#fff;border:1px solid #d4d4d4;height:auto;"
-							class="block pull-left span12">
-							
-							<form class="input-group pull-left block-content"
-								action="/achievement/front/HotAchievement/1" method="post">
-								<label style="display:inline">作者</label> <input type="text"
-									style="margin-bottom:0px;width:150px" placeholder="作者"
-									name="authorName" value='${condition.authorName }' /> <label
-									style="display:inline">起止时间--</label> <label
-									style="display:inline">终止时间</label>
-								<div class="input-append date form_datetime "
-									data-date="2017-12-31" style="margin-bottom:0px;">
+<div class="row-fluid">
+	<div class="alert alert-error alert-block">
+		<button type="button" class="close" data-dismiss="alert">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<h4>操作失败</h4>
+		用户已经更新了成果，不能查看！！
+	</div>
+</div>
+</c:if>
+<div class="row-fluid"></div>
+<div class="row-fluid ">
+	<div class="collapse in" id="collapseExample">
+		<div
+			style="background-color:#fff;border:1px solid #d4d4d4;height:auto;"
+class="block pull-left span12">
 
-									<input size="16" type="text" readonly
-										style="margin-bottom:0px;width:100px" name="achStartTime"
-										value='${condition.achStartTime }'> <span
-										class="add-on"><i class="icon-remove"></i></span> <span
-										class="add-on"><i class="icon-calendar"></i></span>
-								</div>
-								<label style="display:inline">--</label>
-								<div class="input-append date form_datetime "
-									data-date="2017-12-31" style="margin-bottom:0px;">
+<form class="input-group pull-left block-content"
+	action="/achievement/front/HotAchievement/1" method="post">
+	<label style="display:inline">作者</label> <input type="text"
+		style="margin-bottom:0px;width:150px" placeholder="作者"
+		name="authorName" value='${condition.authorName }' /> <label
+		style="display:inline">起止时间--</label> <label
+		style="display:inline">终止时间</label>
+	<div class="input-append date form_datetime "
+		data-date="2017-12-31" style="margin-bottom:0px;">
 
-									<input size="16" type="text" readonly
-										style="margin-bottom:0px;width:100px" name="achEndTime"
-										value='${condition.achEndTime }'> <span class="add-on"><i
-										class="icon-remove"></i></span> <span class="add-on"><i
-										class="icon-calendar"></i></span>
-								</div>
-								<input type="hidden" value='${condition.achStatus}'
-									name="achStatus">
-								<script type="text/javascript">
-									$(".form_datetime").datetimepicker({
-										format : "yyyy-mm-dd hh:ii:ss",
-										autoclose : true,
-										todayBtn : true,
-										startDate : "2017-01-31 10:00",
-										minuteStep : 10
-									});
-								</script>
-								<button class="btn btn-default" type="submit">搜索</button>
-							</form>
-						</div>
-					</div>
-					<div class="row-fluid">
-						<div class="block">
-							<div class="navbar navbar-inner block-header">
-								<div class="muted pull-left">成果</div>
-<div class="pull-right">
-								<span class="badge badge-info">${totalCount }</span>
-							</div>
-								<div style="padding:0px 0px 0px 40px;">
-									<button class="col-sm-6 btn btn-default btn-xs"  onclick="window.open('/achievement/front/HotAchievement/1','_self');" >
-									最热
-									</button>
-									<button class="col-sm-6 btn btn-default btn-xs"  onclick="window.open('/achievement/front/NewAchievement/1','_self');">
-									最新
-									</button>
-								</div>
-							</div>
-							<div class="block-content collapse in">
-								<div class="span12">
-									<table class="table table-hover">
-										<thead>
-											<tr>
-												
-												<th>成果名称</th>
-												<th colspan="2">成果内容</th>
-												<th>时间</th>
-												<th>作者</th>
-												<th>点击量</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:forEach var="achievement" items="${achievements }">
+		<input size="16" type="text" readonly
+			style="margin-bottom:0px;width:100px" name="achStartTime"
+			value='${condition.achStartTime }'> <span
+			class="add-on"><i class="icon-remove"></i></span> <span
+			class="add-on"><i class="icon-calendar"></i></span>
+	</div>
+	<label style="display:inline">--</label>
+	<div class="input-append date form_datetime "
+		data-date="2017-12-31" style="margin-bottom:0px;">
 
-												<tr>
-													
-													<td class="achId"><a href="javascript:void(0);" rel="${achievement.achId }">${achievement.achName }</a></td>
-				
-													<td class="media" colspan="2"><a class="pull-left "
-														href="#"> <img class="media-object img-thumbnail"
-															src='${achievement.achImagePath }' />
-													</a>
-														<div class="media-body">${achievement.achDescribe }</div></td>
-													<td>${achievement.achDate }</td>
-													<td>${achievement.user.userName }</td>
-													<td>${achievement.achCTR }</td>
-											</c:forEach>
+		<input size="16" type="text" readonly
+			style="margin-bottom:0px;width:100px" name="achEndTime"
+			value='${condition.achEndTime }'> <span class="add-on"><i
+			class="icon-remove"></i></span> <span class="add-on"><i
+			class="icon-calendar"></i></span>
+	</div>
+	<input type="hidden" value='${condition.achStatus}'
+		name="achStatus">
+	<script type="text/javascript">
+		$(".form_datetime").datetimepicker({
+			format : "yyyy-mm-dd hh:ii:ss",
+			autoclose : true,
+			todayBtn : true,
+			startDate : "2017-01-31 10:00",
+			minuteStep : 10
+		});
+	</script>
+			<button class="btn btn-default" type="submit">搜索</button>
+		</form>
+	</div>
+</div>
+<div class="row-fluid">
+	<div class="block">
+		<div class="navbar navbar-inner block-header">
+			<div class="muted pull-left">成果</div>
+			<div class="pull-right">
+			<span class="badge badge-info">${totalCount }</span>
+</div>
+	<div style="padding:0px 0px 0px 40px;">
+		<button class="col-sm-6 btn btn-default btn-xs"  onclick="window.open('/achievement/front/HotAchievement/1','_self');" >
+		最热
+		</button>
+		<button class="col-sm-6 btn btn-default btn-xs"  onclick="window.open('/achievement/front/NewAchievement/1','_self');">
+		最新
+		</button>
+	</div>
+</div>
+<div class="block-content collapse in">
+	<div class="span12">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					
+					<th>成果名称</th>
+					<th colspan="2">成果内容</th>
+					<th>时间</th>
+					<th>作者</th>
+					<th>点击量</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="achievement" items="${achievements }">
 
-										</tbody>
-									</table>
-								</div>
-								<div class="span12">
-									<div class="pagination" id="pagecount"></div>
-								</div>
-							</div>
-						</div>
-						<!-- /block -->
-					</div>
+					<tr>
+						
+						<td class="achId"><a href="javascript:void(0);" rel="${achievement.achId }">${achievement.achName }</a></td>
 
+						<td class="media" colspan="2">
+							 <img class="media-object img-rounded" href="#myModal" data-toggle="modal"  id="img_show"
+								src='${achievement.achImagePath }' /></td>				
+						<td>${achievement.achDate }</td>
+						<td>${achievement.user.userName }</td>
+						<td>${achievement.achCTR }</td>
+				</c:forEach>
+
+				</tbody>
+			</table>
+		</div>
+		<div class="span12">
+			<div class="pagination" id="pagecount"></div>
+		</div>
+	</div>
+</div>
+<!-- /block -->
+					</div>	
 				</div>
 			</div>
 		</div>
-
-
-
-
-		<br>
 </body>
 
 
