@@ -52,6 +52,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			text-align: center;
 			font-size: 2em;
 		}
+		.navbar-fixed-top{
+			padding:0px;
+			margin:0px;
+			top:0;
+			left:0;
+		}
+		.breadcrumb li{
+			font-size:1.5em;
+		}
+		.font_inner{
+			
+		}
 	</style>
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
@@ -60,58 +72,63 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-	<nav class="nav navbar-default navbar-fixed-top" role="navigation">
-	    <div class="container-fluid">
-	      <div class="navbar-header">
-	        <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-	          <span class="icon-bar"></span>
-	          <span class="icon-bar"></span>
-	          <span class="icon-bar"></span>
-	        </button>
-	      </div>
-	      <div class="collapse navbar-collapse">
-	      	<li class="active"><a href="/achievement/front/index">首页</a></li>
-	      </div>
-	    </div>
-	</nav>  
+	<div class="navbar-fixed-top col-sm-12 col-md-12">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<ol class="breadcrumb">
+					<li><a href="/achievement/front/index">首页</a> <span class="divider"></span></li>
+					<li><a href="javascript:void(0);">展示</a></li>
+				</ol>
+			</div>
+		</div>
+	</div>
      
    	<div style="height: 60px;"></div>
-   	<div class="col-md-1"></div>
-    <div class="container col-md-12">
+    <div class="container col-md-12 col-sm-12">
       <div class="row">
         <div class="col-md-12">
           <ul id="mytab" class="nav nav-tabs">
             <li class="active">
-              <a href="#xw1" data-toggle='tab'>成果展示</a>
+              	<a href="#xw1" data-toggle='tab'>视频</a> 
+            </li>
+            <li>
+            	<a href="#xw2" data-toggle='tab'>图片</a>
             </li>
             <c:forEach items="${modules }" var="module">
              <li>
               <a href='#${module.modId }' data-toggle='tab'>${module.modName }</a>
             </li>
             </c:forEach>
-           
           </ul>
+   
         <div class="tab-content">
             <div class="tab-pane active fade in" id="xw1">
-              <div class="col-md-12 font">
+              <div class="col-md-12 col-sm-12 font">
               		<h3>成果名称:${achievement.achName }</h3>
               </div>
-              <div class="col-md-12 font_inner" >
-              	<div class="col-md-7">
-              		<video controls autoplay height="550px" width="944px;" style="border:solid;">
+              <div class="col-md-12 col-sm-12 font_inner" >
+              	<div class="col-md-7 col-sm-7">
+              		<video controls class="col-md-10 col-sm-10">
 						<source src="${achievement.achVideoPath }" >
 					</video>
 				</div>
-				<div class="col-md-5">
-					<img src="${achievement.achImagePath }" class="img-responsive pull-right">
-				</div>
-				<div class="col-md-12" style="padding-top: 55px;">
+				<div class="col-md-5 col-sm-5">
 					<h4>成果描述:</h4>
 					<div>${achievement.achDescribe }</div>
 				</div>
               </div>
-            </div>
-            
+              </div>
+           <div class="tab-pane fade in" id="xw2">
+	           	<div class="col-md-12 font">
+	              		<h3>成果名称:${achievement.achName }</h3>
+	            </div>
+	            <div class="col-md-12 col-sm-12 font_inner" >
+	            <div class="col-md-2 col-sm-2"></div>
+					<div class="col-md-8 col-sm-8">
+						<img src="${achievement.achImagePath }" class="img-responsive">
+					</div>
+              	</div>
+           </div>
           <c:forEach items="${modules }" var="module">
             <div class="tab-pane fade in" id="${module.modId }">
           	<div class="col-md-12 font">
@@ -124,7 +141,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
         </div>
            </c:forEach>
-       
        </div>
       </div>
      </div>
