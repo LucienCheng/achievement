@@ -42,19 +42,18 @@
 	action="/achievement/back/user/saveModule"
 	</c:if>
 	<c:if test="${modOpera == 'modify' }">
-	action="/achievement/back/user/saveModifyModule"
+	action="/achievement/back/user/modifyModule"
 	</c:if>
 	 method="post">
 		<div class="row-fluid " role="form">
 				<div class="form-group">
-					<label for="name">模块名称</label> <input type="text" name="modName"
-					value="${module.modName }"		class="form-control" placeholder="模块名称"
-					onkeyup="ta(this)">
+					<label for="name">模块简称</label> <input type="text" name="modName"
+					value="${module.modName }"		class="form-control" placeholder="请输入2~4个汉字或字符"
+					maxlength="4" minlength="2">
 				</div>
 				<div class="form-group">
-					<label for="name">模块描述</label> <input type="text" name="modDescribe"
-				value="${module.modDescribe }"		class="form-control" placeholder="模块描述"
-				>
+					<label for="name">模块简述</label> <input type="text" name="modDescribe"
+				value="${module.modDescribe }"		class="form-control" placeholder="模块简述">
 				</div>
 		</div>
 		<div class="row-fluid">
@@ -70,7 +69,7 @@
 									style="width:100%;height:700px;">
 									${module.modContent }
 								</script>
-								<input type="submit" value="发送">
+								<input type="submit" value="提交">
 								<input type="hidden" value='${achId }' name="achId">
 								<input type="hidden" value='${module.modId }' name="modId">
 						</div>
@@ -83,13 +82,6 @@
 
 	<script type="text/javascript">
 		var ue = UE.getEditor('editor');
-		function ta(obj){
-	var val=$(obj).val().length;
-	if(val>2){
-		alert("至多输入10个字符！");
-		$(obj).val($(obj).val().substring(0,10))
-		}
-}
 	</script>
 
 </body>
