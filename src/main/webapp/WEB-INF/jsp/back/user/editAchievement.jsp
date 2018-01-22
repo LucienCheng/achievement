@@ -82,8 +82,8 @@ function deleteModule() {
 			}
 		});
 	}
-function bounce(){
-var form=new FormData(document.getElementById("achievementForm"));
+			function bounce(){
+			var form=new FormData(document.getElementById("achievementForm"));
 				$.ajax({
  				url:'/achievement/back/user/achievement/saveAjax',
                 type:"post",
@@ -126,9 +126,9 @@ var form=new FormData(document.getElementById("achievementForm"));
 	<div class="container">
 		<div class="col-md-10">
 			<ul id="mytab" class="nav nav-tabs">
-				<li class="active"><a href="#xw1" data-toggle='tab'>成果基本信息填写</a>
+				<li class="active"><a href="#xw1" data-toggle='tab'>基本信息</a>
 				</li>
-				<li><a href="#xw2" data-toggle='tab'>成果模块</a></li>
+				<li><a href="#xw2" data-toggle='tab'>模块信息</a></li>
 			</ul>
 		</div>
 		<div class="tab-content">
@@ -193,7 +193,7 @@ var form=new FormData(document.getElementById("achievementForm"));
 								<td colspan="2">${module.modDescribe }</td>
 								<td><input type="button"
 									class="btn btn-warning addSlideShow" value='修改'
-									onclick="window.open('/achievement/back/user/modifyModule?modId='+'${module.modId }','_self');">
+									onclick="window.open('/achievement/back/user/modifyModule?achId=${achievement.achId }&modId='+'${module.modId }','_self');">
 								</button></td>
 							</tr>
 						</c:forEach>

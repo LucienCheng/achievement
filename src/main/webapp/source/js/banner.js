@@ -33,8 +33,8 @@ function FragmentBanner(option) {
 
 	//容器的大小
 	this.size = {
-		width : 0,
-		height : 0,
+		width : 1200,
+		height : 675,
 	};
 
 	//切换类型

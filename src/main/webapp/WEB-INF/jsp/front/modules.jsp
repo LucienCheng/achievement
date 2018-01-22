@@ -61,9 +61,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		.breadcrumb li{
 			font-size:1.5em;
 		}
-		.font_inner{
-			
-		}
 	</style>
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
