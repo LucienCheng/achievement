@@ -52,11 +52,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript">
 		myVid=document.getElementById("video1");
 		myVid.addEventListener('ended',function(){
-        		if(test="${roleId == 1 }"){
+        		if(test=${roleId == 1 }){
         			setTimeout('window.open("/achievement/back/user/modules/${achId}","_self")',1000);
         			
         			}
-        		else if(test="${roleId == 2 }"){
+        		else if(test=${roleId == 2 }){
         			setTimeout('window.open("/achievement/back/auditor/modules/${achId}","_self")',1000);
         			
         			}
@@ -66,10 +66,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         			}
     	});	
     	myVid.addEventListener('click',function(){
-    			if(test="${roleId == 1 }"){
+    			if(test=${roleId == 1 }){
         			window.open("/achievement/back/user/modules/${achId}","_self");
         			}
-        		else if(test="${roleId == 2 }"){
+        		else if(test=${roleId == 2 }){
         			window.open("/achievement/back/auditor/modules/${achId}","_self");
         			}
         		else{
