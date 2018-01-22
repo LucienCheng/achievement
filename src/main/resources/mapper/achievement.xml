@@ -17,6 +17,7 @@
 			<id property="userId" column="userId" />
 			<result property="userName" column="authorName"/>
 		</association>
+		
 	</resultMap>
 
 
@@ -25,9 +26,17 @@
 		useGeneratedKeys="true" keyProperty="achId">
 		insert into
 		achievement(achName,userId,achVideoPath,
-		achImagePath,achClassify,achStatus,achDate,achDescribe)
+		achImagePath,achClassify
+		
+		<if test="achStatus != null">
+			,achStatus	
+			</if>
+		,achDate,achDescribe)
 		values(#{achName},#{user.userId},#{achVideoPath},#{achImagePath},#{achClassify}
-		,#{achStatus},#{achDate},#{achDescribe})
+		<if test="achStatus != null">
+		,#{achStatus}
+		</if>
+		,#{achDate},#{achDescribe})
 	</insert>
 
 

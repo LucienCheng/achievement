@@ -168,7 +168,6 @@ public class BackUserControll {
 			@RequestParam("video") MultipartFile video,
 			HttpServletRequest request, HttpSession session,
 			Achievement achievement) {
-		System.out.println(achievement);
 		User user = new User();
 		user.setUserId((Integer) session.getAttribute("userId"));
 		achievement.setUser(user);
@@ -180,21 +179,50 @@ public class BackUserControll {
 		String videoPath = null;
 		achievement.setAchDate(TimeToolService.getCurrentTime());
 		if (image.getOriginalFilename().length() != 0) {
-			System.out.println();
 			imagePath = achievementService.saveImagine(image, request);
 		}
 		achievement.setAchImagePath(imagePath);
 		if (video.getOriginalFilename().length() != 0) {
-			System.out.println(video.getOriginalFilename());
 			videoPath = achievementService.saveVideo(video, request);
 		}
 		achievement.setAchVideoPath(videoPath);
-		System.out.println(achievement);
 		achievementService.updateAchievement(achievement);
 		// 保存退出
 		return "redirect:/back/user?achStatus=0";
 	}
-
+	// 保存成果，提供给ajax使用的
+		@RequestMapping(value = "/back/user/achievement/saveAjax", method = { RequestMethod.POST })
+		@Transactional
+		@ResponseBody
+		public Map<String, Object> Save(
+				 MultipartFile image,
+				MultipartFile video,
+				HttpServletRequest request, HttpSession session, Achievement achievement
+				) {
+			Map<String, Object> map=new HashMap<String, Object>();
+			map.put("statue", "failure");
+			User user = new User();
+			user.setUserId((Integer) session.getAttribute("userId"));
+			achievement.setUser(user);
+			List<Integer> achIds = new ArrayList<Integer>();
+			achIds.add(achievement.getAchId());
+			// 将修改的成果设置为0，待审核状态
+			achievementService.updateAchiWithSta(achIds, 0);
+			String imagePath = null;
+			String videoPath = null;
+			achievement.setAchDate(TimeToolService.getCurrentTime());
+			if (image.getOriginalFilename().length() != 0) {
+				imagePath = achievementService.saveImagine(image, request);
+			}
+			achievement.setAchImagePath(imagePath);
+			if (video.getOriginalFilename().length() != 0) {
+				videoPath = achievementService.saveVideo(video, request);
+			}
+			achievement.setAchVideoPath(videoPath);
+			achievementService.updateAchievement(achievement);
+			map.put("statue", "success");
+			return map;
+		}
 	// 批量删除achievement
 	@RequestMapping(value = "/back/user/achievement/delete", method = { RequestMethod.POST })
 	@ResponseBody

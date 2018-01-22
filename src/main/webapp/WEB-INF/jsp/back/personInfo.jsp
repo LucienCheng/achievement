@@ -29,10 +29,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container-fluid">
-				<a class="brand" href="#">首页</a>
+				<a class="brand" href="/achievement/front/index" target="_blank">首页</a>
 				<div class="nav-collapse collapse">
 					<ul class="nav pull-right">
-						<li><a href="#">预览</a></li>
 						<li><a href="/achievement/back/loginOut">登出</a></li>
 					</ul>
 				</div>
