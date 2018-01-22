@@ -52,6 +52,7 @@ public class BackAdminControl {
 
 	//首页
 		@RequestMapping(value="/back/admin",method={RequestMethod.GET,RequestMethod.POST})
+		@Transactional
 		public String index(Model model,UserCondition userCondition,HttpSession session) {
 			List<User> users=userService.getUserByConditon(userCondition, (Integer)session.getAttribute("userId"),0, count);
 			int totalCount=userService.getUserCount(userCondition);
@@ -70,6 +71,7 @@ public class BackAdminControl {
 		}
 		//根据条件搜索用户
 		@RequestMapping(value="/back/admin/{start}",method={RequestMethod.GET,RequestMethod.POST})
+		@Transactional
 		public String searchUsers(@PathVariable int start,UserCondition userCondition,Model model,HttpSession session) {
 			List<User> users=userService.getUserByConditon(userCondition, (Integer)session.getAttribute("userId"),(start-1)*count, count);
 			int totalCount=userService.getUserCount(userCondition);
@@ -88,6 +90,7 @@ public class BackAdminControl {
 		}
 	//个人资料
 		@RequestMapping(value="/back/admin/personInfo",method={RequestMethod.GET,RequestMethod.POST})
+		@Transactional
 		public String personInfo(HttpSession session,Model model) {
 			model.addAttribute("user", userService.getUserById((int)session.getAttribute("userId")));
 			return "/back/personInfo";
@@ -184,6 +187,7 @@ public class BackAdminControl {
     
 	//excel导入,导入的过程有点长，所以使用异步快比较一些
 	@RequestMapping(value="/back/admin/importExcel" ,method=RequestMethod.POST)
+	@Transactional
 	public  Callable<String> importExcel( final MultipartFile file){
 		
 		return new Callable<String>() {
@@ -214,6 +218,7 @@ public class BackAdminControl {
 	
 	//保存一个用户
 	@RequestMapping(value="/back/admin/saveUser",method={RequestMethod.POST})
+	@Transactional
 	public String saveUser(User user){
 		System.out.println(user);
 		int result=userService.updateUser(user);
@@ -222,6 +227,7 @@ public class BackAdminControl {
 	
 	//添加一个用户
 		@RequestMapping(value="/back/admin/addUser",method={RequestMethod.POST})
+		@Transactional
 		public String addUser(User user){
 			List<User> users=new ArrayList<User>();
 			users.add(user);
@@ -230,6 +236,7 @@ public class BackAdminControl {
 		}
 	//批量删除用户
 	@RequestMapping(value="/back/admin/deleteUser/",method={RequestMethod.POST})
+	@Transactional
 	@ResponseBody
 	public Map<String, Object> deleteUser(@RequestBody List<Integer> userIds){
 		Map<String, Object> map=new HashMap<String, Object>();
@@ -241,6 +248,7 @@ public class BackAdminControl {
 	//接下是轮播图
 	//轮播图页面
 	@RequestMapping(value="/back/admin/slideShow",method={RequestMethod.GET,RequestMethod.POST})
+	
 	@Transactional
 	public String slideShow(Model model){
 		//选取幻灯片
@@ -250,7 +258,7 @@ public class BackAdminControl {
 	}
 	//在searchSlideShow
 	@RequestMapping(value="/back/admin/slideShow/search/{start}",method={RequestMethod.GET})
-
+	@Transactional
 	public  String slideShowPage(Model model,@PathVariable("start") Integer start,@ModelAttribute AchievementCondition condition){
 		if(condition!=null&&condition.getAchStartTime()!=null&&condition.getAchEndTime()!=null){
 			if (condition.getAchStartTime().length()==0) {
@@ -271,6 +279,7 @@ public class BackAdminControl {
 	
 	//轮播图的添加动作，并且会刷新slideShow
 	@RequestMapping(value="/back/admin/slideShow/add",method={RequestMethod.GET,RequestMethod.POST})
+	@Transactional
 	public String addSlideShow( Integer achId){
 		slideShowService.insertSlideShow(achId);
 		
@@ -279,6 +288,7 @@ public class BackAdminControl {
 	
 	//轮播图的删除动作，并且会刷新slideShow
 		@RequestMapping(value="/back/admin/slideShow/delete",method={RequestMethod.POST})
+		@Transactional
 		@ResponseBody
 		public Map<String, Object> deleteSlideShow(@RequestBody List<Integer> achIds){
 			Map<String, Object> map=new HashMap<String, Object>();

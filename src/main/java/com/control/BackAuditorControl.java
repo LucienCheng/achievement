@@ -44,6 +44,7 @@ public class BackAuditorControl {
 
 	// 个人资料
 	@RequestMapping(value = "/back/auditor/personInfo", method = { RequestMethod.GET })
+	@Transactional
 	public String personInfo(HttpSession session, Model model) {
 		model.addAttribute("user",
 				userService.getUserById((int) session.getAttribute("userId")));
@@ -52,6 +53,7 @@ public class BackAuditorControl {
 
 	// 更新用户个人的信息
 	@RequestMapping(value = "/back/auditor/savePerson", method = { RequestMethod.POST })
+	@Transactional
 	public String updateUser(User user, HttpSession session) {
 		user.setUserId((int) session.getAttribute("userId"));
 		int result = userService.updateUser(user);
@@ -118,6 +120,7 @@ public class BackAuditorControl {
 
 	// 经过审核的界面
 	@RequestMapping(value = { "/back/auditor/audited/{start}" }, method = { RequestMethod.GET })
+	@Transactional
 	public String pass(Model model, AchievementCondition condition,
 			@PathVariable("start") int start, HttpSession session) {
 		if (condition != null && condition.getAchStartTime() != null
@@ -155,6 +158,7 @@ public class BackAuditorControl {
 
 	// 这是一个动作，将成果变成审核通过,返回待审核成果给待审核界面
 	@RequestMapping(value = "/back/auditor/pass", method = { RequestMethod.POST })
+	@Transactional
 	@ResponseBody
 	public Map<String, Object> passAchievement(
 			@RequestBody List<Integer> oldAchIds, HttpSession session) {
@@ -204,6 +208,7 @@ public class BackAuditorControl {
 
 	// 三级页面模块，初始页面
 	@RequestMapping(value = "/back/auditor/modules/{achId}", method = { RequestMethod.GET })
+	@Transactional
 	public String getAchievementModules(@PathVariable("achId") int achId,
 			Model model) {
 		Achievement achievement = achievementService.getAchiByAchId(achId);

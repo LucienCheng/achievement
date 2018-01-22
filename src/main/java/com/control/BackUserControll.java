@@ -46,6 +46,7 @@ public class BackUserControll {
 	// 首页显示审核已通过
 	@RequestMapping(value = "/back/user", method = { RequestMethod.GET,
 			RequestMethod.POST })
+	@Transactional
 	public String index(HttpSession session, Model model,
 			AchievementCondition condition) {
 		condition.setAuthorId((Integer) session.getAttribute("userId"));
@@ -71,6 +72,7 @@ public class BackUserControll {
 
 	// 搜索
 	@RequestMapping(value = "/back/user/{start}", method = { RequestMethod.GET })
+	@Transactional
 	public String userSearchAchievement(HttpSession session,
 			@PathVariable("start") int start, AchievementCondition condition,
 			Model model) {
@@ -111,6 +113,7 @@ public class BackUserControll {
 
 	// 个人资料
 	@RequestMapping(value = "/back/user/personInfo", method = { RequestMethod.GET })
+	@Transactional
 	public String personInfo(HttpSession session, Model model) {
 		model.addAttribute("user",
 				userService.getUserById((int) session.getAttribute("userId")));
@@ -225,6 +228,7 @@ public class BackUserControll {
 		}
 	// 批量删除achievement
 	@RequestMapping(value = "/back/user/achievement/delete", method = { RequestMethod.POST })
+	@Transactional
 	@ResponseBody
 	public Map<String, Object> deleteAchievement(
 			@RequestBody List<Integer> achievements) {
@@ -238,6 +242,7 @@ public class BackUserControll {
 
 	// 删除模块
 	@RequestMapping(value = "/back/user/deleteModule", method = RequestMethod.POST)
+	@Transactional
 	@ResponseBody
 	public Map<String, Object> deleteModule(@RequestBody List<Integer> moduleIds) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -260,6 +265,7 @@ public class BackUserControll {
 	// 修改模块直接调到编辑模块的界面
 	@RequestMapping(value = "/back/user/modifyModule", method = {
 			RequestMethod.POST, RequestMethod.GET })
+	@Transactional
 	public String modifyModule(Integer achId,Integer modId, Model model) {
 		model.addAttribute("module", moduleService.selectModuleByModId(modId));
 		model.addAttribute("achId", achId);
@@ -269,6 +275,7 @@ public class BackUserControll {
 
 	// 保存新建模块，传进来的是成果id和模块内容，然后返回上一层
 	@RequestMapping(value = "/back/user/saveModule", method = RequestMethod.POST)
+	@Transactional
 	public String saveModule(Module module) {
 		System.out.println(module);
 		moduleService.insertModules(module);
@@ -282,6 +289,7 @@ public class BackUserControll {
 
 	// 保存修改模块，传进来的是成果id和模块内容，然后返回上一层
 	@RequestMapping(value = "/back/user/saveModifyModule", method = RequestMethod.POST)
+	@Transactional
 	public String saveModifyModule(Module module) {
 		moduleService.updateModules(module);
 		List<Integer> achIds = new ArrayList<Integer>();
@@ -307,7 +315,8 @@ public class BackUserControll {
 	}
 
 	// 三级页面模块，初始页面
-	@RequestMapping(value = "/back/user//modules/{achId}", method = { RequestMethod.GET })
+	@RequestMapping(value = "/back/user/modules/{achId}", method = { RequestMethod.GET })
+	@Transactional
 	public String getAchievementModules(@PathVariable("achId") int achId,
 			Model model) {
 		Achievement achievement = achievementService.getAchiByAchId(achId);
