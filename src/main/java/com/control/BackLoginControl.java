@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -20,6 +21,7 @@ public class BackLoginControl {
 		return "/back/login";
 	}
 	@RequestMapping(value="/back/login",method={RequestMethod.POST})
+	@Transactional
 	public String vertifyLogin(User user,HttpSession session){
 		User userOld=userService.vertifyUser(user);
 		if(userOld!=null){
