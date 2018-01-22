@@ -61,7 +61,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         			
         			}
         		else{
-        			setTimeout('window.open("/achievement/front/modules/${achId}","_self")',1000);
+        			setTimeout('window.open("/achievement/front/modules/${achId}?Url=${Url}","_self")',1000);
         			
         			}
     	});	
@@ -73,7 +73,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         			window.open("/achievement/back/auditor/modules/${achId}","_self");
         			}
         		else{
-        			window.open("/achievement/front/modules/${achId}","_self");
+        			window.open("/achievement/front/modules/${achId}?Url=${Url}","_self");
         			}
     	});
 	</script>

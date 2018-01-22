@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.entity.Achievement;
 import com.entity.AchievementCondition;
@@ -122,7 +123,7 @@ public class FrontControl {
 	// 三级页面的视频，同时增加点击量
 	@RequestMapping(value = "/front/{achievementId}/video", method = { RequestMethod.GET,RequestMethod.POST })
 	@Transactional
-	public String getAchievementVideo(String Url,AchievementCondition condition,
+	public String getAchievementVideo(String Url,AchievementCondition condition,RedirectAttributes redirectAttributes,
 			@PathVariable("achievementId") int achievementId, Model model) {
 System.out.println(Url);
 		Achievement achievement = achievementService
@@ -130,12 +131,13 @@ System.out.println(Url);
 		
 		if(achievement.getAchStatus()!=1){
 			System.out.println(achievement.getAchId());
-			model.addAttribute("error", "error");
-			return "forward:"+Url;
+			redirectAttributes.addFlashAttribute("error", "error");
+			return "redirect:"+Url;
 		}
 		else {
 			model.addAttribute("video", achievement.getAchVideoPath());
 			model.addAttribute("achId", achievementId);
+			model.addAttribute("Url", Url);
 			achievement.setAchCTR(achievement.getAchCTR() + 1);
 			achievementService.updateAchievement(achievement);
 			return "/front/video";
@@ -144,7 +146,7 @@ System.out.println(Url);
 	}
 	// 三级页面模块，初始页面
 	@RequestMapping(value = "/front/modules/{achId}", method = { RequestMethod.GET,RequestMethod.POST })
-	public String getAchievementModules(@PathVariable("achId") int achId,String Url,
+	public String getAchievementModules(@PathVariable("achId") int achId,String Url,RedirectAttributes redirectAttributes,
 			AchievementCondition condition,
 			Model model) {
 		Achievement achievement = achievementService
@@ -152,8 +154,8 @@ System.out.println(Url);
 		System.out.println(Url);
 		if (achievement.getAchStatus()!=1) {
 			System.out.println(achievement.getAchId());
-			model.addAttribute("error", "error");
-			return "forward:"+Url;
+			redirectAttributes.addFlashAttribute("error", "error");
+			return "redirect:"+Url;
 		}
 		else {
 			model.addAttribute("modules", moduleService.selectModuleByAchId(achId));
