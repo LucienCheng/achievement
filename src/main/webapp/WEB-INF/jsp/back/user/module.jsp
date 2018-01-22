@@ -33,10 +33,21 @@
 <script type="text/javascript" charset="utf-8"
 	src="/achievement/ueditor/lang/zh-cn/zh-cn.js"></script>
 
+<style type="text/css">
+	#outside_border{
+		border:solid;
+		margin-top:0px;
+		border-color:#D5D4D4;
+	}
+	body{
+		margin-top:30px;
+		padding:0px;
+	}
+</style>
+
 </head>
 <body>
-
-
+<div id="outside_border">
 	<form class="container-fluid" method="post" 
 	<c:if test="${modOpera == 'add' }">
 	action="/achievement/back/user/saveModule"
@@ -79,7 +90,7 @@
 			</div>
 		</div>
 	</form>
-
+</div>
 	<script type="text/javascript">
 		var ue = UE.getEditor('editor');
 	</script>
