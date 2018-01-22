@@ -193,7 +193,7 @@ var form=new FormData(document.getElementById("achievementForm"));
 								<td colspan="2">${module.modDescribe }</td>
 								<td><input type="button"
 									class="btn btn-warning addSlideShow" value='修改'
-									onclick="window.open('/achievement/back/user/modifyModule?modId='+'${module.modId }','_self');">
+									onclick="window.open('/achievement/back/user/modifyModule?achId=${achievement.achId }&modId='+'${module.modId }','_self');">
 								</button></td>
 							</tr>
 						</c:forEach>

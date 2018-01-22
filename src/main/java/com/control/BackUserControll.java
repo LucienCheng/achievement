@@ -260,9 +260,9 @@ public class BackUserControll {
 	// 修改模块直接调到编辑模块的界面
 	@RequestMapping(value = "/back/user/modifyModule", method = {
 			RequestMethod.POST, RequestMethod.GET })
-	public String modifyModule(Integer modId, Model model) {
+	public String modifyModule(Integer achId,Integer modId, Model model) {
 		model.addAttribute("module", moduleService.selectModuleByModId(modId));
-
+		model.addAttribute("achId", achId);
 		model.addAttribute("modOpera", "modify");
 		return "/back/user/module";
 	}
