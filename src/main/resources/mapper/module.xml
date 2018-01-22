@@ -36,7 +36,7 @@
 		</where>
 	</select>
 
-	<update id="updateModule" keyProperty="modId" useGeneratedKeys="true">
+	<update id="updateModules" keyProperty="modId" useGeneratedKeys="true">
 			update modules
 			<set>
 				<if test="module.modContent != null">
