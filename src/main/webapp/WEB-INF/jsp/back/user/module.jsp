@@ -42,7 +42,7 @@
 	action="/achievement/back/user/saveModule"
 	</c:if>
 	<c:if test="${modOpera == 'modify' }">
-	action="/achievement/back/user/modifyModule"
+	action="/achievement/back/user/saveModifyModule"
 	</c:if>
 	 method="post">
 		<div class="row-fluid " role="form">
