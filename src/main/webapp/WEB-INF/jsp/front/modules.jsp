@@ -61,6 +61,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		.breadcrumb li{
 			font-size:1.5em;
 		}
+		.font_inner{
+			
+		}
 	</style>
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
@@ -100,12 +103,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    
         <div class="tab-content">
             <div class="tab-pane active fade in" id="xw1">
-              <div class="col-md-12 font">
+              <div class="col-md-12 col-sm-12 font">
               		<h3>成果名称:${achievement.achName }</h3>
               </div>
               <div class="col-md-12 col-sm-12 font_inner" >
               	<div class="col-md-7 col-sm-7">
-              		<video controls autoplay height="550px" width="944px;" style="border:solid;">
+              		<video controls class="col-md-10 col-sm-10">
 						<source src="${achievement.achVideoPath }" >
 					</video>
 				</div>
@@ -120,8 +123,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	              		<h3>成果名称:${achievement.achName }</h3>
 	            </div>
 	            <div class="col-md-12 col-sm-12 font_inner" >
-	            <div class="col-md-4 col-sm-4"></div>
-					<div class="col-md-5 col-sm-5">
+	            <div class="col-md-2 col-sm-2"></div>
+					<div class="col-md-8 col-sm-8">
 						<img src="${achievement.achImagePath }" class="img-responsive">
 					</div>
               	</div>
