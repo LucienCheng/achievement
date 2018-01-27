@@ -11,7 +11,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>编辑模块</title>
+<title>编辑栏目</title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <script type="text/javascript" charset="utf-8"
 	src="/achievement/ueditor/ueditor.config.js"></script>
@@ -58,12 +58,12 @@
 	 method="post">
 		<div class="row-fluid " role="form">
 				<div class="form-group">
-					<label for="name">模块简称</label> <input type="text" name="modName"
+					<label for="name">栏目简称</label> <input type="text" name="modName"
 					value="${module.modName }"		class="form-control" placeholder="请输入2~4个汉字或字符"
 					maxlength="4" minlength="2">
 				</div>
 				<div class="form-group">
-					<label for="name">模块简述</label> <input type="text" name="modDescribe"
+					<label for="name">栏目简述</label> <input type="text" name="modDescribe"
 				value="${module.modDescribe }"		class="form-control" placeholder="模块简述">
 				</div>
 		</div>
@@ -73,14 +73,15 @@
 					<!-- block -->
 					<div class="block">
 						<div class="navbar navbar-inner block-header">
-							<div class="muted pull-left">模块内容编辑</div>
+							<div class="muted pull-left">栏目内容编辑</div>
 						</div>
 						<div class="block-content collapse in">
 								<script id="editor" type="text/plain" name="modContent"
 									style="width:100%;height:700px;">
 									${module.modContent }
 								</script>
-								<input type="submit" value="提交">
+								<input type="submit" value="保存">
+								<input type="button" value="回退编辑成果" onclick="window.open('/achievement//back/user/achievement/modify?achId=${achId }','_self');">
 								<input type="hidden" value='${achId }' name="achId">
 								<input type="hidden" value='${module.modId }' name="modId">
 						</div>

@@ -44,40 +44,35 @@ public class BackUserControll {
 	private final int count = 1;// 显示的条数
 
 	// 首页显示审核已通过
-	@RequestMapping(value = "/back/user", method = { RequestMethod.GET,
-			RequestMethod.POST })
+	@RequestMapping(value = "/back/user", method = { RequestMethod.GET, RequestMethod.POST })
 	@Transactional
-	public String index(HttpSession session, Model model,
-			AchievementCondition condition) {
+	public String index(HttpSession session, Model model, AchievementCondition condition) {
 		condition.setAuthorId((Integer) session.getAttribute("userId"));
-		List<Achievement> achievements=achievementService.getAchiCondition(
-				condition.getAuthorId(), null, condition.getAchStatus(), null,
-				null, null, null, null, null, null, 0, count);
-		if (condition.getAchStatus()==2) {
+		List<Achievement> achievements = achievementService.getAchiCondition(condition.getAuthorId(), null,
+				condition.getAchStatus(), null, null, null, null, null, null, null, 0, count);
+		if (condition.getAchStatus() == 2) {
 			System.out.println("测试");
 			for (Achievement achievement : achievements) {
 				achievement.setAudit(auditMapper.selectAudit(achievement.getAchId()));
 			}
 		}
-		model.addAttribute("achievements",achievements );
+		model.addAttribute("achievements", achievements);
 		int totalCount = achievementService.getCount(condition);
 		int totalPage = (totalCount + count - 1) / count;
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("curPage", 1);
 		model.addAttribute("condition", condition);
-		
+
 		return "/back/user/userIndex";
 	}
 
 	// 搜索
 	@RequestMapping(value = "/back/user/{start}", method = { RequestMethod.GET })
 	@Transactional
-	public String userSearchAchievement(HttpSession session,
-			@PathVariable("start") int start, AchievementCondition condition,
-			Model model) {
-		if (condition != null && condition.getAchStartTime() != null
-				&& condition.getAchEndTime() != null) {
+	public String userSearchAchievement(HttpSession session, @PathVariable("start") int start,
+			AchievementCondition condition, Model model) {
+		if (condition != null && condition.getAchStartTime() != null && condition.getAchEndTime() != null) {
 			if (condition.getAchStartTime().length() == 0) {
 				condition.setAchStartTime(null);
 			}
@@ -86,21 +81,18 @@ public class BackUserControll {
 			}
 		}
 		condition.setAuthorId((Integer) session.getAttribute("userId"));
-		List<Achievement> achievements=achievementService
-				.getAchiLockCondition(condition.getAuthorId(), null,
-						condition.getAchStatus(), condition.getAchStartTime(),
-						condition.getAchEndTime(), condition.getAudStartTime(),
-						condition.getAudEndTime(), null,
-						condition.getAchName(), null, null,
-						(start - 1) * count, count);
+		List<Achievement> achievements = achievementService.getAchiLockCondition(condition.getAuthorId(), null,
+				condition.getAchStatus(), condition.getAchStartTime(), condition.getAchEndTime(),
+				condition.getAudStartTime(), condition.getAudEndTime(), null, condition.getAchName(), null, null,
+				(start - 1) * count, count);
 		System.out.println(condition.getAchStatus());
-		if (condition.getAchStatus()==2) {
+		if (condition.getAchStatus() == 2) {
 			System.out.println("测试");
 			for (Achievement achievement : achievements) {
 				achievement.setAudit(auditMapper.selectAudit(achievement.getAchId()));
 			}
 		}
-		model.addAttribute("achievements",achievements );
+		model.addAttribute("achievements", achievements);
 
 		int totalCount = achievementService.getCount(condition);
 		int totalPage = (totalCount + count - 1) / count;
@@ -115,8 +107,7 @@ public class BackUserControll {
 	@RequestMapping(value = "/back/user/personInfo", method = { RequestMethod.GET })
 	@Transactional
 	public String personInfo(HttpSession session, Model model) {
-		model.addAttribute("user",
-				userService.getUserById((int) session.getAttribute("userId")));
+		model.addAttribute("user", userService.getUserById((int) session.getAttribute("userId")));
 		return "/back/personInfo";
 	}
 
@@ -129,8 +120,7 @@ public class BackUserControll {
 	}
 
 	// 进入修改界面
-	@RequestMapping(value = "/back/user/achievement/modify", method = {
-			RequestMethod.POST, RequestMethod.GET })
+	@RequestMapping(value = "/back/user/achievement/modify", method = { RequestMethod.POST, RequestMethod.GET })
 	@Transactional
 	public String modifyAchievement(Integer achId, Model model) {
 
@@ -139,8 +129,7 @@ public class BackUserControll {
 		// 意见列表如果通过的成果会把意见默认为通过。
 		model.addAttribute("audits", auditMapper.selectAudit(achId));
 		// 获得成果的基本信息
-		model.addAttribute("achievement",
-				achievementService.getAchiByAchId(achId));
+		model.addAttribute("achievement", achievementService.getAchiByAchId(achId));
 		// 如果是修改的话，直接退出返回上一级页面，这是给取消按钮使用的，因为修改成果和添加成果是同一个页面
 		model.addAttribute("operator", "modify");
 
@@ -148,8 +137,7 @@ public class BackUserControll {
 	}
 
 	// 进入添加成果界面，并且新建一个achievement
-	@RequestMapping(value = "/back/user/achievement/add", method = {
-			RequestMethod.POST, RequestMethod.GET })
+	@RequestMapping(value = "/back/user/achievement/add", method = { RequestMethod.POST, RequestMethod.GET })
 	@Transactional
 	public String addAchievement(Model model, HttpSession session) {
 		Achievement achievement = new Achievement();
@@ -166,10 +154,8 @@ public class BackUserControll {
 	// 保存修改的成果。这种效果就是一旦保存了模块，那就生效了。
 	@RequestMapping(value = "/back/user/achievement/save", method = { RequestMethod.POST })
 	@Transactional
-	public String modifySave(Model model,
-			@RequestParam("image") MultipartFile image,
-			@RequestParam("video") MultipartFile video,
-			HttpServletRequest request, HttpSession session,
+	public String modifySave(Model model, @RequestParam("image") MultipartFile image,
+			@RequestParam("video") MultipartFile video, HttpServletRequest request, HttpSession session,
 			Achievement achievement) {
 		User user = new User();
 		user.setUserId((Integer) session.getAttribute("userId"));
@@ -193,45 +179,43 @@ public class BackUserControll {
 		// 保存退出
 		return "redirect:/back/user?achStatus=0";
 	}
+
 	// 保存成果，提供给ajax使用的
-		@RequestMapping(value = "/back/user/achievement/saveAjax", method = { RequestMethod.POST })
-		@Transactional
-		@ResponseBody
-		public Map<String, Object> Save(
-				 MultipartFile image,
-				MultipartFile video,
-				HttpServletRequest request, HttpSession session, Achievement achievement
-				) {
-			Map<String, Object> map=new HashMap<String, Object>();
-			map.put("statue", "failure");
-			User user = new User();
-			user.setUserId((Integer) session.getAttribute("userId"));
-			achievement.setUser(user);
-			List<Integer> achIds = new ArrayList<Integer>();
-			achIds.add(achievement.getAchId());
-			// 将修改的成果设置为0，待审核状态
-			achievementService.updateAchiWithSta(achIds, 0);
-			String imagePath = null;
-			String videoPath = null;
-			achievement.setAchDate(TimeToolService.getCurrentTime());
-			if (image.getOriginalFilename().length() != 0) {
-				imagePath = achievementService.saveImagine(image, request);
-			}
-			achievement.setAchImagePath(imagePath);
-			if (video.getOriginalFilename().length() != 0) {
-				videoPath = achievementService.saveVideo(video, request);
-			}
-			achievement.setAchVideoPath(videoPath);
-			achievementService.updateAchievement(achievement);
-			map.put("statue", "success");
-			return map;
+	@RequestMapping(value = "/back/user/achievement/saveAjax", method = { RequestMethod.POST })
+	@Transactional
+	@ResponseBody
+	public Map<String, Object> Save(MultipartFile image, MultipartFile video, HttpServletRequest request,
+			HttpSession session, Achievement achievement) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("statue", "failure");
+		User user = new User();
+		user.setUserId((Integer) session.getAttribute("userId"));
+		achievement.setUser(user);
+		List<Integer> achIds = new ArrayList<Integer>();
+		achIds.add(achievement.getAchId());
+		// 将修改的成果设置为0，待审核状态
+		achievementService.updateAchiWithSta(achIds, 0);
+		String imagePath = null;
+		String videoPath = null;
+		achievement.setAchDate(TimeToolService.getCurrentTime());
+		if (image.getOriginalFilename().length() != 0) {
+			imagePath = achievementService.saveImagine(image, request);
 		}
+		achievement.setAchImagePath(imagePath);
+		if (video.getOriginalFilename().length() != 0) {
+			videoPath = achievementService.saveVideo(video, request);
+		}
+		achievement.setAchVideoPath(videoPath);
+		achievementService.updateAchievement(achievement);
+		map.put("statue", "success");
+		return map;
+	}
+
 	// 批量删除achievement
 	@RequestMapping(value = "/back/user/achievement/delete", method = { RequestMethod.POST })
 	@Transactional
 	@ResponseBody
-	public Map<String, Object> deleteAchievement(
-			@RequestBody List<Integer> achievements) {
+	public Map<String, Object> deleteAchievement(@RequestBody List<Integer> achievements) {
 		System.out.println("test");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("statue", "failure");
@@ -263,10 +247,9 @@ public class BackUserControll {
 	}
 
 	// 修改模块直接调到编辑模块的界面
-	@RequestMapping(value = "/back/user/modifyModule", method = {
-			RequestMethod.POST, RequestMethod.GET })
+	@RequestMapping(value = "/back/user/modifyModule", method = { RequestMethod.POST, RequestMethod.GET })
 	@Transactional
-	public String modifyModule(Integer achId,Integer modId, Model model) {
+	public String modifyModule(Integer achId, Integer modId, Model model) {
 		model.addAttribute("module", moduleService.selectModuleByModId(modId));
 		model.addAttribute("achId", achId);
 		model.addAttribute("modOpera", "modify");
@@ -283,8 +266,7 @@ public class BackUserControll {
 		achIds.add(module.getAchId());
 		// 设置为未发布状态
 		achievementService.updateAchiWithSta(achIds, -1);
-		return "redirect:/back/user/achievement/modify?achId="
-				+ module.getAchId();
+		return "forward:/back/user/modifyModule?achId=" + module.getAchId() + "&modId=" + module.getModId();
 	}
 
 	// 保存修改模块，传进来的是成果id和模块内容，然后返回上一层
@@ -296,17 +278,14 @@ public class BackUserControll {
 		achIds.add(module.getAchId());
 		// 设置为待审核
 		achievementService.updateAchiWithSta(achIds, -1);
-		return "redirect:/back/user/achievement/modify?achId="
-				+ module.getAchId();
+		return "forward:/back/user/modifyModule?achId=" + module.getAchId() + "&modId=" + module.getModId();
 	}
 
 	// 预览成果界面
 	@RequestMapping(value = "/back/user/{achievementId}/video", method = { RequestMethod.GET })
 	@Transactional
-	public String getAchievementVideo(
-			@PathVariable("achievementId") int achievementId, Model model) {
-		Achievement achievement = achievementService
-				.getAchiByAchId(achievementId);
+	public String getAchievementVideo(@PathVariable("achievementId") int achievementId, Model model) {
+		Achievement achievement = achievementService.getAchiByAchId(achievementId);
 		model.addAttribute("video", achievement.getAchVideoPath());
 		model.addAttribute("achId", achievementId);
 		achievement.setAchCTR(achievement.getAchCTR() + 1);
@@ -317,8 +296,7 @@ public class BackUserControll {
 	// 三级页面模块，初始页面
 	@RequestMapping(value = "/back/user/modules/{achId}", method = { RequestMethod.GET })
 	@Transactional
-	public String getAchievementModules(@PathVariable("achId") int achId,
-			Model model) {
+	public String getAchievementModules(@PathVariable("achId") int achId, Model model) {
 		Achievement achievement = achievementService.getAchiByAchId(achId);
 		model.addAttribute("modules", moduleService.selectModuleByAchId(achId));
 		model.addAttribute("achievement", achievement);

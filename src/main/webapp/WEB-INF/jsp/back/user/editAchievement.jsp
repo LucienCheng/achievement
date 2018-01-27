@@ -128,7 +128,7 @@ function deleteModule() {
 			<ul id="mytab" class="nav nav-tabs">
 				<li class="active"><a href="#xw1" data-toggle='tab'>基本信息</a>
 				</li>
-				<li><a href="#xw2" data-toggle='tab'>模块信息</a></li>
+				<li><a href="#xw2" data-toggle='tab'>栏目信息</a></li>
 			</ul>
 		</div>
 		<div class="tab-content">

@@ -295,7 +295,7 @@
 												<th><input type="checkbox" /></th>
 											</c:if>
 											<th>成果名称</th>
-											<th colspan="2">成果内容</th>
+											<th >成果简述</th>
 											<th>时间</th>
 											<th>操作</th>
 										</tr>
@@ -309,11 +309,8 @@
 														onclick="if(this.checked == true) {addCheck(${achievement.achId });} else { removeCheck(${achievement.achId }); }" /></td>
 												</c:if>
 												<td>${achievement.achName }</td>
-												<td class="media" colspan="2"><a class="pull-left"
-													href="#"> <img class="media-object"
-														src='${achievement.achImagePath }' />
-												</a>
-													<div class="media-body">${achievement.achDescribe }</div></td>
+												<td >
+													${achievement.achDescribe }</td>
 												<td>${achievement.achDate }</td>
 
 												<td><c:if test="${condition.achStatus == 0 }">
