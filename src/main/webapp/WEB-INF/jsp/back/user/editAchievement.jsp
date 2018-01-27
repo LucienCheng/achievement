@@ -12,7 +12,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>My JSP 'modifyAchievement.jsp' starting page</title>
+<title>编辑成果</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">

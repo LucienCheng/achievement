@@ -11,7 +11,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>完整demo</title>
+<title>编辑模块</title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <script type="text/javascript" charset="utf-8"
 	src="/achievement/ueditor/ueditor.config.js"></script>

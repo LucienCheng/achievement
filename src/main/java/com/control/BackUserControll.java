@@ -51,7 +51,7 @@ public class BackUserControll {
 			AchievementCondition condition) {
 		condition.setAuthorId((Integer) session.getAttribute("userId"));
 		List<Achievement> achievements=achievementService.getAchiCondition(
-				condition.getAuditorId(), null, condition.getAchStatus(), null,
+				condition.getAuthorId(), null, condition.getAchStatus(), null,
 				null, null, null, null, null, null, 0, count);
 		if (condition.getAchStatus()==2) {
 			System.out.println("测试");

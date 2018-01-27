@@ -38,11 +38,17 @@ import com.entity.AchievementCondition;
 import com.entity.User;
 import com.entity.UserCondition;
 import com.mysql.fabric.xmlrpc.base.Array;
+import com.service.AchievementService;
+import com.service.ModuleService;
 import com.service.SlideShowService;
 import com.service.UserService;
 //管理员控制区域
 @Controller
 public class BackAdminControl {
+	@Resource
+	private ModuleService moduleService;
+	@Resource(name = "AchievementImpl")
+	private AchievementService achievementService;
 	@Resource(name="UserServiceImpl")
 	private UserService userService;
 	@Resource(name="slideShowImpl")
@@ -296,7 +302,30 @@ public class BackAdminControl {
 			map.put("success", "success");
 			return map;
 		}
+		// 预览成果界面
+		@RequestMapping(value = "/back/admin/{achievementId}/video", method = { RequestMethod.GET })
+		@Transactional
+		public String getAchievementVideo(
+				@PathVariable("achievementId") int achievementId, Model model) {
+			Achievement achievement = achievementService
+					.getAchiByAchId(achievementId);
+			model.addAttribute("video", achievement.getAchVideoPath());
+			model.addAttribute("achId", achievementId);
+			achievement.setAchCTR(achievement.getAchCTR() + 1);
+			achievementService.updateAchievement(achievement);
+			return "/front/video";
+		}
 
+		// 三级页面模块，初始页面
+		@RequestMapping(value = "/back/admin/modules/{achId}", method = { RequestMethod.GET })
+		@Transactional
+		public String getAchievementModules(@PathVariable("achId") int achId,
+				Model model) {
+			Achievement achievement = achievementService.getAchiByAchId(achId);
+			model.addAttribute("modules", moduleService.selectModuleByAchId(achId));
+			model.addAttribute("achievement", achievement);
+			return "/front/modules";
+		}
 		
 		
 }

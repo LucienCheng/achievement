@@ -14,7 +14,7 @@
 <head>
 <meta name="generator"
 	content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
-<title>湖南大学成果展示系统</title>
+<title>设置轮播图</title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <link href="/achievement/source/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet" media="screen" />

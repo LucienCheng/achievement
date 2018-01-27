@@ -12,7 +12,7 @@
 <html>
 <head>
 
-<title>湖南大学成果展示系统</title>
+<title>轮播图搜索</title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <link href="/achievement/source/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet" media="screen" />
@@ -204,7 +204,11 @@
 										<td>${achievement.user.userName }</td>
 										<td>${achievement.achDate }</td>
 										<td><button class="btn btn-primary addSlideShow"
-												value='${achievement.achId }'>添加</button></td>
+												value='${achievement.achId }'>添加</button>
+												<button class="btn  "
+														 onclick="window.open('/achievement/back/admin/${achievement.achId }/video');"
+														value='${achievement.achId }'>预览</button>
+												</td>
 									</tr>
 								</c:forEach>
 

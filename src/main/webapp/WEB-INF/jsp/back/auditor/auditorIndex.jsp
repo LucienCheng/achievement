@@ -13,7 +13,7 @@
 <head>
 <meta name="generator"
 	content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
-<title>湖南大学成果展示系统</title>
+<title>审核人员</title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <link href="/achievement/source/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet" media="screen" />
@@ -311,7 +311,7 @@
 												<td>${achievement.achName }</td>
 												<td class="media" colspan="2"><a class="pull-left"
 													href="#"> <img class="media-object"
-														src='/achievement/${achievement.achImagePath }' />
+														src='${achievement.achImagePath }' />
 												</a>
 													<div class="media-body">${achievement.achDescribe }</div></td>
 												<td>${achievement.achDate }</td>
@@ -353,7 +353,7 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">模态框（Modal）标题</h4>
+					<h4 class="modal-title" id="myModalLabel">意见</h4>
 				</div>
 				<div class="modal-body">
 					修改建议：

@@ -1,5 +1,7 @@
 package com.control;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.dao.AchiMapper;
 import com.entity.Role;
 import com.entity.User;
 import com.service.UserService;
@@ -16,6 +19,8 @@ import com.service.UserService;
 public class BackLoginControl {
 	@Resource(name="UserServiceImpl")
 	private UserService userService;
+	@Resource
+	private AchiMapper achiMapper;
 	@RequestMapping(value="/back",method={RequestMethod.GET,})
 	public String back(){
 		return "/back/login";
@@ -42,6 +47,12 @@ public class BackLoginControl {
 	}
 	@RequestMapping(value="/back/loginOut",method={RequestMethod.POST,RequestMethod.GET})
 	public String loginOut(HttpSession session){
+		List<Integer> achIds=(List<Integer>) session.getAttribute("achIds");
+    	if (achIds!=null) {
+			if (achIds.size()>0) {
+				achiMapper.updateAchiWithLock(achIds, 0);
+			}
+		}
 		session.invalidate();
 		return "/back/login";
 	}

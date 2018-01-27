@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
 <base href="<%=basePath%>">
 
-<title>My JSP 'video.jsp' starting page</title>
+<title>视频播放界面</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -60,6 +60,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         			setTimeout('window.open("/achievement/back/auditor/modules/${achId}","_self")',1000);
         			
         			}
+        		else if(test=${roleId == 3 }){
+        			setTimeout('window.open("/achievement/back/admin/modules/${achId}","_self")',1000);
+        			
+        			}
         		else{
         			setTimeout('window.open("/achievement/front/modules/${achId}?Url=${Url}","_self")',1000);
         			
@@ -71,6 +75,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         			}
         		else if(test=${roleId == 2 }){
         			window.open("/achievement/back/auditor/modules/${achId}","_self");
+        			}
+        		else if(test=${roleId == 3 }){
+        			window.open("/achievement/back/admin/modules/${achId}","_self");
         			}
         		else{
         			window.open("/achievement/front/modules/${achId}?Url=${Url}","_self");
