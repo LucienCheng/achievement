@@ -179,7 +179,7 @@ public class BackUserControll {
 		// 保存退出
 		return "redirect:/back/user?achStatus=0";
 	}
-
+	
 	// 保存成果，提供给ajax使用的
 	@RequestMapping(value = "/back/user/achievement/saveAjax", method = { RequestMethod.POST })
 	@Transactional

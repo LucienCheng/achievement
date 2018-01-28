@@ -103,8 +103,29 @@ function deleteModule() {
 						});
 
 
-
 }
+			function prepare(obj){
+				var file=$(obj);
+				   var reader = new FileReader();
+				   reader.readAsDataURL(file[0].files[0]);
+				if(file.prop("name")=="image"){
+					console.log("image");
+					   reader.onload = function()
+					    {
+						   $("#achievmentImage").prop("src",reader.result);
+					    };
+				}else{
+					console.log("video");
+					   reader.onload = function()
+					    {
+						   $("#achievmentVideo").prop("src",reader.result);
+					    };
+				}
+				 
+				 
+
+	}
+			
 </script>
 </head>
 
@@ -134,7 +155,7 @@ function deleteModule() {
 		<div class="tab-content">
 			<div class="tab-pane active fade in" id="xw1">
 
-				<form action="/achievement/back/user/achievement/save"
+				<form action="/achievement/back/user/achievement/save" id="achievementForm"
 					enctype="multipart/form-data" method="post" id="achievementForm">
 					<div class="col-md-12">
 						<span>成果名字：</span> <input value="${achievement.achName }"
@@ -145,14 +166,14 @@ function deleteModule() {
 							type="text" name="achDescribe">
 					</div>
 					<div>
-						<img alt="" src="${achievement.achImagePath }">
+						<img id="achievmentImage" alt="" src="${achievement.achImagePath }">
 						<sapn>成果图片：</sapn>
-						<input type="file" name="image">
+						<input type="file" name="image" onchange="prepare(this);" id="achievementImg">
 					</div>
 					<div>
-						<video width="320" height="240" controls> <source
-							src="${achievement.achVideoPath }" type="video/mp4"></video>
-						<span>成果视频：</span> <input type="file" name="video">
+						<video width="320" height="240" id="achievmentVideo"
+							src="${achievement.achVideoPath }" controls> </video>
+						<span>成果视频：</span> <input type="file" name="video" onchange="prepare(this);" id="achievementVid">
 					</div>
 					<div style="maigin: 10px 0px 10px 0px;">
 						<span>成果分类：</span> <select name="achClassify">
@@ -172,14 +193,14 @@ function deleteModule() {
 			<div class="tab-pane fade in" id="xw2">
 
 				<hr width="100%">
-				下面是一个关于模块页面 <input type="button" value="添加模块" onclick="bounce();">
-				<input type="button" value="删除模块" onclick="deleteModule();">
+				下面是一个关于栏目页面 <input type="button" value="添加栏目" onclick="bounce();">
+				<input type="button" value="删除栏目" onclick="deleteModule();">
 				<table class="table table-hover">
 					<thead>
 						<tr>
 							<th><input type="checkbox" /></th>
-							<th>模块名称</th>
-							<th colspan="2">模块描述</th>
+							<th>栏目简称</th>
+							<th colspan="2">栏目描述</th>
 							<th>操作</th>
 						</tr>
 					</thead>
