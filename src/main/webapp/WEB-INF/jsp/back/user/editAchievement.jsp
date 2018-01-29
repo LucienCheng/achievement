@@ -23,7 +23,8 @@
 	rel="stylesheet" media="screen" />
 
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<script type="text/javascript" src="/achievement/source/jquery-3.2.1/jquery-3.2.1.min.js"></script>
+<script type="text/javascript"
+	src="/achievement/source/jquery-3.2.1/jquery-3.2.1.min.js"></script>
 <script src="/achievement/source/bootstrap/js/bootstrap.js"></script>
 <script src="/achievement/source/bootstrap/js/bootstrap.min.js"></script>
 <!--
@@ -44,9 +45,9 @@
 			this.splice(index, 1);
 		}
 	};
-function deleteAch(achId) {
+	function deleteAch(achId) {
 
-		saveDataAry=[];
+		saveDataAry = [];
 		saveDataAry.push(achId);
 		console.log(saveDataAry);
 		$.ajax({
@@ -60,7 +61,7 @@ function deleteAch(achId) {
 			}
 		});
 	}
-	saveModAry=[];
+	saveModAry = [];
 	function addCheck(modId) {
 		saveModAry.push(modId);
 		console.log(saveModAry);
@@ -69,7 +70,7 @@ function deleteAch(achId) {
 		saveModAry.remove(modId);
 		console.log(saveModAry);
 	}
-function deleteModule() {
+	function deleteModule() {
 		console.log(saveModAry);
 		$.ajax({
 			type : 'post',
@@ -78,79 +79,75 @@ function deleteModule() {
 			contentType : "application/json",
 			data : JSON.stringify(saveModAry),
 			success : function(data, statue) {
-				window.open("/achievement/back/user/achievement/modify?achId="+'${achievement.achId }', "_self");
+				window.open("/achievement/back/user/achievement/modify?achId="
+						+ '${achievement.achId }', "_self");
 			}
 		});
 	}
-			function bounce(t){ 
-				if(t=="mod"){
-					url="/achievement/back/user/achievement/modify?achId="+'${achievement.achId }';
-				}else{
-					url="/achievement/back/user?achStatus=0";
-					
-				}
-			var form=new FormData(document.getElementById("achievementForm"));
-				$.ajax({
- 				url:'/achievement/back/user/achievement/saveAjax',
-                type:"post",
-                data:form ,
-                /* 执行执行的是dom对象 ，不需要转化信息*/
-                processData:false,
-                contentType:false,
-                /* 指定返回类型为json */
-                dataType:'json',
-                xhr: function(){
-                    myXhr = $.ajaxSettings.xhr();
-                    if(myXhr.upload){
-                      myXhr.upload.addEventListener('progress',function(e) {
-                        if (e.lengthComputable) {
-                          var percent = Math.floor(e.loaded/e.total*100);
-                          if(percent <= 100) {
-                        	  $("#bar").html("正在上传。。。。");
-                            $("#bar").css("width",percent+"%");
-                          }
-                          if(percent >= 100){
-                        	  $("#bar").html("成功上传");
-                        	  
-                          }
-                        }
-                      }, false);
-                    }
-                    return myXhr;
-                },
-				success:function(){
-						console.log("test");
-						window.open(url,"_self");
-						},
-				error:function(e){
-						console.log("失败");
+	function bounce(t) {
+		if (t == "mod") {
+			url = "/achievement/back/user/achievement/modify?achId="
+					+ '${achievement.achId }';
+		} else {
+			url = "/achievement/back/user?achStatus=0";
+
+		}
+		var form = new FormData(document.getElementById("achievementForm"));
+		$.ajax({
+			url : '/achievement/back/user/achievement/saveAjax',
+			type : "post",
+			data : form,
+			/* 执行执行的是dom对象 ，不需要转化信息*/
+			processData : false,
+			contentType : false,
+			/* 指定返回类型为json */
+			dataType : 'json',
+			xhr : function() {
+				myXhr = $.ajaxSettings.xhr();
+				if (myXhr.upload) {
+					myXhr.upload.addEventListener('progress', function(e) {
+						if (e.lengthComputable) {
+							var percent = Math.floor(e.loaded / e.total * 100);
+							if (percent <= 100) {
+								$("#bar").html("正在上传。。。。");
+								$("#bar").css("width", percent + "%");
+							}
+							if (percent >= 100) {
+								$("#bar").html("成功上传");
+
+							}
 						}
-						});
-
-
-}
-			function prepare(obj){
-				var file=$(obj);
-				   var reader = new FileReader();
-				   reader.readAsDataURL(file[0].files[0]);
-				if(file.prop("name")=="image"){
-					console.log("image");
-					   reader.onload = function()
-					    {
-						   $("#achievmentImage").prop("src",reader.result);
-					    };
-				}else{
-					console.log("video");
-					   reader.onload = function()
-					    {
-						   $("#achievmentVideo").prop("src",reader.result);
-					    };
+					}, false);
 				}
-				 
-				 
+				return myXhr;
+			},
+			success : function() {
+				console.log("test");
+				window.open(url, "_self");
+			},
+			error : function(e) {
+				console.log("失败");
+			}
+		});
 
 	}
-			
+	function prepare(obj) {
+		var file = $(obj);
+		var reader = new FileReader();
+		reader.readAsDataURL(file[0].files[0]);
+		if (file.prop("name") == "image") {
+			console.log("image");
+			reader.onload = function() {
+				$("#achievmentImage").prop("src", reader.result);
+			};
+		} else {
+			console.log("video");
+			reader.onload = function() {
+				$("#achievmentVideo").prop("src", reader.result);
+			};
+		}
+
+	}
 </script>
 </head>
 
@@ -163,7 +160,7 @@ function deleteModule() {
 					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span>
 				</a> <a class="brand" href="/achievement/front/index" target="_blank">首页</a>
-				
+
 
 			</div>
 		</div>
@@ -174,16 +171,16 @@ function deleteModule() {
 
 		<div class="col-md-10">
 			<ul id="mytab" class="nav nav-tabs">
-				<li class="active"><a href="#xw1" data-toggle='tab'>基本信息</a>
-				</li>
+				<li class="active"><a href="#xw1" data-toggle='tab'>基本信息</a></li>
 				<li><a href="#xw2" data-toggle='tab'>栏目信息</a></li>
 			</ul>
 		</div>
 		<div class="tab-content">
 			<div class="tab-pane active fade in" id="xw1">
 
-				<form action="/achievement/back/user/achievement/save" id="achievementForm"
-					enctype="multipart/form-data" method="post" id="achievementForm">
+				<form action="/achievement/back/user/achievement/save"
+					id="achievementForm" enctype="multipart/form-data" method="post"
+					id="achievementForm">
 					<div class="col-md-12">
 						<span>成果名字：</span> <input value="${achievement.achName }"
 							type="text" name="achName">
@@ -192,15 +189,23 @@ function deleteModule() {
 						<span>成果描述：</span> <input value="${achievement.achDescribe }"
 							type="text" name="achDescribe">
 					</div>
-					<div>
-						<img id="achievmentImage" alt="" src="${achievement.achImagePath }">
+					<div class="col-md-12" style="margin: 10px 0px 10px 0px;">
 						<sapn>成果图片：</sapn>
-						<input type="file" name="image" onchange="prepare(this);" id="achievementImg">
+						<input type="file" name="image" onchange="prepare(this);"
+							id="achievementImg">
+
 					</div>
-					<div>
-						<video width="320" height="240" id="achievmentVideo"
+					<div class="col-md-6" style="margin: 10px 0px 10px 0px;">
+						<img id="achievmentImage" alt=""
+							src="${achievement.achImagePath }" width="640" height="480">
+					</div>
+					<div class="col-md-12" style="margin: 10px 0px 10px 0px;">
+						<span>成果视频：</span> <input type="file" name="video"
+							onchange="prepare(this);" id="achievementVid">
+					</div>
+					<div class="col-md-6" style="margin: 10px 0px 10px 0px;">
+						<video width="640" height="480" id="achievmentVideo"
 							src="${achievement.achVideoPath }" controls> </video>
-						<span>成果视频：</span> <input type="file" name="video" onchange="prepare(this);" id="achievementVid">
 					</div>
 					<div style="maigin: 10px 0px 10px 0px;">
 						<span>成果分类：</span> <select name="achClassify">
@@ -209,23 +214,27 @@ function deleteModule() {
 						</select>
 					</div>
 					<input type="hidden" value="${achievement.achId }" name="achId">
-					<input value="保存并退出" type="button " class="btn btn-success" onclick="bounce('achievement');">
-					<input value="不保存退出" type="button" class="btn btn-warning"
+					<input value="保存并退出" type="button " class="btn btn-success"
+						onclick="bounce('achievement');"> <input value="不保存退出"
+						type="button" class="btn btn-warning"
 						<c:if test="${operator == 'add'}"> onclick="deleteAch('${achievement.achId }');" </c:if>
-						<c:if test="${operator == 'modify'}"> onclick="window.open('/achievement/back/user?achStatus=0','_self');"</c:if> >
+						<c:if test="${operator == 'modify'}"> onclick="window.open('/achievement/back/user?achStatus=0','_self');"</c:if>>
 				</form>
 			</div>
-	<div class="col-md-10">
-		<div class="progress progress-striped progress-success active" id="progress">
-										 <div style='width: 0% 'class='bar' id="bar"></div>
-										</div>
-										</div>
+			<div class="col-md-10">
+			<span>上传进度条：</span>
+				<div class="progress progress-striped progress-success active"
+					id="progress">
+					<div style='width: 0%' class='bar' id="bar"></div>
+				</div>
+			</div>
 
 			<div class="tab-pane fade in" id="xw2">
 
 				<hr width="100%">
-				下面是一个关于栏目页面 <input type="button" value="添加栏目" onclick="bounce('mod');">
-				<input type="button" value="删除栏目" onclick="deleteModule();">
+				下面是一个关于栏目页面 <input type="button" value="添加栏目"
+					onclick="bounce('mod');"> <input type="button" value="删除栏目"
+					onclick="deleteModule();">
 				<table class="table table-hover">
 					<thead>
 						<tr>
@@ -246,7 +255,7 @@ function deleteModule() {
 								<td><input type="button"
 									class="btn btn-warning addSlideShow" value='修改'
 									onclick="window.open('/achievement/back/user/modifyModule?achId=${achievement.achId }&modId='+'${module.modId }','_self');">
-								</button></td>
+									</button></td>
 							</tr>
 						</c:forEach>
 
