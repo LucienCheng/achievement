@@ -212,7 +212,7 @@
 							onchange="prepare(this);" id="achievementVid">
 					</div>
 					<div class="col-md-6 col-sm-6" style="margin: 10px 0px 10px 0px;">
-						<video width="640" height="480" id="achievmentVideo"
+						<video autoplay width="640" height="480" id="achievmentVideo"
 							src="${achievement.achVideoPath }" controls> </video>
 					</div>
 					<div style="maigin: 10px 0px 10px 0px;">
