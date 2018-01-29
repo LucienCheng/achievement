@@ -23,13 +23,21 @@
 	rel="stylesheet" media="screen" />
 
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<script type="text/javascript"
-	src="/achievement/source/jquery-3.2.1/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/achievement/source/jquery-3.2.1/jquery.js"></script>
 <script src="/achievement/source/bootstrap/js/bootstrap.js"></script>
 <script src="/achievement/source/bootstrap/js/bootstrap.min.js"></script>
 <!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+	
+<style type="text/css">
+	#achievement_des{
+		width:567px;
+		height:150px;
+		resize: none;
+	}
+</style>
+
 <script type="text/javascript">
 	Array.prototype.indexOf = function(val) {
 		for (var i = 0; i < this.length; i++) {
@@ -179,31 +187,31 @@
 			<div class="tab-pane active fade in" id="xw1">
 
 				<form action="/achievement/back/user/achievement/save"
-					id="achievementForm" enctype="multipart/form-data" method="post"
-					id="achievementForm">
+					id="achievementForm" enctype="multipart/form-data" method="post">
 					<div class="col-md-12">
 						<span>成果名字：</span> <input value="${achievement.achName }"
 							type="text" name="achName">
 					</div>
-					<div class="col-md-12" style="margin: 10px 0px 10px 0px;">
-						<span>成果描述：</span> <input value="${achievement.achDescribe }"
-							type="text" name="achDescribe">
+					<div class="kb-input-content col-md-12 col-sm-12 " style="margin: 10px 0px 10px 0px;">
+						<span>成果描述：</span> <textarea value="${achievement.achDescribe }"
+							type="text" name="achDescribe" id="achievement_des" maxlength="200"></textarea>
+				            <span class="input-number-tip">0~200个字</span>
 					</div>
-					<div class="col-md-12" style="margin: 10px 0px 10px 0px;">
+					<div class="col-md-12 col-sm-12" style="margin: 10px 0px 10px 0px;">
 						<sapn>成果图片：</sapn>
 						<input type="file" name="image" onchange="prepare(this);"
 							id="achievementImg">
 
 					</div>
-					<div class="col-md-6" style="margin: 10px 0px 10px 0px;">
+					<div class="col-md-6 col-sm-6" style="margin: 10px 0px 10px 0px;">
 						<img id="achievmentImage" alt=""
 							src="${achievement.achImagePath }" width="640" height="480">
 					</div>
-					<div class="col-md-12" style="margin: 10px 0px 10px 0px;">
+					<div class="col-md-12 col-sm-6" style="margin: 10px 0px 10px 0px;">
 						<span>成果视频：</span> <input type="file" name="video"
 							onchange="prepare(this);" id="achievementVid">
 					</div>
-					<div class="col-md-6" style="margin: 10px 0px 10px 0px;">
+					<div class="col-md-6 col-sm-6" style="margin: 10px 0px 10px 0px;">
 						<video width="640" height="480" id="achievmentVideo"
 							src="${achievement.achVideoPath }" controls> </video>
 					</div>
@@ -264,4 +272,35 @@
 			</div>
 		</div>
 </body>
+<script type="text/javascript">
+	// 中文字符判断(计算字符数)
+function getStrLength(str) { 
+    var len = str.length; 
+    var reLen = 0; 
+    for (var i = 0; i < len; i++) {        
+        if (str.charCodeAt(i)  >= 0  || str.charCodeAt(i) <= 128) { 
+            // 全角    
+            reLen += 1; 
+        } else { 
+            reLen+=2; 
+        }
+    } 
+    return reLen;    
+}
+ 
+//计算字符数(200个字内，用于回复框)
+function count_str(value,total_count){
+    var len = getStrLength(value);
+    count = "";
+    count = total_count-len; 
+    return '已经输入<span>'+len+'</span>字,'+'还可以输入<span>'+count+'</span>字';
+}
+ 
+  /* 文本区域字数检测 */
+$("#achievement_des").on("keyup mouseup",function(event){
+    var count_html=count_str($(this).val(),200);
+    $(".kb-input-content").find(".input-number-tip").html(count_html);
+});
+
+</script>
 </html>

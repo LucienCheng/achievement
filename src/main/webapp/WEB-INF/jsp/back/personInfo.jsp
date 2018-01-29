@@ -23,6 +23,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
 <script src="/achievement/source/vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+
+<style type="text/css">
+	.control-group .controls .focused{
+		height:30px;
+		width:220px;
+	}
+	.control-group .controls{
+		height:30px;
+		width:500px;
+	}
+</style>
 </head>
 
 <body>
