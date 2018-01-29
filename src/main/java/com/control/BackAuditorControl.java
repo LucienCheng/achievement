@@ -40,7 +40,7 @@ public class BackAuditorControl {
 	private AuditMapper auditMapper;
 	@Resource(name = "UserServiceImpl")
 	private UserService userService;
-	private final int count = 5;// 显示的条数
+	private final int count = 10;// 显示的条数
 
 	// 个人资料
 	@RequestMapping(value = "/back/auditor/personInfo", method = { RequestMethod.GET })

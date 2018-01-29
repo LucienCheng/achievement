@@ -82,7 +82,13 @@ function deleteModule() {
 			}
 		});
 	}
-			function bounce(){
+			function bounce(t){ 
+				if(t=="mod"){
+					url="/achievement/back/user/achievement/modify?achId="+'${achievement.achId }';
+				}else{
+					url="/achievement/back/user?achStatus=0";
+					
+				}
 			var form=new FormData(document.getElementById("achievementForm"));
 				$.ajax({
  				url:'/achievement/back/user/achievement/saveAjax',
@@ -93,9 +99,28 @@ function deleteModule() {
                 contentType:false,
                 /* 指定返回类型为json */
                 dataType:'json',
+                xhr: function(){
+                    myXhr = $.ajaxSettings.xhr();
+                    if(myXhr.upload){
+                      myXhr.upload.addEventListener('progress',function(e) {
+                        if (e.lengthComputable) {
+                          var percent = Math.floor(e.loaded/e.total*100);
+                          if(percent <= 100) {
+                        	  $("#bar").html("正在上传。。。。");
+                            $("#bar").css("width",percent+"%");
+                          }
+                          if(percent >= 100){
+                        	  $("#bar").html("成功上传");
+                        	  
+                          }
+                        }
+                      }, false);
+                    }
+                    return myXhr;
+                },
 				success:function(){
 						console.log("test");
-						window.open(" /achievement/back/user/addModule?achId="+${achievement.achId },"_self");
+						window.open(url,"_self");
 						},
 				error:function(e){
 						console.log("失败");
@@ -143,8 +168,10 @@ function deleteModule() {
 			</div>
 		</div>
 	</div>
+
 	<div style="height: 60px;"></div>
 	<div class="container">
+
 		<div class="col-md-10">
 			<ul id="mytab" class="nav nav-tabs">
 				<li class="active"><a href="#xw1" data-toggle='tab'>基本信息</a>
@@ -182,18 +209,22 @@ function deleteModule() {
 						</select>
 					</div>
 					<input type="hidden" value="${achievement.achId }" name="achId">
-					<input value="保存并退出" type="submit" class="btn btn-success">
+					<input value="保存并退出" type="button " class="btn btn-success" onclick="bounce('achievement');">
 					<input value="不保存退出" type="button" class="btn btn-warning"
 						<c:if test="${operator == 'add'}"> onclick="deleteAch('${achievement.achId }');" </c:if>
 						<c:if test="${operator == 'modify'}"> onclick="window.open('/achievement/back/user?achStatus=0','_self');"</c:if> >
 				</form>
 			</div>
-
+	<div class="col-md-10">
+		<div class="progress progress-striped progress-success active" id="progress">
+										 <div style='width: 0% 'class='bar' id="bar"></div>
+										</div>
+										</div>
 
 			<div class="tab-pane fade in" id="xw2">
 
 				<hr width="100%">
-				下面是一个关于栏目页面 <input type="button" value="添加栏目" onclick="bounce();">
+				下面是一个关于栏目页面 <input type="button" value="添加栏目" onclick="bounce('mod');">
 				<input type="button" value="删除栏目" onclick="deleteModule();">
 				<table class="table table-hover">
 					<thead>

@@ -41,7 +41,7 @@ public class BackUserControll {
 	private UserService userService;
 	@Resource
 	private AuditMapper auditMapper;
-	private final int count = 1;// 显示的条数
+	private final int count = 10;// 显示的条数
 
 	// 首页显示审核已通过
 	@RequestMapping(value = "/back/user", method = { RequestMethod.GET, RequestMethod.POST })
@@ -151,34 +151,7 @@ public class BackUserControll {
 		return "/back/user/editAchievement";
 	}
 
-	// 保存修改的成果。这种效果就是一旦保存了模块，那就生效了。
-	@RequestMapping(value = "/back/user/achievement/save", method = { RequestMethod.POST })
-	@Transactional
-	public String modifySave(Model model, @RequestParam("image") MultipartFile image,
-			@RequestParam("video") MultipartFile video, HttpServletRequest request, HttpSession session,
-			Achievement achievement) {
-		User user = new User();
-		user.setUserId((Integer) session.getAttribute("userId"));
-		achievement.setUser(user);
-		List<Integer> achIds = new ArrayList<Integer>();
-		achIds.add(achievement.getAchId());
-		// 将修改的成果设置为0，待审核状态
-		achievementService.updateAchiWithSta(achIds, 0);
-		String imagePath = null;
-		String videoPath = null;
-		achievement.setAchDate(TimeToolService.getCurrentTime());
-		if (image.getOriginalFilename().length() != 0) {
-			imagePath = achievementService.saveImagine(image, request);
-		}
-		achievement.setAchImagePath(imagePath);
-		if (video.getOriginalFilename().length() != 0) {
-			videoPath = achievementService.saveVideo(video, request);
-		}
-		achievement.setAchVideoPath(videoPath);
-		achievementService.updateAchievement(achievement);
-		// 保存退出
-		return "redirect:/back/user?achStatus=0";
-	}
+	
 	
 	// 保存成果，提供给ajax使用的
 	@RequestMapping(value = "/back/user/achievement/saveAjax", method = { RequestMethod.POST })
