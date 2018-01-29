@@ -160,6 +160,11 @@
 			}
 		});
 	}
+	function getUrl(){
+		var url = document.location.toString();
+		var arrUrl=url.split("/achievement");
+		return arrUrl[1];
+		}
 </script>
 </head>
 <body>
@@ -202,6 +207,17 @@
 						<h4>成功提示</h4>
 						操作已经成功了！
 					</div>
+								<c:if test="${error == 'error' }">
+<div class="row-fluid">
+	<div class="alert alert-error alert-block">
+		<button type="button" class="close" data-dismiss="alert">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<h4>操作失败</h4>
+		不能查看别人的成果！！
+	</div>
+</div>
+</c:if>
 				</div>
 				<div class="row-fluid">
 					<button class="btn btn-primary " onclick="window.open('/achievement/back/user/achievement/add','_self')">添加</button>
@@ -300,7 +316,7 @@
 												<td><button class="btn btn-warning addSlideShow"
 														value='${achievement.achId }' onclick="window.open('/achievement/back/user/achievement/modify?achId='+'${achievement.achId }','_self');">修改</button>
 															<button class="btn btn-primative addSlideShow"
-														data-toggle="modal" data-target="#myModal" onclick="window.open('/achievement/back/user/modules/${achievement.achId }');"
+														data-toggle="modal" data-target="#myModal" onclick="window.open('/achievement/back/user/modules/${achievement.achId }?Url='+getUrl());"
 														value='${achievement.achId }'>预览</button>
 														</td>
 											</tr>

@@ -14,7 +14,7 @@
 		<result property="achCTR" column="achCTR" />
 		<result property="achDescribe" column="achDescribe" />
 		<association property="user" javaType="User" column="userId">
-			<id property="userId" column="userId" />
+			<id property="userId" column="authorId" />
 			<result property="userName" column="authorName"/>
 		</association>
 		

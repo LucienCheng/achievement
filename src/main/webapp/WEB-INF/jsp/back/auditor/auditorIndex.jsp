@@ -217,6 +217,7 @@
 						操作已经成功了！
 					</div>
 				</div>
+				
 				<div class="row-fluid">
 					<c:if test="${condition.achStatus == 0}">
 						<button class="btn btn-primary " onclick="passAchievement();">通过</button>

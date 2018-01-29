@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dao.AuditMapper;
 import com.entity.Achievement;
@@ -254,16 +255,25 @@ public class BackUserControll {
 		return "forward:/back/user/modifyModule?achId=" + module.getAchId() + "&modId=" + module.getModId();
 	}
 
-	
 
 	// 三级页面模块，初始页面
 	@RequestMapping(value = "/back/user/modules/{achId}", method = { RequestMethod.GET })
 	@Transactional
-	public String getAchievementModules(@PathVariable("achId") int achId, Model model) {
+	public String getAchievementModules(@PathVariable("achId") int achId, Model model,HttpSession session,
+			String Url,RedirectAttributes redirectAttributes) {
 		Achievement achievement = achievementService.getAchiByAchId(achId);
-		model.addAttribute("modules", moduleService.selectModuleByAchId(achId));
-		model.addAttribute("achievement", achievement);
-		return "/front/modules";
+		if(!((Integer)session.getAttribute("userId")).equals(achievement.getUser().getUserId())) {
+			
+			System.out.println((Integer)session.getAttribute("userId")+achievement.getUser().getUserId());
+			redirectAttributes.addFlashAttribute("error", "error");
+			return "redirect:"+Url;
+		}
+		else {
+			model.addAttribute("modules", moduleService.selectModuleByAchId(achId));
+			model.addAttribute("achievement", achievement);
+			return "/front/modules";
+		}
+		
 	}
 
 }
