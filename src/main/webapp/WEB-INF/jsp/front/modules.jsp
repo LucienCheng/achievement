@@ -105,7 +105,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </div>
               <div class="col-md-12 col-sm-12 font_inner" >
               	<div class="col-md-7 col-sm-7">
-              		<video controls class="col-md-10 col-sm-10">
+              		<video controls class="col-md-10 col-sm-10" autoplay>
 						<source src="${achievement.achVideoPath }" >
 					</video>
 				</div>

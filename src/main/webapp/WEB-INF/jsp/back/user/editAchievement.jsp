@@ -211,7 +211,7 @@
 							onchange="prepare(this);" id="achievementVid">
 					</div>
 					<div class="col-md-6 col-sm-6" style="margin: 10px 0px 10px 0px;">
-						<video autoplay width="640" height="480" id="achievmentVideo"
+						<video width="640" height="480" id="achievmentVideo"
 							src="${achievement.achVideoPath }" controls> </video>
 					</div>
 					<div style="maigin: 10px 0px 10px 0px;">
@@ -238,9 +238,8 @@
 
 			<div class="tab-pane fade in" id="xw2">
 
-				<hr width="100%">
-				下面是一个关于栏目页面 <input type="button" value="添加栏目"
-					onclick="bounce('mod');"> <input type="button" value="删除栏目"
+				<input type="button" value="添加栏目" class="btn btn-success"
+					onclick="bounce('mod');"> <input type="button" value="删除栏目" class="btn btn-danger"
 					onclick="deleteModule();">
 				<table class="table table-hover">
 					<thead>
