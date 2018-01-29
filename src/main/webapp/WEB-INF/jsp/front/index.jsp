@@ -63,7 +63,7 @@ var map= ${slideShowMap };
 <div class="col-md-2 col-sm-2">
 	<div class="aside_banner" id="aside_banner1" style="float: right;margin:2px;">
 	<c:forEach items="${hotAchievements }" var="achievement">
-	<div><img src="${achievement.achImagePath}" class="img-rounded img-thumbnail col-md-12 col-sm-12" style="height:19%;" onclick='window.open("/achievement/front/${achievement.achId}/video?Url="+getUrl(),"_self");'></div>
+	<div><img src="${achievement.achImagePath}" class="img-rounded img-thumbnail col-md-12 col-sm-12" style="height:19%;" onclick='window.open("/achievement/front/modules/${achievement.achId}?Url="+getUrl(),"_self");'></div>
 	</c:forEach>
 		<div>
 			<button class="col-md-6 col-sm-6 btn btn-default btn-lg" onclick="window.open('/achievement/front/HotAchievement/1','_self')"><span class="glyphicon glyphicon-fire" style="font-size: 35px;color: #C54D4D;"></span><br>最热</button>
@@ -74,7 +74,7 @@ var map= ${slideShowMap };
 	<div class="col-md-12" style="margin-left: 12px;">
 	<div class="lower_banner " id="lower_banner1" style="background: #0F0D0D;float: left;padding:3px;">
 	<c:forEach items="${newAchievements }" var="achievement">
-	<div class="col-md-2 col-sm-2" id="img2_beforediv"><img src="${achievement.achImagePath }" class="img-rounded img-thumbnail" onclick='window.open("/achievement/front/${achievement.achId}/video?Url="+getUrl(),"_self");' id="img2"></div>
+	<div class="col-md-2 col-sm-2" id="img2_beforediv"><img src="${achievement.achImagePath }" class="img-rounded img-thumbnail" onclick='window.open("/achievement/front/modules/${achievement.achId}?Url="+getUrl(),"_self");' id="img2"></div>
 	
 	</c:forEach>
 	</div>

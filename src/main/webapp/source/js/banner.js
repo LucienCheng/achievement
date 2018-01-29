@@ -119,7 +119,7 @@ FragmentBanner.prototype = {
 				this.elem.view.appendChild(newI);
 				this.elem.viewBox.push(newI);
 				newI.onclick=function(obj){
-					window.open("/achievement/front/"+get(this.imgs[this.index])+"/video?Url="+getUrl(),"_self");
+					window.open("/achievement/front/modules/"+get(this.imgs[this.index])+"?Url="+getUrl(),"_self");
 					}.bind(this,newI)
 				// document.getElementByTagName('this.elem').onclick=function(){window.open('auditor1.html')};
 				// document.getElementByName("newI").onclick=function(){window.open("auditor1.html")};

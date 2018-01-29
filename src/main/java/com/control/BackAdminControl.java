@@ -302,19 +302,7 @@ public class BackAdminControl {
 			map.put("success", "success");
 			return map;
 		}
-		// 预览成果界面
-		@RequestMapping(value = "/back/admin/{achievementId}/video", method = { RequestMethod.GET })
-		@Transactional
-		public String getAchievementVideo(
-				@PathVariable("achievementId") int achievementId, Model model) {
-			Achievement achievement = achievementService
-					.getAchiByAchId(achievementId);
-			model.addAttribute("video", achievement.getAchVideoPath());
-			model.addAttribute("achId", achievementId);
-			achievement.setAchCTR(achievement.getAchCTR() + 1);
-			achievementService.updateAchievement(achievement);
-			return "/front/video";
-		}
+	
 
 		// 三级页面模块，初始页面
 		@RequestMapping(value = "/back/admin/modules/{achId}", method = { RequestMethod.GET })

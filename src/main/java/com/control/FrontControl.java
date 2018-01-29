@@ -120,30 +120,7 @@ public class FrontControl {
 		return "/front/second";
 	}
 
-	// 三级页面的视频，同时增加点击量
-	@RequestMapping(value = "/front/{achievementId}/video", method = { RequestMethod.GET,RequestMethod.POST })
-	@Transactional
-	public String getAchievementVideo(String Url,AchievementCondition condition,RedirectAttributes redirectAttributes,
-			@PathVariable("achievementId") int achievementId, Model model) {
-System.out.println(Url);
-		Achievement achievement = achievementService
-				.getAchiByAchId(achievementId);
-		
-		if(achievement.getAchStatus()!=1){
-			System.out.println(achievement.getAchId());
-			redirectAttributes.addFlashAttribute("error", "error");
-			return "redirect:"+Url;
-		}
-		else {
-			model.addAttribute("video", achievement.getAchVideoPath());
-			model.addAttribute("achId", achievementId);
-			model.addAttribute("Url", Url);
-			achievement.setAchCTR(achievement.getAchCTR() + 1);
-			achievementService.updateAchievement(achievement);
-			return "/front/video";
-		}
-		
-	}
+	
 	// 三级页面模块，初始页面
 	@RequestMapping(value = "/front/modules/{achId}", method = { RequestMethod.GET,RequestMethod.POST })
 	public String getAchievementModules(@PathVariable("achId") int achId,String Url,RedirectAttributes redirectAttributes,
@@ -158,6 +135,8 @@ System.out.println(Url);
 			return "redirect:"+Url;
 		}
 		else {
+			achievement.setAchCTR(achievement.getAchCTR() + 1);
+			achievementService.updateAchievement(achievement);
 			model.addAttribute("modules", moduleService.selectModuleByAchId(achId));
 			model.addAttribute("achievement", achievement);
 			return "/front/modules";

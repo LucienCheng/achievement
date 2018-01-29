@@ -93,13 +93,7 @@
 		});
 	}
 	function bounce(t) {
-		if (t == "mod") {
-			url = "/achievement/back/user/achievement/modify?achId="
-					+ '${achievement.achId }';
-		} else {
-			url = "/achievement/back/user?achStatus=0";
-
-		}
+		
 		var form = new FormData(document.getElementById("achievementForm"));
 		$.ajax({
 			url : '/achievement/back/user/achievement/saveAjax',
@@ -117,7 +111,7 @@
 						if (e.lengthComputable) {
 							var percent = Math.floor(e.loaded / e.total * 100);
 							if (percent <= 100) {
-								$("#bar").html("正在上传。。。。");
+								$("#bar").html("正在上传。。。。"+percent);
 								$("#bar").css("width", percent + "%");
 							}
 							if (percent >= 100) {
@@ -131,7 +125,12 @@
 			},
 			success : function() {
 				console.log("test");
-				window.open(url, "_self");
+				if (t == "mod") {
+					url = "/achievement/back/user/achievement/modify?achId="
+							+ '${achievement.achId }';
+					window.open(url, "_self");
+				} 
+				
 			},
 			error : function(e) {
 				console.log("失败");
@@ -222,11 +221,11 @@
 						</select>
 					</div>
 					<input type="hidden" value="${achievement.achId }" name="achId">
-					<input value="保存并退出" type="button " class="btn btn-success"
-						onclick="bounce('achievement');"> <input value="不保存退出"
+					<input value="保存" type="button " class="btn btn-success"
+						onclick="bounce('achievement');"> <input value="退出"
 						type="button" class="btn btn-warning"
 						<c:if test="${operator == 'add'}"> onclick="deleteAch('${achievement.achId }');" </c:if>
-						<c:if test="${operator == 'modify'}"> onclick="window.open('/achievement/back/user?achStatus=0','_self');"</c:if>>
+						<c:if test="${operator == 'modify'}"> onclick="window.open('/achievement/back/user?achStatus=0','_self');"</c:if> >
 				</form>
 			</div>
 			<div class="col-md-10">

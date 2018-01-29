@@ -143,11 +143,10 @@ var authorName = '${condition.authorName}';
 				var url=getUrl();
 				var rel = $(this).attr("rel");
 				
-				var u = "/achievement/front/"+ rel + "/video?authorName="
+				var u = "/achievement/front/modules/"+rel+"?authorName="
 							+ authorName + "&achStartTime=" + achStartTime
 							+ "&achEndTime=" + achEndTime + "&achStatus="
 							+ achStatus+"&Url="+url;
-				console.log(u);
 						window.open(u,"_self");
 				});
 
@@ -264,11 +263,13 @@ class="block pull-left span12">
 
 					<tr>
 						
-						<td class="achId"><a href="javascript:void(0);" rel="${achievement.achId }">${achievement.achName }</a></td>
+						<td >${achievement.achName }</td>
 
-						<td class="media" colspan="2">
+						<td class="media achId" colspan="2" >
+						<a href="javascript:void(0);" rel="${achievement.achId }">
 							 <img class="media-object img-rounded"  id="img_show"
-								src='${achievement.achImagePath }' /></td>				
+								src='${achievement.achImagePath }' />
+								</a></td>				
 						<td>${achievement.achDate }</td>
 						<td>${achievement.user.userName }</td>
 						<td>${achievement.achCTR }</td>

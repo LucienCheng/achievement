@@ -319,7 +319,7 @@
 															onclick='addAudit(${achievement.achId });'>未通过</button>
 													</c:if>
 													<button class="btn btn-primative addSlideShow"
-														 onclick="window.open('/achievement/back/auditor/${achievement.achId }/video');"
+														 onclick="window.open('/achievement/back/auditor/modules/${achievement.achId }');"
 														value='${achievement.achId }'>预览</button></td>
 
 

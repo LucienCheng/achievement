@@ -206,7 +206,7 @@
 										<td><button class="btn btn-primary addSlideShow"
 												value='${achievement.achId }'>添加</button>
 												<button class="btn  "
-														 onclick="window.open('/achievement/back/admin/${achievement.achId }/video');"
+														 onclick="window.open('/achievement/back/admin/modules/${achievement.achId }');"
 														value='${achievement.achId }'>预览</button>
 												</td>
 									</tr>

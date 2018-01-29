@@ -300,7 +300,7 @@
 												<td><button class="btn btn-warning addSlideShow"
 														value='${achievement.achId }' onclick="window.open('/achievement/back/user/achievement/modify?achId='+'${achievement.achId }','_self');">修改</button>
 															<button class="btn btn-primative addSlideShow"
-														data-toggle="modal" data-target="#myModal" onclick="window.open('/achievement/back/user/${achievement.achId }/video');"
+														data-toggle="modal" data-target="#myModal" onclick="window.open('/achievement/back/user/modules/${achievement.achId }');"
 														value='${achievement.achId }'>预览</button>
 														</td>
 											</tr>
