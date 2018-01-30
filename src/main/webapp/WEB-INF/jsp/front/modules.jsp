@@ -88,7 +88,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<ol class="breadcrumb">
 					<li><a href="/achievement/front/index">首页</a> <span class="divider"></span></li>
 					<li><a href="javascript:void(0);">展示</a></li>
-					<a class="pull-right" herf="/achievement/back">登录</a>
+						<c:if test="${roleId==NULL}">
+					<a class="pull-right" href="/achievement/back">登录</a>
+					</c:if>
 				</ol>
 			
 			</div>
