@@ -20,7 +20,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<link rel="stylesheet" type="text/css" href="/achievement/source/bootstrap-3.3.7-dist/css/bootstrap.css">
 	<script type="text/javascript" src="/achievement/source/jquery-3.2.1/jquery.js"></script>
 	<script type="text/javascript" src="/achievement/source/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+	<script type="text/javascript">
 	
+	$(window).load(function(){
+		 
+	    $("#model_descript img").addClass("img-responsive center-block");
+	 
+	})
+	</script>
 	<style type="text/css">
 		.model_name{
 			

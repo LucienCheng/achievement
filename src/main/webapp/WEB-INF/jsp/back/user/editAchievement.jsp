@@ -65,7 +65,7 @@
 			contentType : "application/json",
 			data : JSON.stringify(saveDataAry),
 			success : function(data, statue) {
-				window.open("/achievement/back/user?achStatus=0", "_self");
+				//window.open("/achievement/back/user?achStatus=0", "_self");
 			}
 		});
 	}
@@ -124,13 +124,16 @@
 				return myXhr;
 			},
 			success : function() {
-				console.log("test");
-				if (t == "mod") {
-					url = "/achievement/back/user/achievement/modify?achId="
-							+ '${achievement.achId }';
-					window.open(url, "_self");
-				} 
 				
+				if (t == "mod") {
+					url = "/achievement/back/user/addModule?achId="
+							+ '${achievement.achId }';
+					
+				} else{
+					url = "/achievement/back/user/achievement/modify?achId="
+						+ '${achievement.achId }';
+				}
+				window.open(url, "_self");
 			},
 			error : function(e) {
 				console.log("失败");
@@ -192,8 +195,8 @@
 							type="text" name="achName">
 					</div>
 					<div class="kb-input-content col-md-12 col-sm-12 " style="margin: 10px 0px 10px 0px;">
-						<span>成果描述：</span> <textarea value="${achievement.achDescribe }"
-							type="text" name="achDescribe" id="achievement_des" maxlength="200"></textarea>
+						<span>成果描述：</span> <textarea 
+							 name="achDescribe" id="achievement_des" maxlength="200">${achievement.achDescribe }</textarea>
 				            <span class="input-number-tip">0~200个字</span>
 					</div>
 					<div class="col-md-12 col-sm-12" style="margin: 10px 0px 10px 0px;">
@@ -202,7 +205,7 @@
 							id="achievementImg">
 
 					</div>
-					<div class="col-md-6 col-sm-6" style="margin: 10px 0px 10px 0px;">
+					<div class="col-md-6 col-sm-6" style="margin: 10px 0px 10px 75px;">
 						<img id="achievmentImage" alt=""
 							src="${achievement.achImagePath }" width="640" height="480">
 					</div>
@@ -210,7 +213,7 @@
 						<span>成果视频：</span> <input type="file" name="video"
 							onchange="prepare(this);" id="achievementVid">
 					</div>
-					<div class="col-md-6 col-sm-6" style="margin: 10px 0px 10px 0px;">
+					<div class="col-md-6 col-sm-6" style="margin: 10px 0px 10px 75px;">
 						<video width="640" height="480" id="achievmentVideo"
 							src="${achievement.achVideoPath }" controls> </video>
 					</div>
@@ -222,7 +225,7 @@
 					</div>
 					<input type="hidden" value="${achievement.achId }" name="achId">
 					<input value="保存" type="button " class="btn btn-success"
-						onclick="bounce('achievement');"> <input value="退出"
+						onclick="bounce('achievement');"> <input value="退出" id="back"
 						type="button" class="btn btn-warning"
 						<c:if test="${operator == 'add'}"> onclick="deleteAch('${achievement.achId }');" </c:if>
 						<c:if test="${operator == 'modify'}"> onclick="window.open('/achievement/back/user?achStatus=0','_self');"</c:if> >
