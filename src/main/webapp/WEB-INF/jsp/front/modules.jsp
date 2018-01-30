@@ -22,21 +22,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript" src="/achievement/source/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 	<script type="text/javascript">
 	
-	$(window).load(function(){
+	$(document).ready(function(){
 		 
 	    $("#model_descript img").addClass("img-responsive center-block");
 	 
 	})
 	</script>
 	<style type="text/css">
-		.model_name{
+		#model_name{
 			
 			border-color: #A1A7AD;
 			border-width: 1px;
 		}
-		.model_descript{
-			
-			border-color: #A1A7AD;
+		#model_descript{
+			border:solid;
+			border-color: black;
 			border-width: 1px;
 		}
 		.font{
@@ -142,6 +142,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="col-md-8 col-sm-8">
 						<img src="${achievement.achImagePath }" class="img-responsive">
 					</div>
+				<div class="col-md-2 col-sm-2"></div>
               	</div>
            </div>
           <c:forEach items="${modules }" var="module">

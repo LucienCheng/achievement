@@ -165,6 +165,16 @@
 		var arrUrl=url.split("/achievement");
 		return arrUrl[1];
 		}
+		//全选和全不选
+	function reserveCheck(name){  
+	    var revalue = document.getElementsByName(name);   
+	    for(i=0;i<revalue.length;i++){  
+	        if(revalue[i].checked == true)   
+	            revalue[i].checked = false;  
+	        else   
+	            revalue[i].checked = true;  
+	    }  
+	} 
 </script>
 </head>
 <body>
@@ -289,20 +299,20 @@
 								<table class="table table-hover">
 									<thead>
 										<tr>
-											<th><input type="checkbox" /></th>
-											<th>成果名称</th>
-											<th colspan="2">成果内容</th>
+											<th class="span1"><input type="checkbox" onclick="reserveCheck('choice')"/></th>
+											<th class="span2">成果名称</th>
+											<th colspan="2" class="span5">成果内容</th>
 											<c:if test="${condition.achStatus == 2}">
-											<th>意见</th>
+											<th class="span1">意见</th>
 											</c:if>
-											<th>操作</th>
+											<th colspan="2" class="span3">操作</th>
 										</tr>
 									</thead>
 									<tbody>
 										<c:forEach var="achievement" items="${achievements }">
 
 											<tr>
-												<td><input type="checkbox"
+												<td><input type="checkbox" name="choice"
 													onclick="if(this.checked == true) {addCheck(${achievement.achId });} else { removeCheck(${achievement.achId }); }" /></td>
 												<td>${achievement.achName }</td>
 												<td class="media" colspan="2"><a class="pull-left"
@@ -313,9 +323,9 @@
 												<c:if test="${condition.achStatus == 2}">
 												<td>${achievement.audit.opinion }</td>
 												</c:if>	
-												<td><button class="btn btn-warning addSlideShow"
+												<td colspan="2"><button class="btn btn-warning addSlideShow"
 														value='${achievement.achId }' onclick="window.open('/achievement/back/user/achievement/modify?achId='+'${achievement.achId }','_self');">修改</button>
-															<button class="btn btn-primative addSlideShow"
+												<button class="btn btn-primative addSlideShow"
 														data-toggle="modal" data-target="#myModal" onclick="window.open('/achievement/back/user/modules/${achievement.achId }?Url='+getUrl());"
 														value='${achievement.achId }'>预览</button>
 														</td>
