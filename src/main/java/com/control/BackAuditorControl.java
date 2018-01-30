@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dao.AuditMapper;
 import com.entity.Achievement;
@@ -196,12 +197,18 @@ public class BackAuditorControl {
 	// 三级页面模块，初始页面
 	@RequestMapping(value = "/back/auditor/modules/{achId}", method = { RequestMethod.GET })
 	@Transactional
-	public String getAchievementModules(@PathVariable("achId") int achId,
+	public String getAchievementModules(@PathVariable("achId") int achId,String Url,RedirectAttributes redirectAttributes,
 			Model model) {
 		Achievement achievement = achievementService.getAchiByAchId(achId);
-		model.addAttribute("modules", moduleService.selectModuleByAchId(achId));
-		model.addAttribute("achievement", achievement);
-		return "/front/modules";
+		if (achievement.getUser().getUserId()==-1) {
+			redirectAttributes.addFlashAttribute("error", "error");
+			return "redirect:"+Url;
+		}else {
+			model.addAttribute("modules", moduleService.selectModuleByAchId(achId));
+			model.addAttribute("achievement", achievement);
+			return "/front/modules";
+		}
+	
 	}
 
 }

@@ -168,6 +168,11 @@
 		console.log(achId);
 		$("#achId").val(achId);
 	}
+	function getUrl(){
+		var url = document.location.toString();
+		var arrUrl=url.split("/achievement");
+		return arrUrl[1];
+		}
 </script>
 </head>
 <body>
@@ -217,7 +222,17 @@
 						操作已经成功了！
 					</div>
 				</div>
-				
+												<c:if test="${error == 'error' }">
+<div class="row-fluid">
+	<div class="alert alert-error alert-block">
+		<button type="button" class="close" data-dismiss="alert">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<h4>操作失败</h4>
+		不能查看别人的待编辑的成果！！
+	</div>
+</div>
+</c:if>
 				<div class="row-fluid">
 					<c:if test="${condition.achStatus == 0}">
 						<button class="btn btn-primary " onclick="passAchievement();">通过</button>
@@ -320,7 +335,7 @@
 															onclick='addAudit(${achievement.achId });'>未通过</button>
 													</c:if>
 													<button class="btn btn-primative addSlideShow"
-														 onclick="window.open('/achievement/back/auditor/modules/${achievement.achId }');"
+														 onclick="window.open('/achievement/back/auditor/modules/${achievement.achId }?Url='+getUrl());"
 														value='${achievement.achId }'>预览</button></td>
 
 

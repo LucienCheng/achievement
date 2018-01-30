@@ -96,6 +96,11 @@
 		});
 
 	});
+	function getUrl(){
+		var url = document.location.toString();
+		var arrUrl=url.split("/achievement");
+		return arrUrl[1];
+		}
 </script>
 </head>
 <body>
@@ -136,6 +141,17 @@
 						操作已经成功了！
 					</div>
 				</div>
+												<c:if test="${error == 'error' }">
+<div class="row-fluid">
+	<div class="alert alert-error alert-block">
+		<button type="button" class="close" data-dismiss="alert">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<h4>操作失败</h4>
+		不能添加未审核通过的成果！！
+	</div>
+</div>
+</c:if>
 				<div class="row-fluid">
 					<button class="btn btn-danger " onclick="deleteUser();">删除</button>
 					<button class="btn btn-primary " data-toggle="modal"

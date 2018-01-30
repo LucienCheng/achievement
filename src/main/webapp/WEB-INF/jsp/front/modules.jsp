@@ -20,7 +20,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<link rel="stylesheet" type="text/css" href="/achievement/source/bootstrap-3.3.7-dist/css/bootstrap.css">
 	<script type="text/javascript" src="/achievement/source/jquery-3.2.1/jquery.js"></script>
 	<script type="text/javascript" src="/achievement/source/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+	<script type="text/javascript">
 	
+	$(window).load(function(){
+		 
+	    $("#model_descript img").addClass("img-responsive center-block");
+	 
+	})
+	</script>
 	<style type="text/css">
 		.model_name{
 			
@@ -58,9 +65,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			top:0;
 			left:0;
 		}
-		.breadcrumb li{
+		.breadcrumb li a{
 			font-size:1.5em;
 		}
+		
+		.breadcrumb a{
+		cursor:pointer;
+		target:_self;
+		font-size:1.5em;
+	  	}
 	</style>
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
@@ -75,7 +88,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<ol class="breadcrumb">
 					<li><a href="/achievement/front/index">首页</a> <span class="divider"></span></li>
 					<li><a href="javascript:void(0);">展示</a></li>
-					
+					<a class="pull-right" herf="/achievement/back">登录</a>
 				</ol>
 			
 			</div>

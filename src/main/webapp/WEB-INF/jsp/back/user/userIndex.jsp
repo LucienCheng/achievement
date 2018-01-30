@@ -174,7 +174,7 @@
 				<a class="btn btn-navbar" data-toggle="collapse"
 					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span>
-				</a> <a class="brand"href="/achievement/front/index" target="_blank">首页</a>
+				</a> <a class="brand "href="/achievement/front/index" target="_blank">首页</a>
 				<div class="nav-collapse collapse">
 					<ul class="nav pull-right">
 						<li><a href="/achievement/back/loginOut">登出</a></li>

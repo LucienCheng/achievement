@@ -53,7 +53,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	width:204px;
 	height:236px;
 }
-.breadcrumb li{
+.breadcrumb li a{
+	font-size:1.5em;
+}
+.breadcrumb a{
+	cursor:pointer;
+	target:_self;
 	font-size:1.5em;
 }
 </style>
@@ -161,6 +166,7 @@ var authorName = '${condition.authorName}';
 				<ol class="breadcrumb">
 					<li><a href="/achievement/front/index">首页</a> <span class="divider">/</span></li>
 					<li><a href="javascript:void(0);">展示</a></li>
+					<a class="pull-right" herf="/achievement/back">登录</a>
 				</ol>
 				
 			</div>

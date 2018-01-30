@@ -234,12 +234,13 @@ public class BackUserControll {
 	@RequestMapping(value = "/back/user/saveModule", method = RequestMethod.POST)
 	@Transactional
 	public String saveModule(Module module) {
-		System.out.println(module);
+		
 		moduleService.insertModules(module);
 		List<Integer> achIds = new ArrayList<Integer>();
 		achIds.add(module.getAchId());
 		// 设置为未发布状态
 		achievementService.updateAchiWithSta(achIds, -1);
+		System.out.println(module);
 		return "forward:/back/user/modifyModule?achId=" + module.getAchId() + "&modId=" + module.getModId();
 	}
 

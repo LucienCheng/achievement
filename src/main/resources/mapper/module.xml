@@ -36,7 +36,7 @@
 		</where>
 	</select>
 
-	<update id="updateModules" keyProperty="modId" useGeneratedKeys="true">
+	<update id="updateModules" keyProperty="module.modId" useGeneratedKeys="true">
 			update modules
 			<set>
 				<if test="module.modContent != null">
@@ -57,7 +57,7 @@
 
 
 
-	<insert id="insertModules" keyProperty="modId" useGeneratedKeys="true">
+	<insert id="insertModules" keyProperty="module.modId" useGeneratedKeys="true">
 		insert into
 		modules(modName,modContent,modDescribe,achId)
 			values(#{module.modName},#{module.modContent},#{module.modDescribe},#{module.achId})
