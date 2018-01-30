@@ -65,7 +65,7 @@
 			contentType : "application/json",
 			data : JSON.stringify(saveDataAry),
 			success : function(data, statue) {
-				//window.open("/achievement/back/user?achStatus=0", "_self");
+				window.open("/achievement/back/user?achStatus=0", "_self");
 			}
 		});
 	}
@@ -92,9 +92,12 @@
 			}
 		});
 	}
-	function bounce(t) {
+	function bounce(t,achId,modId) {
 		
 		var form = new FormData(document.getElementById("achievementForm"));
+		if (t=="achievement") {
+			form.append("achStatus","0");
+		}
 		$.ajax({
 			url : '/achievement/back/user/achievement/saveAjax',
 			type : "post",
@@ -129,9 +132,11 @@
 					url = "/achievement/back/user/addModule?achId="
 							+ '${achievement.achId }';
 					
-				} else{
-					url = "/achievement/back/user/achievement/modify?achId="
-						+ '${achievement.achId }';
+				} else if(t=="achievement"){
+					url = "/achievement/back/user?achStatus=0";
+				}
+				else{
+					url = "/achievement/back/user/modifyModule?achId="+achId+'&modId='+modId ;
 				}
 				window.open(url, "_self");
 			},
@@ -224,7 +229,8 @@
 						</select>
 					</div>
 					<input type="hidden" value="${achievement.achId }" name="achId">
-					<input value="保存" type="button " class="btn btn-success"
+					
+					<input value="保存并退出" type="button " class="btn btn-success"
 						onclick="bounce('achievement');"> <input value="退出" id="back"
 						type="button" class="btn btn-warning"
 						<c:if test="${operator == 'add'}"> onclick="deleteAch('${achievement.achId }');" </c:if>
@@ -263,7 +269,7 @@
 								<td colspan="2">${module.modDescribe }</td>
 								<td><input type="button"
 									class="btn btn-warning addSlideShow" value='修改'
-									onclick="window.open('/achievement/back/user/modifyModule?achId=${achievement.achId }&modId='+'${module.modId }','_self');">
+									onclick="bounce('moduleModify',${achievement.achId },${module.modId });">
 									</button></td>
 							</tr>
 						</c:forEach>

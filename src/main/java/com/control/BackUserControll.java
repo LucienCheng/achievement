@@ -167,8 +167,15 @@ public class BackUserControll {
 		achievement.setUser(user);
 		List<Integer> achIds = new ArrayList<Integer>();
 		achIds.add(achievement.getAchId());
-		// 将修改的成果设置为0，待审核状态
-		achievementService.updateAchiWithSta(achIds, 0);
+		if (achievement.getAchStatus()!=null) {
+			// 将修改的成果设置为0，待审核状态
+			achievementService.updateAchiWithSta(achIds, 0);
+		}
+		else {
+			// 将修改的成果设置为-1，待审核状态
+			achievementService.updateAchiWithSta(achIds, -1);
+		}
+		
 		String imagePath = null;
 		String videoPath = null;
 		achievement.setAchDate(TimeToolService.getCurrentTime());
